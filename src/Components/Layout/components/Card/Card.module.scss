@@ -1,0 +1,106 @@
+.card-container{
+    padding: 30px 23px 5px 25px;
+    margin: 10px 0;
+    background-color: #1111;
+    margin-top: 10px;
+    position: relative;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    transition: transform ease-in 0.1s;
+    h4{
+        color: #333;
+        font-weight: 600;
+        margin-top: 5px;
+        margin-left: 55px;
+    }
+    button{
+        margin-left: 10px;
+        padding: 5px;
+        font-size: 14px;
+        margin-right: 6px;
+        width: 100px;
+    }
+    i{
+        margin-right: 5px;
+    }
+}
+.card{
+    border: none !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+    img{
+        width: 100%;
+    }
+}
+.card__img{
+    border-radius: 5px 5px 0 0 ;
+}
+.book__rating{
+    height: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #333;
+    i{
+        font-size: 10px;
+    }
+    span{
+        margin-bottom: 6px;
+    }
+}
+.book__author{
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #555;
+    font-size: 13px;
+    h5{
+        display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 0;
+    }
+    h5:hover{
+        color: #555;
+    }
+}
+.tour__title{
+    justify-content: center;
+    display: flex;
+    color: #333;
+    margin-left: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+.card-bottom{
+    h5{
+       color: #333;
+    }
+} 
+.home-product-item{
+    display: flex;
+    a{
+        color: #fff !important;
+    }
+}
+.genre_container{
+    span,
+    h5{
+        margin: 5px 0 0 0;
+        display: flex;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 13px;
+        color: #777;
+    }
+    h5:hover{
+        color: #555;
+    }
+    span{
+        color: #555;
+    }
+}
+
+

@@ -1,0 +1,23 @@
+.book-vendor{
+    padding: 10px;
+    border: 1px solid #d5d5d5;
+    margin-top: 10px;
+    border-radius: 10px;
+    p{
+        font-weight: 600;
+    }
+    ul{
+        list-style: none;
+        padding: 10px;
+    }
+    li{
+        margin: 5px;
+    }
+    a{
+        color: #595959 !important;
+    }
+    a:hover{
+        color: #3b3b3b;
+        text-decoration: underline !important;
+    }
+}

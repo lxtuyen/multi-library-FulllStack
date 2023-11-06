@@ -1,0 +1,21 @@
+.wrapper-card{
+    background-color: var(--main);
+    padding: 20px;
+    border-radius: 5px;
+}
+.title{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    span{
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+.carouse{
+    padding: 50px;
+    display:flex;
+    justify-content: center;
+}
+
+

@@ -1,0 +1,54 @@
+.book-details{
+    border-radius: 5px;
+   /* border: 1px solid #D5D5D5;*/
+    color: #272727;
+    h2{
+        margin: 20px 0 20px 10px;
+        font-size: 22px;
+        font-weight: 600;
+    }
+    hr{
+        margin: 0 10px 0 10px;
+    }
+}
+.section{
+    margin: 10px 0 10px 10px;
+    h3{
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+    p{
+        margin: 5px;
+        color: #666666;
+    }
+    dl dt{
+        margin: 5px 0 5px 0;
+        font-size: 15px;
+    }
+    dl dd{
+        color: #666666;
+        margin: 5px;
+    }
+}
+.section-detail{
+    text-align: justify;
+    font-family: "Lucida Grande",Verdana,Helvetica,Arial,sans-serif;
+    margin-top: 10px;
+    padding-right: 5px;
+    margin: 5px;
+    color: #666666;
+}
+.section-list{
+    list-style: none;
+    padding-left: 0;
+    li{
+        margin-top: 5px;
+    }
+    a{
+        color: #666666 !important;
+    }
+    a:hover{
+        text-decoration: underline;
+         color: #3b3b3b;
+    }
+}

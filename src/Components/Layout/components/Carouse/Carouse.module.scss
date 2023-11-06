@@ -1,0 +1,28 @@
+.card{
+    width: 18rem;
+    margin-right: 30px;
+    background-color: #1111;
+    padding: 25px 0px;
+    transition: transform ease-in 0.1s;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    img{
+        margin-left: 30px;
+        width: 100px;
+    }
+    h3{
+        margin: 20px 15px 5px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: normal;
+        display: inline-block;
+        color: #333;
+    }
+    p{
+        color: #555;
+        margin: 10px 10px 0px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: normal;
+    }
+}

@@ -1,0 +1,16 @@
+.book-decription{
+    font-family: "Lucida Grande",Verdana,Helvetica,Arial,sans-serif;
+    color: #333333;
+    padding-bottom: 10px;
+    p{
+        padding-bottom: 10px;
+    }
+    span{
+        cursor: pointer;
+        color: #02598b;
+    }
+    span:hover{
+        text-decoration: underline;
+    }
+}
+

@@ -1,0 +1,27 @@
+.wrapper{
+    padding: 30px;
+    background-color: rgba(17, 17, 17, 0.0666666667);
+}
+.home-filter{
+    background-color: #ECEBEC;
+    display: flex;
+    align-items: center;
+    padding: 12px 22px;
+    border-radius: 2px;
+    button{
+        border-radius: 5px;
+        padding: 5px 10px;
+        background-color: #fff;
+        min-width: 90px;
+        margin: 5px;
+    }
+    div{
+        min-width: 200px;
+    }
+}
+.input-group{
+    width: 50%;
+}
+.body{
+    display: flex;
+}
