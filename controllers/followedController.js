@@ -7,17 +7,17 @@ export const createFollow = async (req, res) => {
   const idBook = req.body.bookId;
   const newFollowed = new Followed({ ...req.body });
   try {
-    const savedFollowed = newFollowed.save();
+    const savedFollowed = await  newFollowed.save();
     await User.findByIdAndUpdate(idUser, {
-      $push: { followed: (await savedFollowed)._id },
+      $push: { followed:  savedFollowed._id },
     });
     await Book.findByIdAndUpdate(idBook, {
-      $push: { follower: (await savedFollowed)._id },
+      $push: { follower: savedFollowed._id },
     });
     res.status(200).json({
       success: true,
       message: "your book is followed",
-      data: savedFollowed,
+      savedFollowed,
     });
   } catch (error) {
     res.status(404).json({ success: false, message: error.message });

@@ -16,8 +16,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     photo: {
+      type: String,
+    },
+    phoneNumber: {
+      type: String,
+    },
+    address: {
       type: String,
     },
     followed: [{

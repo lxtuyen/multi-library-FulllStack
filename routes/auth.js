@@ -1,9 +1,11 @@
 import express from 'express';
-import { register,login } from '../controllers/authController.js';
+import { register, login, adminRegister } from '../controllers/authController.js';
+import { verifyAdmin } from '../untils/VerifyToken.js';
 
 const router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login)
+router.post('/admin/register', verifyAdmin, adminRegister);
 
 export default router

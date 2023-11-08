@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const followedSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
     bookId: {
       type: mongoose.Types.ObjectId,
       ref: "Book",

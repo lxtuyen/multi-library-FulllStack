@@ -14,7 +14,9 @@ export const register = async( req, res) => {
             email: req.body.email,
             password: hash,
             photo: req.body.photo,
-            watching: [],
+            phoneNumber: req.body.phoneNumber,
+            address: req.body.address,
+            followed: [],
             readingHistory: [],
         })
 
@@ -64,5 +66,37 @@ export const login = async( req, res) => {
         }).status(200).json({success:true,token, message:'Successfully login',data:{...rest},role})
     } catch (error) {
         res.status(500).json({success: false, message:error.message})
+    }
+};
+// admin registration
+export const adminRegister = async( req, res) => {
+    try {
+        //hashing password
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(req.body.password, salt)
+
+        const newUser = new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: hash,
+            photo: req.body.photo,
+            phoneNumber: req.body.phoneNumber,
+            address: req.body.address,
+            role: "admin"
+        })
+
+        await newUser.save();
+
+        res.status(200).json({
+            success:true,
+            message:'successfully created'
+        })
+
+    } catch (error) {
+        res.status(200).json({
+            success:false,
+            message:error.message
+        })
+
     }
 };
