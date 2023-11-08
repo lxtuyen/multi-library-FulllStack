@@ -26,6 +26,37 @@
         margin: 15px 0 0 20px;
     }
 }
+.wrapper-list{
+    top: 65px;
+    left: 170px;
+    max-height: 0;
+    position: absolute;
+    width: 250px;
+    background-color: #F4F3F4;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: max-height 0.5s;
+    z-index: 2;
+    div{
+        padding: 5px 5px 5px 15px;
+    }
+    span{
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
+.nav-item__type-list{
+    &:hover{
+        background-color: var(--secondary-2);
+        box-shadow: var(--shadow);
+
+        .wrapper-list{
+            max-height: 500px;
+            z-index: 99;
+        }
+}
+}
 .search {
     position: relative;
     display: flex;
@@ -198,4 +229,3 @@ footer{
         margin-left: -30px;
     }
 }
-

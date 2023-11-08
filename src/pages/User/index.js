@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './User.module.scss';
@@ -10,6 +10,9 @@ const cx = classNames.bind(styles);
 function User() {
     const { user } = useContext(AuthContext);
     const { username, email } = user.data;
+    const handleUpdate = (e) => {
+        e.preventDefault();
+    }
     return (
         <div className={cx('wrapper')}>
             <div className="container">
@@ -47,7 +50,7 @@ function User() {
                                     </div>
                                 </div>
                                 <div className="mt-5 text-center">
-                                    <button className="btn btn-primary profile-button" type="button">
+                                    <button onClick={handleUpdate} className="btn btn-primary profile-button" type="button">
                                         Cập nhật hồ sơ
                                     </button>
                                 </div>

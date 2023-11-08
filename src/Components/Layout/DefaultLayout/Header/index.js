@@ -54,14 +54,62 @@ function Header() {
                 </div>
                 <div className={cx('nav')}>
                     <ul>
-                        {nav__link.map((item, index) => (
-                            <li key={index}>
-                                <NavLink to={item.path}>
-                                    <i className={item.img}></i>
-                                    <span>{item.display}</span>
-                                </NavLink>
-                            </li>
-                        ))}
+                        <li className={cx('nav-item__type-list')}>
+                            <i className="fa-solid fa-book"></i>
+                            <span>Thể Loại</span>
+                            <div className={cx('wrapper-list')}>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>col</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <NavLink>
+                                <i className="fa-solid fa-crown"></i>
+                                <span>Xếp Hạng</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/search">
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                                <span>Tìm Kiếm</span>
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
                 <Tippy
@@ -106,13 +154,13 @@ function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link>
+                                    <Link to={`/history/${user.data._id}`}>
                                         <i className="fa-sharp fa-solid fa-clock-rotate-left"></i>
                                         Lịch Sử Đọc
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link>
+                                    <Link to={`/followed/${user.data._id}`}>
                                         <i className="far fa-heart"></i>
                                         Đang Theo Dõi
                                     </Link>

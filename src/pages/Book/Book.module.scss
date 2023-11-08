@@ -23,19 +23,16 @@
     }
 }
 .read-options__button{
-    width: 90%;
-    height: 35px;
-    background-color: #025C8F;
-    margin: 15px;
-    border-radius: 5px;
-    a{
-        color: #fff !important;
-        position: relative;
-        top: 8px;
+    button{
+        color: #fff;
+        width: 90%;
+        height: 35px;
+        margin: 15px;
+        border-radius: 5px;
         font-size: 15px;
     }
-    span{
-      font-size: 15px;
+    i{
+        margin-right: 5px;
     }
 }
 .read-options__label{

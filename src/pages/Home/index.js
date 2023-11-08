@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import styles from './Home.module.scss';
 

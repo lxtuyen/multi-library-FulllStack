@@ -9,44 +9,60 @@ import { BASE_URL } from '~/hooks/config';
 
 const cx = classNames.bind(styles);
 function Card({ items, bookIds, followedId }) {
+    const { _id, photo, title, author, genre, reviews, language, follower } = items;
     const navigate = useNavigate();
     const [isFolloweds, setIsFolloweds] = useState(false);
+    const [followId, setFollowId] = useState([]);
+    const [followerId, setFollowerId] = useState([]);
     const { user } = useContext(AuthContext);
-    const { _id, photo, title, author, genre, reviews, language, follower } = items;
     const { totalRating, avgRatings } = calculateAvgRatings(reviews);
 
     const bookIdsArray = Array.from(bookIds.toString().split(','));
-
     const isFollowed = bookIdsArray.includes(_id);
-        const followedIds = Array.from(followedId.toString().split(','));
-
-        const foundBookIds = followedIds?.filter((bookId) => {
-                return follower?.includes(bookId);  
+    const followedIds = Array.from(followId.toString().split(','));
+            
+    const foundBookIds = followedIds?.filter((bookId) => {
+                return followerId?.includes(bookId);  
         });
+        
         useEffect(()=>{
-            setIsFolloweds(isFollowed)      
-        },[isFollowed])
+        
+            setIsFolloweds(isFollowed)   
+            setFollowId(followedId) 
+            setFollowerId(follower) 
+        },[isFollowed, followedId, follower])
     const handleDelete = async (e) => {
         e.preventDefault();
         try {
-        const deleteObj = {
-            userId: user.data._id,
-            bookId: _id,
-        };
-        
-        const res = await fetch(`${BASE_URL}/followed/${foundBookIds}`, {
-            method: 'delete',
-            headers: { 'content-type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify(deleteObj),
-        });
-        const result = await res.json();
-            if (!res.ok) {
-                return alert(result.message);
-            } else {
-                alert('thanh cong');
+            const deletedBookIds = await foundBookIds.map(async (foundBookId) => {
+                const deleteObj = {
+                    userId: user.data._id,
+                    bookId: _id,
+                };
+                const res = await fetch(`${BASE_URL}/followed/${foundBookId}`, {
+                    method: 'delete',
+                    headers: { 'content-type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(deleteObj),
+                });
+                const result = await res.json();
+                if (!res.ok) {
+                    return alert(result.message);
+                } else {
+                    return foundBookId;
+                }
+            });
+    
+            // Cập nhật trạng thái theo dõi
+            if (deletedBookIds.length > 0) {
                 setIsFolloweds(false);
+                setFollowId(followId.filter(id => !foundBookIds.includes(id)))
+                setFollowerId(followerId.filter(id => id !== _id)) 
+              // Hiển thị thông báo
+                alert('Xóa thành công');
             }
+    
+            
         } catch (error) {
             alert(error.message);
         }
@@ -82,7 +98,8 @@ function Card({ items, bookIds, followedId }) {
             } else {
                 alert('thanh cong');
                 setIsFolloweds(true)
-                console.log(isFolloweds)
+                setFollowId([...followId, result.savedFollowed._id])
+                setFollowerId([...followerId, result.savedFollowed.bookId]) 
             }
         } catch (error) {
             alert(error.message);
