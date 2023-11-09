@@ -7,6 +7,7 @@ import Book from '~/pages/Book';
 import SearchType from '~/pages/SearchType';
 import Login from '~/pages/Login';
 import User from '~/pages/User';
+import Admin from '~/pages/Admin';
 import ReadingHistory from '~/pages/ReadingHistory';
 
 const publicRoutes = [
@@ -18,6 +19,7 @@ const publicRoutes = [
     {path: '/register', component: Register},
     {path: '/search', component: SearchType},
     {path: '/user/:id', component: User},
+    {path: '/admin/:id', component: Admin},
 ]
 const privareRoutes = [
 ]

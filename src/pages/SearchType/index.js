@@ -4,10 +4,10 @@ import classNames from 'classnames/bind';
 import styles from './SearchType.module.scss';
 import  axios from 'axios';
 
-import Search from '~/components/Layout/components/Search';
-import Pagination from '~/components/Pagination';
-import Genre from '~/components/Genre';
-import { Table } from '~/components/Table';
+import Search from '~/Components/Layout/components/Search';
+import Pagination from '~/Components/Pagination';
+import Genre from '~/Components/Genre';
+import { Table } from '~/Components/Table';
 import { BASE_URL } from '~/hooks/config';
 
 const cx = classNames.bind(styles);

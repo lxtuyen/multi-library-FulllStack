@@ -6,33 +6,38 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 
 import styles from '../DefaultLayout.module.scss';
 import images from '~/assets/images';
+import  axios from 'axios';
 import { Wrapper as PopperWrapper } from '~/components/Layout/Popper';
 import SearchItem from '~/components/SearchItem';
 import { AuthContext } from '~/context/AuthContext';
-
-const nav__link = [
-    {
-        path: '#',
-        display: 'Thể Loại',
-        img: 'fa-solid fa-book',
-    },
-    {
-        path: '#',
-        display: 'Xếp Hạng',
-        img: 'fa-solid fa-crown',
-    },
-    {
-        path: '/search',
-        display: 'Tìm Kiếm',
-        img: 'fa-solid fa-magnifying-glass',
-    },
-];
+import { BASE_URL } from '~/hooks/config';
 
 const cx = classNames.bind(styles);
 
 function Header() {
     const navitage = useNavigate();
-    const { user, dispatch } = useContext(AuthContext);
+    const { user, dispatch, role, token } = useContext(AuthContext);
+    const [obj, setObj] = useState([]);
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [search, setSearch] = useState('');
+
+    useEffect(()=>{
+        const getAllBook = async () =>{
+            setLoading(true)
+            try{
+                const url = `${BASE_URL}/books?search=${search}`;
+                const {data} = await axios.get(url);
+                setObj(data)
+                setLoading(false)
+            }
+            catch(err){
+                setError(err.message)
+                setLoading(false)
+            }
+        }
+        getAllBook();
+    },[search]);
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
@@ -118,10 +123,9 @@ function Header() {
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
-                                <SearchItem />
-                                <SearchItem />
-                                <SearchItem />
-                                <SearchItem />
+                                {obj.data?.map((book)=>(
+                                    <SearchItem books={obj.books?obj.books:[]} error={error} loading={loading} />
+                                ))}
                             </PopperWrapper>
                         </div>
                     )}
@@ -148,7 +152,7 @@ function Header() {
                             </div>
                             <ul>
                                 <li>
-                                    <Link to={`/user/${user.data._id}`}>
+                                    <Link to={`${role === 'admin'?`/admin/${user.data._id}`:`/user/${user.data._id}`}`}>
                                         <i className="fa-regular fa-user"></i>
                                         Hồ sơ
                                     </Link>

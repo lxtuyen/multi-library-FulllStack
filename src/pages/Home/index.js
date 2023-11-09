@@ -4,9 +4,9 @@ import React, { useContext } from 'react';
 import styles from './Home.module.scss';
 
 import images from '~/assets/images';
-import Slider from '~/components/Layout/components/Slider';
-import Carouse from '~/components/Layout/components/Carouse';
-import { FeaturedTable } from '~/components/Table';
+import Slider from '~/Components/Layout/components/Slider';
+import Carouse from '~/Components/Layout/components/Carouse';
+import { FeaturedTable } from '~/Components/Table';
 import { AuthContext } from '~/context/AuthContext';
 import useFetch from '~/hooks/useFetch';
 import { BASE_URL } from '~/hooks/config';

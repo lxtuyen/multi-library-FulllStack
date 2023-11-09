@@ -4,13 +4,15 @@ import images from '~/assets/images'
 
 const cx = classNames.bind(Styles)
 
-function SearchItem() {
+function SearchItem({ books, error, loading}) {
+
+    const { photo, title, author } = books
     return ( 
         <div className={cx('wrapper')}>
-            <img className={cx('img-book')} src={images.sach} alt="img-book" />
+            <img className={cx('img-book')} src={photo} alt="img-book" />
             <div className={cx('info')}>
-                <p className={cx('name')}>sach a</p>
-                <span className={cx('author')}>nguyen van a</span>
+                <p className={cx('name')}>{title}</p>
+                <span className={cx('author')}>{author}</span>
             </div>
         </div>
      );

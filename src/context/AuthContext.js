@@ -53,6 +53,8 @@ export const AuthContextProvider = ({children}) =>{
 
     return <AuthContext.Provider value={{
         user: state.user,
+        role: state.role,
+        token: state.token,
         loading: state.loading,
         error: state.error,
         dispatch

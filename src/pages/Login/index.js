@@ -17,7 +17,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Login = () => {
 
-  const {dispatch} = useContext(AuthContext)
+  const {dispatch} = useContext(AuthContext);
   const navitage = useNavigate();
 
   const emailRef = useRef();
@@ -68,10 +68,14 @@ const Login = () => {
       })
       const result =  await res.json()
       if(!res.ok){
-        alert(result.message)
+        alert(result.message);
       } else{
         dispatch({type:"LOGIN_SUCCESS", payload: result})
-        navitage('/')
+        if(result.role === 'admin'){
+          navitage(`/admin/${result.data?._id}`);
+        } else{
+          navitage('/');
+        }
       }
 
   } catch (err) {

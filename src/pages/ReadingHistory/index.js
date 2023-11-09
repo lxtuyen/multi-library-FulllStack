@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { BASE_URL } from '~/hooks/config';
-import RSideBar from '~/components/RSideBar';
+import RSideBar from '~/Components/RSideBar';
 
 function ReadingHistory() {
     const { id } = useParams();
