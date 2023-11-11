@@ -3,8 +3,8 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
 import styles from './OverViewBook.module.scss';
-import Decription from '~/Components/Layout/components/Decription';
-import DetailBook from '~/Components/DetailBook';
+import Decription from '~/Components/BookLayout/Decription';
+import DetailBook from '~/Components/BookLayout/DetailBook';
 import calculateAvgRatings from '~/utils/avgRatings';
 import Start from '~/components/Layout/components/Start';
 

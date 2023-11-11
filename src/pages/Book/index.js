@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import styles from './Book.module.scss';
 import calculateAvgRatings from '~/utils/avgRatings';
-import OverViewBook from '~/Components/overViewBook';
-import CommentBox from '~/Components/CommentBox';
-import BookVendor from '~/Components/Layout/components/BookVendor';
+import OverViewBook from '~/Components/BookLayout/overViewBook';
+import BookVendor from '~/Components/BookLayout/BookVendor';
 import { BASE_URL } from '~/hooks/config';
 import useFetch from '~/hooks/useFetch';
 import { AuthContext } from '~/context/AuthContext';
+import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 
@@ -22,8 +22,15 @@ function Book() {
     const [isFolloweds, setIsFolloweds] = useState(false);
     const [followId, setFollowId] = useState([]);
     const [followerId, setFollowerId] = useState([]);
-    const idUser = user?.data._id;
+    const commentRef = useRef('');
+    const [comments, setComments] = useState(reviews);
+    const [bookRating, setBookRating] = useState(null);
+
     const navigate = useNavigate();
+
+    const option = { day: 'numeric', month: 'long', year: 'numeric' };
+
+    const idUser = user?.data._id;
     const { avgRatings } = calculateAvgRatings(reviews);
 
     const { data: followed } = useFetch(`${BASE_URL}/users/${idUser}`);
@@ -116,6 +123,74 @@ function Book() {
             alert(error.message);
         }
     };
+    const submitHandler = async (e) => {
+        e.preventDefault();
+
+        const commentText = commentRef.current.value;
+
+        if (!commentText) {
+            alert('Vui lòng nhập bình luận.');
+            return;
+        }
+
+        try {
+            if (!user || user === undefined || user === null) {
+                navigate('/login');
+                return;
+            }
+
+            const reviewObj = {
+                username: user.data.username,
+                reviewText: commentText,
+                rating: bookRating,
+            };
+
+            const res = await fetch(`${BASE_URL}/review/${id}`, {
+                method: 'post',
+                headers: { 'content-type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(reviewObj),
+            });
+
+            const result = await res.json();
+            if (!res.ok) {
+                return alert(result.message);
+            } else {
+                setComments([...comments, result.data]);
+                // Xóa nội dung của ô nhập bình luận
+                commentRef.current.value = '';
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+    const renderComments = () => {
+        if (comments?.length === 0) {
+            return <p>Chưa có bình luận nào.</p>;
+        }
+        console.log(comments);
+        return comments?.map((review, index) => (
+            <div className={cx('review__item')} key={index}>
+                <img src={images.profile_user} alt="" />
+
+                <div className="w-100">
+                    <div className="d-lex align-items-center justify-content-between">
+                        <div>
+                            <h5>{review.username}</h5>
+                            <p>{new Date(review.createdAt).toLocaleDateString('en-US', option)}</p>
+                        </div>
+                        <div className={cx('comment-box__text')}>
+                            <h6>{review.reviewText}</h6>
+                            <span className="d-lex align-items-center">
+                                {review.rating}
+                                <i className="fas fa-star"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ));
+    };
 
     return (
         <>
@@ -127,16 +202,12 @@ function Book() {
                         </div>
                         <div className={cx('read-options__button')}>
                             <button type="button" className="btn btn-primary btn-block">
-                                
-                                    <i className="fa-solid fa-book-open-reader"></i>
-                                    Đọc
-                                
+                                <i className="fa-solid fa-book-open-reader"></i>
+                                Đọc
                             </button>
                             <button type="button" className="btn btn-primary btn-block">
-                                
-                                    <i className="fa-solid fa-book"></i>
-                                    Mượn Sách
-                                
+                                <i className="fa-solid fa-book"></i>
+                                Mượn Sách
                             </button>
                             {isFolloweds ? (
                                 <button onClick={handleDelete} className="btn btn-danger">
@@ -151,35 +222,76 @@ function Book() {
                         </div>
                         <hr />
                         <div className={cx('read-options__modal-link')}>
-                        <div>
-                            <Link className={cx('read-options__icon-link')}>
-                                <img src="https://openlibrary.org/static/images/icons/reviews.svg" alt="" />
-                                <div>Review</div>
-                            </Link>
-                        </div>
-                        <div>
-                            <Link className={cx('read-options__icon-link')}>
-                                <img src="https://openlibrary.org/static/images/icons/notes.svg" alt="" />
-                                <div>Ghi Chú</div>
-                            </Link>
-                        </div>
-                        <div>
-                            <Link className={cx('read-options__icon-link')}>
-                                <img src="https://openlibrary.org/static/images/icons/share.svg" alt="" />
-                                <div>Chia Sẻ</div>
-                            </Link>
+                            <div>
+                                <Link className={cx('read-options__icon-link')}>
+                                    <img src="https://openlibrary.org/static/images/icons/reviews.svg" alt="" />
+                                    <div>Review</div>
+                                </Link>
+                            </div>
+                            <div>
+                                <Link className={cx('read-options__icon-link')}>
+                                    <img src="https://openlibrary.org/static/images/icons/notes.svg" alt="" />
+                                    <div>Ghi Chú</div>
+                                </Link>
+                            </div>
+                            <div>
+                                <Link className={cx('read-options__icon-link')}>
+                                    <img src="https://openlibrary.org/static/images/icons/share.svg" alt="" />
+                                    <div>Chia Sẻ</div>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                    </div>
-    
-                    
+
                     <BookVendor book={books} Loading={loading} error={error} />
                 </div>
                 <div className={cx('wrapper__right')}>
                     <OverViewBook book={books} Loading={loading} error={error} />
-                </div>   
+                </div>
             </div>
-            <CommentBox book={books} Loading={loading} error={error} />
+            <div className={cx('wrapper__comment-box')}>
+                <div className="container">
+                    <div className={cx('comment-box')}>
+                        <h4 className={cx('Comment-box__title')}>Bình Luận ({comments?.length} bình luận)</h4>
+                        <form onSubmit={submitHandler}>
+                            <div className={cx('comment-box__star')}>
+                                <span
+                                    onClick={() => {
+                                        setBookRating(1);
+                                    }}
+                                >
+                                    1<i className="fas fa-star"></i>
+                                </span>
+                                <span onClick={() => setBookRating(2)}>
+                                    2<i className="fas fa-star"></i>
+                                </span>
+                                <span onClick={() => setBookRating(3)}>
+                                    3<i className="fas fa-star"></i>
+                                </span>
+                                <span onClick={() => setBookRating(4)}>
+                                    4<i className="fas fa-star"></i>
+                                </span>
+                                <span onClick={() => setBookRating(5)}>
+                                    5<i className="fas fa-star"></i>
+                                </span>
+                            </div>
+
+                            <div className={cx('form-group')}>
+                                <textarea
+                                    className={cx('form-input')}
+                                    ref={commentRef}
+                                    required=""
+                                    placeholder="Viết bình luận tại đây."
+                                ></textarea>
+                            </div>
+                            <button type="button" className="btn btn-primary btn-block">
+                                Bình Luận
+                            </button>
+                        </form>
+                        <div className={cx('list-group')}>{renderComments()}</div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

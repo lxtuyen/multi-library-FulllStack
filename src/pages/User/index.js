@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './User.module.scss';
-import Sidebar from '~/Components/layout/sidebar';
+import Sidebar from '~/Components/UserLayout/sidebar';
 import { AuthContext } from '~/context/AuthContext';
 
 const cx = classNames.bind(styles);

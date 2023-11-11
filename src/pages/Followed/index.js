@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { BASE_URL } from '~/hooks/config';
-import RSideBar from '~/Components/RSideBar';
+import RSideBar from '~/Components/UserLayout/RSideBar';
 
 function Following() {
     const { id } = useParams();

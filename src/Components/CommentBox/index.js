@@ -105,7 +105,7 @@ function CommentBox({ book }) {
         ));
     };
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper__comment-box')}>
             <div className="container">
                 <div className={cx('comment-box')}>
                     <h4 className={cx('Comment-box__title')}>Bình Luận ({comments?.length} bình luận)</h4>

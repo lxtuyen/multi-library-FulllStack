@@ -4,9 +4,9 @@ import classNames from 'classnames/bind';
 import styles from './SearchType.module.scss';
 import  axios from 'axios';
 
-import Search from '~/Components/Layout/components/Search';
-import Pagination from '~/Components/Pagination';
-import Genre from '~/Components/Genre';
+import Search from '~/Components/SearchLayout/Search';
+import Pagination from '~/Components/Layout/components/Pagination';
+import Genre from '~/Components/SearchLayout/Genre';
 import { Table } from '~/Components/Table';
 import { BASE_URL } from '~/hooks/config';
 import  UseDebounce  from '~/hooks/useDebounce';
