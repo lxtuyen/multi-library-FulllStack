@@ -6,11 +6,12 @@ import styles from './OverViewBook.module.scss';
 import Decription from '~/Components/Layout/components/Decription';
 import DetailBook from '~/Components/DetailBook';
 import calculateAvgRatings from '~/utils/avgRatings';
+import Start from '~/components/Layout/components/Start';
 
 const cx = classNames.bind(styles);
 
 const OverViewBook = ({ book, Loading, error }) => { 
-    const { totalRating, avgRatings } = calculateAvgRatings(book.reviews);
+    const { avgRatings } = calculateAvgRatings(book.reviews);
 
     return (
         <>
@@ -25,67 +26,7 @@ const OverViewBook = ({ book, Loading, error }) => {
                     </h2>
                     <ul class={cx('reader-stats')}>
                         <li>
-                            <div className={cx('reader-stats__rating')}>
-                            {avgRatings <= 1 ?   <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>:null}
-                                {avgRatings > 1 && avgRatings <= 2 ?  <>
-                                    <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                <span className={cx('item__start--gold')}>
-                                <i className="fas fa-star"></i>
-                            </span>
-                                </>:null
-                                }
-                               {avgRatings > 2 && avgRatings <= 3 ?  <>
-                                    <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                <span className={cx('item__start--gold')}>
-                                <i className="fas fa-star"></i>
-                            </span>
-                            <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                </>:null
-                                }
-                                {avgRatings > 3 && avgRatings <= 4 ?  <>
-                                    <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                <span className={cx('item__start--gold')}>
-                                <i className="fas fa-star"></i>
-                            </span>
-                            <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                </>:null
-                                }
-                                {avgRatings > 4 && avgRatings <= 5 ?  <>
-                                    <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                <span className={cx('item__start--gold')}>
-                                <i className="fas fa-star"></i>
-                            </span>
-                            <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                <span className={cx('item__start--gold')}>
-                                    <i className="fas fa-star"></i>
-                                </span>
-                                </>:null
-                                }                                                                
-                            </div>
-                            {avgRatings === 0 ? null : <span>{avgRatings}</span>}
-                            
+                            <Start value={avgRatings} />
                         </li>
                         <li>{book.reviews?.length} Đánh giá</li>
                         <li>{book.wantToRead} Muốn đọc</li>

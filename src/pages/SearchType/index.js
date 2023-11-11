@@ -9,6 +9,8 @@ import Pagination from '~/Components/Pagination';
 import Genre from '~/Components/Genre';
 import { Table } from '~/Components/Table';
 import { BASE_URL } from '~/hooks/config';
+import  UseDebounce  from '~/hooks/useDebounce';
+
 
 const cx = classNames.bind(styles);
 
@@ -19,13 +21,14 @@ function SearchType() {
     const [filterGenre, setFilterGenre] = useState([]);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
+    const debounced = UseDebounce(search, 500)
 
      useEffect(()=>{
         const getAllBook = async () =>{
             setLoading(true)
             try{
                 const url = `${BASE_URL}/books?page=${page}
-                &genre=${filterGenre.toString()}&search=${search}`;
+                &genre=${filterGenre.toString()}&search=${encodeURIComponent(debounced)}`;
                 const {data} = await axios.get(url);
                 setObj(data)
                 setLoading(false)
@@ -36,7 +39,7 @@ function SearchType() {
             }
         }
         getAllBook();
-    },[filterGenre,page,search]);
+    },[filterGenre,page,debounced]);
 
     return (
         <div className={cx('wrapper')}>

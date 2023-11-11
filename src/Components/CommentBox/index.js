@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from './CommentBox.module.scss';
 import images from '~/assets/images';
@@ -12,10 +12,10 @@ const cx = classNames.bind(styles);
 function CommentBox({ book }) {
     const commentRef = useRef('');
     const [comments, setComments] = useState(book?.reviews);
-    const { id } = useParams()
-    useEffect(()=>{
-        setComments(book?.reviews)      
-    },[book?.reviews])
+    const { id } = useParams();
+    useEffect(() => {
+        setComments(book?.reviews);
+    }, [book?.reviews]);
 
     const [bookRating, setBookRating] = useState(null);
     const [rating, setRating] = useState([false, false, false, false, false]);
@@ -25,14 +25,16 @@ function CommentBox({ book }) {
     const option = { day: 'numeric', month: 'long', year: 'numeric' };
 
     const handleClick = (index) => {
-        setRating(rating.map((value, i) => {
-          if (i === index) {
-            return !value;
-          } else {
-            return value;
-          }
-        }));
-      };
+        setRating(
+            rating.map((value, i) => {
+                if (i === index) {
+                    return !value;
+                } else {
+                    return value;
+                }
+            }),
+        );
+    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -61,18 +63,16 @@ function CommentBox({ book }) {
                 headers: { 'content-type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify(reviewObj),
-              });
-              
-              const result = await res.json();
-              if(!res.ok) {
+            });
+
+            const result = await res.json();
+            if (!res.ok) {
                 return alert(result.message);
-            } else{
-                alert('thanh cong')
-                setComments([...comments,result.data])
-                 // Xóa nội dung của ô nhập bình luận
+            } else {
+                setComments([...comments, result.data]);
+                // Xóa nội dung của ô nhập bình luận
                 commentRef.current.value = '';
             }
-
         } catch (error) {
             alert(error.message);
         }
@@ -81,7 +81,7 @@ function CommentBox({ book }) {
         if (comments?.length === 0) {
             return <p>Chưa có bình luận nào.</p>;
         }
-        console.log(comments)
+        console.log(comments);
         return comments?.map((review, index) => (
             <div className={cx('review__item')} key={index}>
                 <img src={images.profile_user} alt="" />
@@ -111,30 +111,32 @@ function CommentBox({ book }) {
                     <h4 className={cx('Comment-box__title')}>Bình Luận ({comments?.length} bình luận)</h4>
                     <form onSubmit={submitHandler}>
                         <div className={cx('comment-box__star')}>
-                            {rating.map((value,index)=>(
+                            {rating.map((value, index) => (
                                 <span
-                                onClick={() => {
-                                    setBookRating(index +1);
-                                    handleClick(index);
-                                }}
-                                key={index}
-                                className={value ? cx("active") : ""}
-                            >
-                                {index+1}<i className="fas fa-star"></i>
-                            </span>
+                                    onClick={() => {
+                                        setBookRating(index + 1);
+                                        handleClick(index);
+                                    }}
+                                    key={index}
+                                    className={value ? cx('active') : ''}
+                                >
+                                    {index + 1}
+                                    <i className="fas fa-star"></i>
+                                </span>
                             ))}
                         </div>
-                        <div className={cx('comment-box__input')}>
-                            <input
-                                type="text"
+
+                        <div className={cx("form-group")}>
+                            <textarea
+                                className={cx("form-input")}
                                 ref={commentRef}
-                                className={cx('comment-input')}
+                                required=""
                                 placeholder="Viết bình luận tại đây."
-                            />
-                            <button className="btn primary__btn " type="submit">
-                                Bình Luận
-                            </button>
+                            ></textarea>
                         </div>
+                        <button type="button" className="btn btn-primary btn-block">
+                            Bình Luận
+                        </button>
                     </form>
                     <div className={cx('list-group')}>{renderComments()}</div>
                 </div>
@@ -165,3 +167,15 @@ export default CommentBox;
                                 5<i className="fas fa-star"></i>
                             </span>
  */
+/*<div className={cx('comment-box__input')}>
+                            <input
+                                type="text"
+                                ref={commentRef}
+                                className={cx('comment-input')}
+                                placeholder="Viết bình luận tại đây."
+                            />
+                            <button className="btn primary__btn " type="submit">
+                                Bình Luận
+                            </button>
+                            
+                        </div>*/

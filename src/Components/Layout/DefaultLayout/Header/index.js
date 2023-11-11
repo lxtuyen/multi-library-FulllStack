@@ -1,56 +1,58 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import classNames from 'classnames/bind';
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
+import HeadlessTippy from '@tippyjs/react/headless';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 
 import styles from '../DefaultLayout.module.scss';
 import images from '~/assets/images';
-import  axios from 'axios';
+import axios from 'axios';
 import { Wrapper as PopperWrapper } from '~/components/Layout/Popper';
 import SearchItem from '~/components/SearchItem';
 import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
+import  UseDebounce  from '~/hooks/useDebounce';
 
 const cx = classNames.bind(styles);
 
 function Header() {
     const navitage = useNavigate();
-    const { user, dispatch, role, token } = useContext(AuthContext);
+    const { user, dispatch, role } = useContext(AuthContext);
     const [obj, setObj] = useState([]);
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [search, setSearch] = useState('');
-
-    useEffect(()=>{
-        const getAllBook = async () =>{
-            setLoading(true)
-            try{
-                const url = `${BASE_URL}/books?search=${search}`;
-                const {data} = await axios.get(url);
-                setObj(data)
-                setLoading(false)
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
+    const [showResult, setShowResult] = useState(true);
+    const inputRef = useRef();
+    const debounced = UseDebounce(searchValue, 500)
+    
+    useEffect(() => {
+        const getAllBook = async () => {
+            if (!debounced?.trim()) {
+                setObj([]);
+                return;
             }
-            catch(err){
-                setError(err.message)
-                setLoading(false)
+            setLoading(true);
+            try {
+                const url = `${BASE_URL}/books?search=${encodeURIComponent(debounced)}&limit=4`;
+                const { data } = await axios.get(url);
+                setObj(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
             }
-        }
+        };
         getAllBook();
-    },[search]);
+    }, [debounced]);
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
         navitage('/');
     };
 
-    const [searchResult, setSearchResult] = useState([]);
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 0);
-    }, []);
-
+    const handleHideResult = () => {
+        setShowResult(false);
+    };
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -117,33 +119,56 @@ function Header() {
                         </li>
                     </ul>
                 </div>
-                <Tippy
-                    inertia
-                    visible={searchResult.length > 0}
+                <HeadlessTippy
+                    interactive
+                    visible={showResult}
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
-                                {obj.data?.map((book)=>(
-                                    <SearchItem books={obj.books?obj.books:[]} error={error} loading={loading} />
+                                {obj.books?.map((book) => (
+                                    <SearchItem books={book ? book : []} />
                                 ))}
                             </PopperWrapper>
                         </div>
                     )}
                     content="Tìm Kiếm"
+                    onClickOutside={handleHideResult}
                 >
                     <div className={cx('search')}>
-                        <input placeholder="Search Books and author" spellCheck={false} />
-                        <buttton className={cx('clear')}>
-                            <i className="fa-solid fa-circle-xmark"></i>
-                        </buttton>
-                        <div className={cx('loading')}>
-                            <i className="fa-solid fa-spinner"></i>
-                        </div>
+                        <input
+                            placeholder="Search Books and author"
+                            spellCheck={false}
+                            value={searchValue}
+                            ref={inputRef}
+                            onFocus={() => {
+                                setShowResult(true);
+                            }}
+                            onChange={(e) => {
+                                setSearchValue(e.target.value);
+                            }}
+                        />
+                        {!!searchValue && !loading && (
+                            <buttton
+                                className={cx('clear')}
+                                onClick={() => {
+                                    setSearchValue('');
+                                    inputRef.current.focus();
+                                    setObj([]);
+                                }}
+                            >
+                                <i className="fa-solid fa-circle-xmark"></i>
+                            </buttton>
+                        )}
+                        {loading && (
+                            <div className={cx('loading')}>
+                                <i className="fa-solid fa-spinner"></i>
+                            </div>
+                        )}
                         <buttton className={cx('search-btn')}>
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </buttton>
                     </div>
-                </Tippy>
+                </HeadlessTippy>
                 <div className={cx('action')}>
                     {user ? (
                         <div className={cx('profile-dropdown-btn')}>
@@ -152,7 +177,11 @@ function Header() {
                             </div>
                             <ul>
                                 <li>
-                                    <Link to={`${role === 'admin'?`/admin/${user.data._id}`:`/user/${user.data._id}`}`}>
+                                    <Link
+                                        to={`${
+                                            role === 'admin' ? `/admin/${user.data._id}` : `/user/${user.data._id}`
+                                        }`}
+                                    >
                                         <i className="fa-regular fa-user"></i>
                                         Hồ sơ
                                     </Link>
