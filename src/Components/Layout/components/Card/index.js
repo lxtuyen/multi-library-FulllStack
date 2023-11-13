@@ -20,17 +20,17 @@ function Card({ items, bookIds, followedId }) {
     const bookIdsArray = Array.from(bookIds.toString().split(','));
     const isFollowed = bookIdsArray.includes(_id);
     const followedIds = Array.from(followId.toString().split(','));
-            
+        
     const foundBookIds = followedIds?.filter((bookId) => {
-                return followerId?.includes(bookId);  
-        });
-        
-        useEffect(()=>{
-        
-            setIsFolloweds(isFollowed)   
-            setFollowId(followedId) 
-            setFollowerId(follower) 
-        },[isFollowed, followedId, follower])
+        return followerId?.includes(bookId);  
+});
+
+useEffect(()=>{
+
+    setIsFolloweds(isFollowed)   
+    setFollowId(followedId) 
+    setFollowerId(follower) 
+},[isFollowed, followedId, follower])
     const handleDelete = async (e) => {
         e.preventDefault();
         try {
@@ -61,7 +61,7 @@ function Card({ items, bookIds, followedId }) {
               // Hiển thị thông báo
                 alert('Xóa thành công');
             }
-    
+
             
         } catch (error) {
             alert(error.message);

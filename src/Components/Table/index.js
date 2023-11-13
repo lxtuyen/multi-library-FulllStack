@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Table.module.scss';
@@ -10,22 +10,19 @@ import { AuthContext } from '~/context/AuthContext';
 const cx = classNames.bind(styles);
 
 export const Table = ({ books }) => {
-
-    console.log(books)
     const { user } = useContext(AuthContext);
-    const id = user?.data._id
+    const id = user._id
 
     const { data: followed } = useFetch(`${BASE_URL}/users/${id}`);
     const bookId = [followed?.map((book) => book.bookId)];
     const followedId = [followed?.map((book) => book._id)];
-
     return (
         <div className={'container'}>
             <div className={'row'}>
-               {!books.length ? <h4>loading....</h4> :
+               {!books.length ? <h4>not found</h4> :
                     books?.map((book) => (
                         <div className={cx('column')} key={book._id}>
-                            <Card items={book}  bookIds={bookId} followedId={followedId} />
+<Card items={book}  bookIds={bookId} followedId={followedId} />
                         </div>
                     ))}
             </div>
