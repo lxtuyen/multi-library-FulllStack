@@ -24,7 +24,7 @@ function Header() {
     const [showResult, setShowResult] = useState(true);
     const inputRef = useRef();
     const debounced = UseDebounce(searchValue, 500)
-    
+    console.log(role);
     useEffect(() => {
         const getAllBook = async () => {
             if (!debounced?.trim()) {

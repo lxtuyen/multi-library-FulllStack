@@ -22,5 +22,6 @@ const publicRoutes = [
     {path: '/admin/:id', component: Admin},
 ]
 const privareRoutes = [
+    {path: '/', component: Admin},
 ]
 export {publicRoutes, privareRoutes}
