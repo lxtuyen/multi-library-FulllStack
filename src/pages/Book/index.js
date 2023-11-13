@@ -4,8 +4,8 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import styles from './Book.module.scss';
 import calculateAvgRatings from '~/utils/avgRatings';
-import OverViewBook from '~/Components/BookLayout/overViewBook';
-import BookVendor from '~/Components/BookLayout/BookVendor';
+import OverViewBook from '~/Components/BookLayout/OverViewBook';
+import BookVendor from '~/Components/BookLayout/Bookvendor';
 import { BASE_URL } from '~/hooks/config';
 import useFetch from '~/hooks/useFetch';
 import { AuthContext } from '~/context/AuthContext';

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
 
 import styles from './RSideBar.module.scss';
-import Sidebar from '~/components/UserLayout/sidebar';
+import Sidebar from '~/components/UserLayout/Sidebar';
 import Pagination from '~/Components/Layout/components/Pagination';
 import Start from '~/components/Layout/components/Start';
 import { AuthContext } from '~/context/AuthContext';
