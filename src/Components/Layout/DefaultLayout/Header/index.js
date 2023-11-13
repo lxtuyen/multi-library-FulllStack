@@ -23,14 +23,14 @@ function Header() {
     const [searchValue, setSearchValue] = useState('');
     const [showResult, setShowResult] = useState(true);
     const inputRef = useRef();
-    const debounced = UseDebounce(searchValue, 500);
+    const debounced = UseDebounce(searchValue, 500)
     const [ avatar, setAvatar ] = useState()
 
     useEffect(()=>{
         setAvatar(user?.data.avatar)
     },[user?.data.avatar])
 
-
+    
     useEffect(() => {
         const getAllBook = async () => {
             if (!debounced?.trim()) {
