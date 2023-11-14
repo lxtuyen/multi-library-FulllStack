@@ -12,7 +12,7 @@ function App() {
         <Router>
         <div className="App">
             <Routes>
-                {user.role === 'admin' ? privareRoutes.map((route, index) => {
+                {user?.role === 'admin' ? privareRoutes.map((route, index) => {
                     const Page = route.component;
                     let Layout = AdminDefaultLayout;
 
@@ -51,7 +51,6 @@ function App() {
                             element={
                                 <Layout>
                                     <Page />
-                                    
                                 </Layout>
                             }
                         />

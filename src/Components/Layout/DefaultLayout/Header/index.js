@@ -24,7 +24,6 @@ function Header() {
     const [showResult, setShowResult] = useState(true);
     const inputRef = useRef();
     const debounced = UseDebounce(searchValue, 500)
-    console.log(role);
     useEffect(() => {
         const getAllBook = async () => {
             if (!debounced?.trim()) {
@@ -178,9 +177,9 @@ function Header() {
                             <ul>
                                 <li>
                                     <Link
-                                        to={`${
-                                            role === 'admin' ? `/admin/${user.data._id}` : `/user/${user.data._id}`
-                                        }`}
+                                        to={
+                                            `/user/${user.data._id}`
+                                        }
                                     >
                                         <i className="fa-regular fa-user"></i>
                                         Hồ sơ

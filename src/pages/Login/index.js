@@ -71,11 +71,7 @@ const Login = () => {
         alert(result.message);
       } else{
         dispatch({type:"LOGIN_SUCCESS", payload: result})
-        if(result.role === 'admin'){
-          navitage(`/admin/${result.data?._id}`);
-        } else{
-          navitage('/');
-        }
+        navitage('/'); 
       }
 
   } catch (err) {
