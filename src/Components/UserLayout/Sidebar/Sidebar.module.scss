@@ -1,7 +1,9 @@
 .profile-sidebar {  
     padding: 20px 0 10px 0;  
     }
-     
+     .profile-userpic{
+      width: 300px;
+     }
     .profile-userpic img {  
     float: none;  
     margin: 0 65px;  
@@ -36,6 +38,15 @@
         padding: 6px 15px;  
         margin-right: 5px;
       }
+      input{
+        display: none;
+      }
+      label {
+        font-weight: 600;
+        padding-bottom: 0px;
+        line-height: 1.5rem;
+        font-size: 1.1rem;
+    }
     }
 
     .profile-usermenu {  

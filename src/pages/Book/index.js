@@ -15,24 +15,25 @@ const cx = classNames.bind(styles);
 
 function Book() {
     const { id } = useParams();
-    const { data: books, loading, error } = useFetch(`${BASE_URL}/books/${id}`);
-    const { _id, title, author, follower, language, reviews, photo } = books;
-
+    const option = { day: 'numeric', month: 'long', year: 'numeric' };
     const { user } = useContext(AuthContext);
     const [isFolloweds, setIsFolloweds] = useState(false);
     const [followId, setFollowId] = useState([]);
     const [followerId, setFollowerId] = useState([]);
     const commentRef = useRef('');
+
+    const { data: books, loading, error } = useFetch(`${BASE_URL}/books/${id}`);
+    const { _id, title, author, follower, language, reviews, photo } = books;
+
+
     const [comments, setComments] = useState(reviews);
-    const [bookRating, setBookRating] = useState(null);
+    const [bookRating, setBookRating] = useState(0);
 
     const navigate = useNavigate();
 
-    const option = { day: 'numeric', month: 'long', year: 'numeric' };
-
-    const idUser = user?.data._id;
+    const idUser = user._id;
     const { avgRatings } = calculateAvgRatings(reviews);
-
+    //kiểm tra xem có theo dõi chưa
     const { data: followed } = useFetch(`${BASE_URL}/users/${idUser}`);
 
     const bookIds = [followed?.map((book) => book.bookId)];
@@ -40,17 +41,16 @@ function Book() {
     const bookIdsArray = Array.from(bookIds.toString().split(','));
     const isFollowed = bookIdsArray.includes(_id);
     const followedIds = Array.from(followId.toString().split(','));
-
     const foundBookIds = followedIds?.filter((bookId) => {
         return followerId?.includes(bookId);
     });
-
     useEffect(() => {
         const followedId = [followed?.map((book) => book._id)];
         setIsFolloweds(isFollowed);
         setFollowId(followedId);
         setFollowerId(follower);
     }, [isFollowed, follower, followed]);
+    // xử lý khi người dùng xóa
     const handleDelete = async (e) => {
         e.preventDefault();
         try {
@@ -85,6 +85,7 @@ function Book() {
             alert(error.message);
         }
     };
+    // xử lý khi người dùng nhấp vào nút theo dõi
     const handleClick = async (e) => {
         e.preventDefault();
         try {
@@ -123,6 +124,7 @@ function Book() {
             alert(error.message);
         }
     };
+    // xử lý bình luận
     const submitHandler = async (e) => {
         e.preventDefault();
 
@@ -163,6 +165,10 @@ function Book() {
         } catch (error) {
             alert(error.message);
         }
+    };
+
+    const handleStarClick = (rating) => {
+      setBookRating(rating === bookRating ? 0 : rating);
     };
     const renderComments = () => {
         if (comments?.length === 0) {
@@ -255,25 +261,15 @@ function Book() {
                         <h4 className={cx('Comment-box__title')}>Bình Luận ({comments?.length} bình luận)</h4>
                         <form onSubmit={submitHandler}>
                             <div className={cx('comment-box__star')}>
-                                <span
-                                    onClick={() => {
-                                        setBookRating(1);
-                                    }}
-                                >
-                                    1<i className="fas fa-star"></i>
-                                </span>
-                                <span onClick={() => setBookRating(2)}>
-                                    2<i className="fas fa-star"></i>
-                                </span>
-                                <span onClick={() => setBookRating(3)}>
-                                    3<i className="fas fa-star"></i>
-                                </span>
-                                <span onClick={() => setBookRating(4)}>
-                                    4<i className="fas fa-star"></i>
-                                </span>
-                                <span onClick={() => setBookRating(5)}>
-                                    5<i className="fas fa-star"></i>
-                                </span>
+                                {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          onClick={() => handleStarClick(star)}
+          style={{ color: star <= bookRating ? 'gold' : 'gray', cursor: 'pointer' }}
+        >
+          {star}<i className="fas fa-star"></i>
+        </span>
+      ))}
                             </div>
 
                             <div className={cx('form-group')}>

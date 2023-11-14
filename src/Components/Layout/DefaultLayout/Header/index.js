@@ -10,7 +10,7 @@ import { Wrapper as PopperWrapper } from '~/Components/Layout/Popper';
 import SearchItem from '~/Components/Layout/components/SearchItem';
 import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
-import  UseDebounce  from '~/hooks/useDebounce';
+import UseDebounce from '~/hooks/useDebounce';
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +24,12 @@ function Header() {
     const [showResult, setShowResult] = useState(true);
     const inputRef = useRef();
     const debounced = UseDebounce(searchValue, 500)
+    const [ avatar, setAvatar ] = useState()
+
+    useEffect(()=>{
+        setAvatar(user?.data.avatar)
+    },[user?.data.avatar])
+    
     useEffect(() => {
         const getAllBook = async () => {
             if (!debounced?.trim()) {
@@ -172,14 +178,18 @@ function Header() {
                     {user ? (
                         <div className={cx('profile-dropdown-btn')}>
                             <div className={cx('profile-img')}>
-                                <img src={images.profile_user} alt="" />
+                                {avatar ? (
+                                    <img src={avatar} alt="Thông tin cá nhân" />
+                                ) : (
+                                    <img src={images.profile_user} alt="Thông tin cá nhân" />
+                                )}
                             </div>
                             <ul>
                                 <li>
                                     <Link
-                                        to={
-                                            `/user/${user.data._id}`
-                                        }
+                                        to={`${
+                                            role === 'admin' ? `/admin/${user.data._id}` : `/user/${user.data._id}`
+                                        }`}
                                     >
                                         <i className="fa-regular fa-user"></i>
                                         Hồ sơ
