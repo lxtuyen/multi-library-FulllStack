@@ -29,7 +29,6 @@ function Header() {
     useEffect(()=>{
         setAvatar(user?.data.avatar)
     },[user?.data.avatar])
-
     
     useEffect(() => {
         const getAllBook = async () => {
@@ -191,7 +190,7 @@ function Header() {
                                 <li>
                                     <Link
                                         to={`${
-                                            role === 'admin' ? `/admin/${user?.data._id}` : `/user/${user?.data._id}`
+                                            role === 'admin' ? `/admin/${user.data._id}` : `/user/${user.data._id}`
                                         }`}
                                     >
                                         <i className="fa-regular fa-user"></i>
