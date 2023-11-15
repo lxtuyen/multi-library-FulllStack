@@ -6,6 +6,7 @@ import styles from './Card.module.scss';
 import calculateAvgRatings from '~/utils/avgRatings';
 import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
+import {  toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 function Card({ items, bookIds, followedId }) {
@@ -59,12 +60,12 @@ useEffect(()=>{
                 setFollowId(followId.filter(id => !foundBookIds.includes(id)))
                 setFollowerId(followerId.filter(id => id !== _id)) 
               // Hiển thị thông báo
-                alert('Xóa thành công');
+              toast.success('Xóa thành công')
             }
 
             
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message)
         }
     };
     const handleClick = async (e) => {
@@ -96,13 +97,13 @@ useEffect(()=>{
             if (!res.ok) {
                 return alert(result.message);
             } else {
-                alert('thanh cong');
+                toast.success('Theo dõi thành công')
                 setIsFolloweds(true)
                 setFollowId([...followId, result.savedFollowed._id])
                 setFollowerId([...followerId, result.savedFollowed.bookId]) 
             }
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message)
         }
     };
     return (
@@ -131,9 +132,9 @@ useEffect(()=>{
                     <span>Thể Loại:</span>
                     {genre.map((genre, index) => (
                         <h5 key={index}>
-                            {genre} {index !== genre.length - 1 && ' '}
+                            {genre} {index !== genre.length - 1 && ','}
                         </h5>
-                    ))}
+                    ))}...
                 </div>
                 <div className={cx('card-bottom d-flex align-items-center justify-content-between mt-3')}>
                     <div className={cx('home-product-item')}>

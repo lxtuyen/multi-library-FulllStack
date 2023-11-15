@@ -29,7 +29,7 @@ const OverViewBook = ({ book, Loading, error }) => {
                             <Start value={avgRatings} />
                         </li>
                         <li>{book.reviews?.length} Đánh giá</li>
-                        <li>{book.wantToRead} Muốn đọc</li>
+                        <li>{book.followed?.length ? book.followed?.length : 0} Đang theo dõi</li>
                         <li> {book.currentlyReading} Hiện đang đọc</li>
                         <li>{book.haveRead} Đã đọc</li>
                     </ul>

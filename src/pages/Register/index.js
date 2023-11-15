@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { MDBContainer } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
+import SyncLoader from 'react-spinners/SyncLoader';
+import {  toast } from 'react-toastify';
 
 import styles from '../Login/Login.module.scss';
 import { AuthContext } from '~/context/AuthContext';
@@ -15,6 +17,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const Register = () => {
     const { dispatch } = useContext(AuthContext);
     const navitage = useNavigate();
+
+    const [loading , setLoading] = useState(false);
 
     const usernameRef = useRef();
 
@@ -63,6 +67,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
             const res = await fetch(`${BASE_URL}/auth/register`, {
                 method: 'post',
@@ -73,10 +78,12 @@ const Register = () => {
             if (!res.ok) {
                 alert(result.message);
             } 
+            setLoading(false)
+            toast.success('Đăng ký thành công')
             dispatch({ type: 'REGISTER_SUCCESS' });
             navitage('/login');
         } catch (err) {
-            alert(err.message);
+            toast.error('Đăng ký thất bại')
         }
     };
     return (
@@ -228,7 +235,7 @@ const Register = () => {
                         </Link>
                     </p>
                     <button disabled={!validName || !validPwd || !validMatch ? true : false } type="submit" className="btn">
-                        Đăng ký
+                        {loading ? <SyncLoader size={15} color="#36d7b7" /> : "Đăng ký"}
                     </button>
                 </form>
             </MDBContainer>

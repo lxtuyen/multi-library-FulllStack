@@ -6,6 +6,8 @@ import {
 from 'mdb-react-ui-kit';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
+import {  toast } from 'react-toastify';
+import SyncLoader from 'react-spinners/SyncLoader'
 
 import styles from './Login.module.scss';
 import { AuthContext } from '~/context/AuthContext';
@@ -32,6 +34,7 @@ const Login = () => {
   const [emailFocus, setEmailFocus] = useState(false);
 
   const [errMsg , setErrMsg] = useState('');
+  const [loading , setLoading] = useState(false);
 
   useEffect(()=>{
     emailRef.current.focus();
@@ -57,6 +60,7 @@ const Login = () => {
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
+    setLoading(true)
 
     dispatch({type: 'LOGIN START'})
     try {
@@ -68,8 +72,10 @@ const Login = () => {
       })
       const result =  await res.json()
       if(!res.ok){
-        alert(result.message);
+        return toast.error(result.message)
       } else{
+        setLoading(false)
+        toast.success('Đăng nhập thành công')
         dispatch({type:"LOGIN_SUCCESS", payload: result})
         if(result.role === 'admin'){
           navitage(`/admin/${result.data?._id}`);
@@ -79,6 +85,7 @@ const Login = () => {
       }
 
   } catch (err) {
+      toast.error('Đăng nhập thất bại')
       errRef.current.focus();
       dispatch({type:"LOGIN_FAILURE", payload: err.message})
   }
@@ -162,7 +169,7 @@ const Login = () => {
         <p className='ms-5'>Chưa có tài khoản?<Link to="/register" className="link-info">Đăng Ký</Link></p>
       </div>
   
-      <button className="btn" type="submit">Đăng Nhập</button>
+      <button className="btn" type="submit">{loading ?<SyncLoader size={15} color="#36d7b7" /> : 'Đăng Nhập'}</button>
     </form>
 </MDBContainer>
      </div>

@@ -1,5 +1,6 @@
-import React, { useContext, useEffect,useState } from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames/bind';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 import styles from './Table.module.scss';
 import Card from '~/components/Layout/components/Card';
@@ -9,9 +10,9 @@ import { AuthContext } from '~/context/AuthContext';
 
 const cx = classNames.bind(styles);
 
-export const Table = ({ books }) => {
+export const Table = ({ books, error, loading }) => {
     const { user } = useContext(AuthContext);
-    const id = user._id
+    const id = user.data._id;
 
     const { data: followed } = useFetch(`${BASE_URL}/users/${id}`);
     const bookId = [followed?.map((book) => book.bookId)];
@@ -19,10 +20,14 @@ export const Table = ({ books }) => {
     return (
         <div className={'container'}>
             <div className={'row'}>
-               {!books.length ? <h4>not found</h4> :
+                {loading && <SyncLoader size={30} color="#36d7b7" margin="30px"  />}
+                {error && <h4>Error!!!</h4>}
+                {!loading && !error && !books.length && <h4>not found</h4>}
+                {!loading &&
+                    !error &&
                     books?.map((book) => (
                         <div className={cx('column')} key={book._id}>
-<Card items={book}  bookIds={bookId} followedId={followedId} />
+                            <Card items={book} bookIds={bookId} followedId={followedId} />
                         </div>
                     ))}
             </div>
@@ -30,20 +35,20 @@ export const Table = ({ books }) => {
     );
 };
 export const FeaturedTable = ({ followed }) => {
-    const { data: featuredBook, loading , error } = useFetch(`${BASE_URL}/books/search/getFeaturedBook`);
+    const { data: featuredBook, loading, error } = useFetch(`${BASE_URL}/books/search/getFeaturedBook`);
     const bookId = [followed?.map((book) => book.bookId)];
     const followedId = [followed?.map((book) => book._id)];
-    
+
     return (
         <div className={'container'}>
             <div className={'row'}>
-                {loading && <h4>Loading............</h4>}
+                {loading && <SyncLoader size={15} color="#36d7b7" margin="30px" />}
                 {error && <h4>Error!!!</h4>}
                 {!loading &&
                     !error &&
-                    featuredBook.map((item,index) => (
+                    featuredBook.map((item, index) => (
                         <div className={cx('column')} key={index}>
-                            <Card items={item}  bookIds={bookId} followedId={followedId} />
+                            <Card items={item} bookIds={bookId} followedId={followedId} />
                         </div>
                     ))}
             </div>

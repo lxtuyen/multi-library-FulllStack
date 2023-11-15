@@ -1,9 +1,11 @@
 import classNames from 'classnames/bind';
 
 import styles from './Carouse.module.scss';
-
 const cx = classNames.bind(styles);
-function Carouse({ image, title, text }) {
+function Carousel({ carousel }) {
+    const { image, title, text } = carousel
+
+
     return (
         <div className={cx('card')}>
             <img src={image} alt="..." />
@@ -15,4 +17,4 @@ function Carouse({ image, title, text }) {
     );
 }
 
-export default Carouse;
+export default Carousel;

@@ -10,6 +10,7 @@ import { BASE_URL } from '~/hooks/config';
 import useFetch from '~/hooks/useFetch';
 import { AuthContext } from '~/context/AuthContext';
 import images from '~/assets/images';
+import {  toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +25,6 @@ function Book() {
 
     const { data: books, loading, error } = useFetch(`${BASE_URL}/books/${id}`);
     const { _id, title, author, follower, language, reviews, photo } = books;
-
 
     const [comments, setComments] = useState(reviews);
     const [bookRating, setBookRating] = useState(0);
@@ -79,10 +79,10 @@ function Book() {
                 setFollowId(followId.filter((id) => !foundBookIds.includes(id)));
                 setFollowerId(followerId.filter((id) => id !== _id));
                 // Hiển thị thông báo
-                alert('Xóa thành công');
+                toast.success('Thành công')
             }
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message)
         }
     };
     // xử lý khi người dùng nhấp vào nút theo dõi
@@ -90,6 +90,7 @@ function Book() {
         e.preventDefault();
         try {
             if (!user || user === undefined || user === null) {
+                toast.warn('Vui lòng đăng nhập.')
                 navigate('/login');
                 return;
             }
@@ -113,15 +114,15 @@ function Book() {
 
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return toast.error(result.message)
             } else {
-                alert('thanh cong');
+                toast.success('Thành công')
                 setIsFolloweds(true);
                 setFollowId([...followId, result.savedFollowed._id]);
                 setFollowerId([...followerId, result.savedFollowed.bookId]);
             }
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message)
         }
     };
     // xử lý bình luận
@@ -131,12 +132,13 @@ function Book() {
         const commentText = commentRef.current.value;
 
         if (!commentText) {
-            alert('Vui lòng nhập bình luận.');
+            toast.warn('Vui lòng nhập bình luận.')
             return;
         }
 
         try {
             if (!user || user === undefined || user === null) {
+                toast.warn('Vui lòng đăng nhập.')
                 navigate('/login');
                 return;
             }
@@ -156,19 +158,20 @@ function Book() {
 
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return toast.error(result.message)
             } else {
+                toast.success('Thành công')
                 setComments([...comments, result.data]);
                 // Xóa nội dung của ô nhập bình luận
                 commentRef.current.value = '';
             }
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message)
         }
     };
 
     const handleStarClick = (rating) => {
-      setBookRating(rating === bookRating ? 0 : rating);
+        setBookRating(rating === bookRating ? 0 : rating);
     };
     const renderComments = () => {
         if (comments?.length === 0) {
@@ -258,18 +261,19 @@ function Book() {
             <div className={cx('wrapper__comment-box')}>
                 <div className="container">
                     <div className={cx('comment-box')}>
-                        <h4 className={cx('Comment-box__title')}>Bình Luận ({comments?.length} bình luận)</h4>
+                        <h4 className={cx('Comment-box__title')}>Bình Luận ({comments?.length ?comments?.length : 0} bình luận)</h4>
                         <form onSubmit={submitHandler}>
                             <div className={cx('comment-box__star')}>
                                 {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={star}
-          onClick={() => handleStarClick(star)}
-          style={{ color: star <= bookRating ? 'gold' : 'gray', cursor: 'pointer' }}
-        >
-          {star}<i className="fas fa-star"></i>
-        </span>
-      ))}
+                                    <span
+                                        key={star}
+                                        onClick={() => handleStarClick(star)}
+                                        style={{ color: star <= bookRating ? 'gold' : 'gray', cursor: 'pointer' }}
+                                    >
+                                        {star}
+                                        <i className="fas fa-star"></i>
+                                    </span>
+                                ))}
                             </div>
 
                             <div className={cx('form-group')}>

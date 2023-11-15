@@ -58,16 +58,11 @@ function User() {
                     payload: {
                         data: {
                             avatar: previewURL,
-                            username: result.data.username,
-                            email: result.data.email,
-                            password: result.data.password,
                             phoneNumber: '',
                             address: '',
                         },
                     },
                 });
-                console.log(user);
-                console.log(previewURL);
             }
         } catch (error) {
             console.error('Update error:', error);
@@ -92,7 +87,8 @@ function User() {
                                             type="text"
                                             className="form-control"
                                             placeholder="first name"
-                                            value={user?.username}
+                                            value={user?.data.username}
+                                            disabled
                                         />
                                     </div>
                                 </div>
@@ -103,7 +99,6 @@ function User() {
                                             type="text"
                                             className="form-control"
                                             placeholder="enter phone number"
-                                            value=""
                                         />
                                     </div>
                                     <div className="col-md-12">
@@ -112,7 +107,8 @@ function User() {
                                             type="password"
                                             className="form-control"
                                             placeholder="enter your password"
-                                            value={user?.password}
+                                            value={user?.data.password}
+                                            disabled
                                         />
                                     </div>
                                     <div className="col-md-12">
@@ -121,7 +117,8 @@ function User() {
                                             type="text"
                                             className="form-control"
                                             placeholder="enter email id"
-                                            value={user?.email}
+                                            value={user?.data.email}
+                                            disabled
                                         />
                                     </div>
                                     <div className="col-md-12">
@@ -141,7 +138,6 @@ function User() {
                                             type="text"
                                             className="form-control"
                                             placeholder="enter address"
-                                            value=""
                                         />
                                     </div>
                                 </div>

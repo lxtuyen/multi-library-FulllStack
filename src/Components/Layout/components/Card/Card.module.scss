@@ -33,6 +33,10 @@
 }
 .card__img{
     border-radius: 5px 5px 0 0 ;
+    img:hover{
+        transform: scale(1.02);
+        transition: all ease 0.8s;
+    }
 }
 .book__rating{
     height: 20px;
@@ -48,6 +52,7 @@
     }
 }
 .book__author{
+    margin-top: 2px;
     display: flex;
     align-items: center;
     font-weight: 500;
@@ -55,11 +60,11 @@
     font-size: 13px;
     h5{
         display: flex;
-    align-items: center;
-    font-weight: 500;
-    color: #777;
-    font-size: 13px;
-    margin-bottom: 0;
+        align-items: center;
+        font-weight: 500;
+        color: #777;
+        font-size: 13px;
+        margin-bottom: 1px;
     }
     h5:hover{
         color: #555;
@@ -86,10 +91,9 @@
     }
 }
 .genre_container{
-    span,
+    display: flex;
     h5{
-        margin: 5px 0 0 0;
-        display: flex;
+        margin: 5px 0 0 5px;
         justify-content: center;
         font-weight: 500;
         font-size: 13px;
@@ -99,6 +103,9 @@
         color: #555;
     }
     span{
+        justify-content: center;
+        font-weight: 500;
+        font-size: 13px;
         color: #555;
     }
 }

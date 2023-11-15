@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
+import {  toast } from 'react-toastify';
+import SyncLoader from 'react-spinners/SyncLoader'
 
 import styles from './RSideBar.module.scss';
 import Sidebar from '~/components/UserLayout/Sidebar';
@@ -21,8 +23,6 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
     }, [obj, type, value]);
     const handleDelete = async (e, _id, bookId) => {
         e.preventDefault();
-        const confirm = window.confirm('Bạn có chắc chắn muốn xóa bản ghi này không?');
-        if (confirm) {
             try {
                 const deleteObj = {
                     userId: user.data._id,
@@ -38,13 +38,12 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
                 if (!res.ok) {
                     return alert(result.message);
                 } else {
-                    alert('Xóa thành công');
+                    toast.success('Xóa thành công')
                     setStatus((prevStatus) => prevStatus.filter((id) => id._id.toString() !== _id));
                 }
             } catch (error) {
-                alert(error.message);
+                toast.error('Xóa thất bại')
             }
-        }
     };
     return (
         <div className={cx('wrapper')}>
@@ -63,7 +62,7 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
                                         <th className={cx('thead-post-on')}>Thời gian cập nhật</th>
                                     </tr>
                                 </thead>
-                                {loading && <h4>Loading............</h4>}
+                                {loading && <SyncLoader size={15} color="#36d7b7" />}
                                 {error && <h4>Error!!!</h4>}
                                 {!loading && !error && !status && (
                                     <tbody>
