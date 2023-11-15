@@ -10,6 +10,7 @@ import authRoute from './routes/auth.js';
 import reviewRoute from './routes/reviews.js';
 import followedRoute from './routes/followed.js';
 import historyRoute from './routes/history.js';
+import adminRoute from './routes/admin.js';
 
 dotenv.config();
 const app = express();
@@ -44,6 +45,7 @@ app.use('/api/v1/users', usersControlle)
 app.use('/api/v1/review', reviewRoute)
 app.use('/api/v1/followed', followedRoute)
 app.use('/api/v1/history', historyRoute)
+app.use('/api/v1/admin', adminRoute)
 
 app.listen(port, ()=>{ 
     connect();
