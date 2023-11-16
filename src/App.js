@@ -2,7 +2,7 @@ import { Fragment, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
 import DefaultLayout from '~/Components/Layout/DefaultLayout';
-import AdminDefaultLayout from '~/Components/Layout/DefaultLayout/Admin';
+import AdminDefaultLayout from '~/admin/Components//DefaultLayout';
 import { AuthContext } from '~/context/AuthContext';
 import { privareRoutes } from './routes';
 
@@ -28,8 +28,7 @@ function App() {
                             path={route.path}
                             element={
                                 <Layout>
-                                    <Page />
-                                    
+                                    <Page /> 
                                 </Layout>
                             }
                         />
