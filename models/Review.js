@@ -10,6 +10,9 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    avatarUser: {
+      type: String,
+    },
     reviewText: {
       type: String,
       required: true,

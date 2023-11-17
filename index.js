@@ -28,12 +28,11 @@ const connect = async () =>{
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-        console.log('thanh cong');
+        console.log('Thành công');
     } catch (err) {
-        console.log('loi');
+        console.log(err);
     }
 }
-
 
 // middleware
 app.use(express.json());

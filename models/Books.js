@@ -47,10 +47,6 @@ const bookSchema = new mongoose.Schema(
             type: Number,
             require: true,
         },
-        wantToRead: {
-            type: Number,
-            require: true,
-        },
         people: {
             type: String,
             require: true,
