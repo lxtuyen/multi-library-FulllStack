@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
-
+import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './Card.module.scss';
 import calculateAvgRatings from '~/utils/avgRatings';
 import { AuthContext } from '~/context/AuthContext';
@@ -111,7 +111,7 @@ useEffect(()=>{
             <div className={cx('card-container')}>
                 <div className={cx('card')}>
                     <div className={cx('card__img')}>
-                        <img src={photo} alt="" title={title} />
+                        <img src={photo?photo: <MoonLoader size={15} color="#36d7b7"/>} alt="" title={title} />
                     </div>
                 </div>
                 <div

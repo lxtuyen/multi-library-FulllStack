@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google';
 
 import styles from './Sidebar.module.scss';
 import { AuthContext } from '~/context/AuthContext';
@@ -18,6 +19,7 @@ function Sidebar() {
     },[user?.data.avatar])
 
     const logout = () => {
+        googleLogout();
         dispatch({ type: 'LOGOUT' });
         navitage('/');
     };

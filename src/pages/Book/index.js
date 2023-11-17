@@ -145,6 +145,7 @@ function Book() {
 
             const reviewObj = {
                 username: user.data.username,
+                avatarUser: user.data.avatar,
                 reviewText: commentText,
                 rating: bookRating,
             };
@@ -180,8 +181,7 @@ function Book() {
         console.log(comments);
         return comments?.map((review, index) => (
             <div className={cx('review__item')} key={index}>
-                <img src={images.profile_user} alt="" />
-
+                {review.avatarUser ? <img src={review.avatarUser} alt="" />: <img src={images.profile_user} alt="" />}
                 <div className="w-100">
                     <div className="d-lex align-items-center justify-content-between">
                         <div>

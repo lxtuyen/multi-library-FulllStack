@@ -25,7 +25,7 @@ function Home() {
             <div className={cx('wrapper-card')}>
                 <div className={cx('carouse')}>
                     {Carousels.map((carousel) => (
-                        <Carousel carousel={carousel} />
+                        <Carousel key={carousel._id} carousel={carousel} />
     ))}
                 </div>
                 <div className={cx('title')}>

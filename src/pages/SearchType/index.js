@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-
-import styles from './SearchType.module.scss';
 import axios from 'axios';
 
+import styles from './SearchType.module.scss';
 import Search from '~/Components/SearchLayout/Search';
 import Pagination from '~/Components/Layout/components/Pagination';
 import Genre from '~/Components/SearchLayout/Genre';

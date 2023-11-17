@@ -2,6 +2,7 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import classNames from 'classnames/bind';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google';
 
 import styles from '../DefaultLayout.module.scss';
 import images from '~/assets/images';
@@ -51,8 +52,9 @@ function Header() {
     }, [debounced]);
 
     const logout = () => {
-        dispatch({ type: 'LOGOUT' });
+        googleLogout();
         navitage('/');
+        dispatch({ type: 'LOGOUT' });
     };
 
     const handleHideResult = () => {
