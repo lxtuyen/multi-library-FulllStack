@@ -25,14 +25,24 @@ const userSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-    followed: [{
-      type: mongoose.Types.ObjectId,
-      ref: "followed"
-  }],
-    readingHistory:[{
-      type: mongoose.Types.ObjectId,
-      ref: "history"
-  }],
+    followed: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "followed",
+      },
+    ],
+    readingHistory: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "history",
+      },
+    ],
+    messages: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Message",
+      },
+    ],
     role: {
       type: String,
       default: "user",
