@@ -115,7 +115,7 @@ function Header() {
                             </div>
                         </li>
                         <li>
-                            <NavLink>
+                            <NavLink to={`/chatbot/${user?.data._id}`}>
                                 <i className="fa-solid fa-crown"></i>
                                 <span>Xếp Hạng</span>
                             </NavLink>

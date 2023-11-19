@@ -8,6 +8,7 @@ import SearchType from '~/pages/SearchType';
 import Login from '~/pages/Login';
 import User from '~/pages/User';
 import Admin from '../pages/Home/Admin';
+import Chat from '../pages/Chat';
 import ReadingHistory from '~/pages/ReadingHistory';
 
 const publicRoutes = [
@@ -18,8 +19,8 @@ const publicRoutes = [
     {path: '/login', component: Login},
     {path: '/register', component: Register},
     {path: '/search', component: SearchType},
+    {path: '/chatbot/:id', component: Chat},
     {path: '/user/:id', component: User},
-    // {path: '/admin/:id', component: Admin},
 ]
 const privareRoutes = [
     {path: '/', component: Admin},

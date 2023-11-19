@@ -20,7 +20,7 @@ const Login = () => {
     const navitage = useNavigate();
 
     const emailRef = useRef();
-    const errRef = useRef();
+   // const errRef = useRef();
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -78,7 +78,7 @@ const Login = () => {
             }
         } catch (err) {
             toast.error('Đăng nhập thất bại');
-            errRef.current.focus();
+            errMsg.current.focus();
             dispatch({ type: 'LOGIN_FAILURE', payload: err.message });
         }
     };

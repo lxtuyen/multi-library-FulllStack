@@ -31,7 +31,7 @@ function Book() {
 
     const navigate = useNavigate();
 
-    const idUser = user._id;
+    const idUser = user?.data._id;
     const { avgRatings } = calculateAvgRatings(reviews);
     //kiểm tra xem có theo dõi chưa
     const { data: followed } = useFetch(`${BASE_URL}/users/${idUser}`);
@@ -54,7 +54,7 @@ function Book() {
     const handleDelete = async (e) => {
         e.preventDefault();
         try {
-            const deletedBookIds = await foundBookIds.map(async (foundBookId) => {
+            const deletedBookIds = foundBookIds.map(async (foundBookId) => {
                 const deleteObj = {
                     userId: user.data._id,
                     bookId: _id,

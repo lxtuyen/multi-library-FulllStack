@@ -33,8 +33,8 @@ function User() {
         e.preventDefault();
         try {
             const obj = {
-                username: user?.username,
-                password: user?.password,
+                username: user?.data.username,
+                password: user?.data.password,
                 avatar: previewURL,
                 phoneNumber: '',
                 address: '',
