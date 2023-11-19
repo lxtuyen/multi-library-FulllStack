@@ -10,7 +10,12 @@ import User from '~/pages/User';
 import Admin from '../pages/Home/Admin';
 import Chat from '../pages/Chat';
 import ReadingHistory from '~/pages/ReadingHistory';
+//layout
 
+import Dashboard from 'admin/pages/Dashboard';
+import AllBooks from 'admin/pages/AllBooks';
+import AddBook from 'admin/pages/AddProducts';
+import AllUsers from 'admin/pages/AllUsers';
 const publicRoutes = [
     {path: '/', component: Home},
     {path: '/followed/:id', component: Following}, 
@@ -23,6 +28,9 @@ const publicRoutes = [
     {path: '/user/:id', component: User},
 ]
 const privareRoutes = [
-    {path: '/', component: Admin},
+    {path: '/', component: Dashboard},
+    {path: '/allbooks', component: AllBooks},
+    {path: '/addbook', component: AddBook},
+    {path: '/users', component: AllUsers}
 ]
 export {publicRoutes, privareRoutes}

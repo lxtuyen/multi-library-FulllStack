@@ -1,1 +1,3 @@
-npm i react-redux @reduxjs/toolkit react-datepicker react-router-dom@6 @mui/material @emotion/react @emotion/styled @mui/icons-material @mui/x-data-grid @nivo/core @nivo/bar @nivo/geo @nivo/pie
+npm i @mui/material @emotion/react @emotion/styled @mui/x-data-grid @mui/icons-material react-pro-sidebar@0.7.1 formik yup @fullcalendar/core @ful
+lcalendar/daygrid @fullcalendar/timegrid @fullcalendar/list @nivo/core @nivo/pie @ni
+vo/line @nivo/bar @nivo/geo        
