@@ -37,11 +37,6 @@ function Sidebar() {
                 <div className={cx('profile-usertitle')}>
                     <div className={cx('profile-usertitle-name')}>{user?.data.username}</div>
                 </div>
-                <div className={cx('profile-userbuttons')}>
-                    <button type="button" className="btn btn-danger btn-sm" onClick={logout}>
-                        Đăng xuất
-                    </button>
-                </div>
                 <div className={cx('profile-usermenu')}>
                     <ul>
                         <li>

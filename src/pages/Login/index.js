@@ -206,7 +206,7 @@ const Login = () => {
                     </div>
 
                     <button className="btn" type="submit">
-                        {loading ? <SyncLoader size={15} color="#36d7b7" /> : 'Đăng Nhập'}
+                        {loading ? <SyncLoader size={13} color="#36d7b7" /> : 'Đăng Nhập'}
                     </button>
                 </form>
                 <div className={cx('GoogleLogin')}> 

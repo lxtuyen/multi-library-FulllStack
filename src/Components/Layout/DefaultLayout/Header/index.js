@@ -12,6 +12,7 @@ import SearchItem from '~/Components/Layout/components/SearchItem';
 import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
 import UseDebounce from '~/hooks/useDebounce';
+import useFetch from '~/hooks/useFetch';
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +27,8 @@ function Header() {
     const inputRef = useRef();
     const debounced = UseDebounce(searchValue, 500)
     const [ avatar, setAvatar ] = useState()
+
+    const { data: Genres } = useFetch(`${BASE_URL}/admin/genre`);
 
     useEffect(()=>{
         setAvatar(user?.data.avatar)
@@ -75,49 +78,18 @@ function Header() {
                             <span>Thể Loại</span>
                             <div className={cx('wrapper-list')}>
                                 <div class="row">
-                                    <div class="col-3">
-                                        <span>col</span>
+                                    {Genres?.map((Genre,i)=>(
+                                        <div class="col-4" key={i}>
+                                        <span>{Genre.name}</span>
                                     </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
+                                    ))}  
                                 </div>
                             </div>
                         </li>
                         <li>
                             <NavLink to={`/chatbot/${user?.data._id}`}>
                                 <i className="fa-solid fa-crown"></i>
-                                <span>Xếp Hạng</span>
+                                <span>Chatbot</span>
                             </NavLink>
                         </li>
                         <li>

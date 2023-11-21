@@ -14,7 +14,6 @@
     }
 }
 .genre-container{
-    justify-content: center;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -25,9 +24,9 @@
         margin: 2px 0;
     }
     p{
+        font-family: system-ui;
         font-weight: 600;
-        margin-top: 10px;
-        margin-left: 5px;
+        margin: 16px;
     }
 }
 

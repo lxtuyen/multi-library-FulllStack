@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
-import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './Card.module.scss';
 import calculateAvgRatings from '~/utils/avgRatings';
 import { AuthContext } from '~/context/AuthContext';
@@ -10,12 +9,13 @@ import {  toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 function Card({ items, bookIds, followedId }) {
+    const { user } = useContext(AuthContext);
     const { _id, photo, title, author, genre, reviews, language, follower } = items;
     const navigate = useNavigate();
+
     const [isFolloweds, setIsFolloweds] = useState(false);
-    const [followId, setFollowId] = useState([]);
+    const [followId, setFollowId] = useState(followedId);
     const [followerId, setFollowerId] = useState([]);
-    const { user } = useContext(AuthContext);
     const { totalRating, avgRatings } = calculateAvgRatings(reviews);
 
     const bookIdsArray = Array.from(bookIds.toString().split(','));
@@ -29,13 +29,12 @@ function Card({ items, bookIds, followedId }) {
 useEffect(()=>{
 
     setIsFolloweds(isFollowed)   
-    setFollowId(followedId) 
     setFollowerId(follower) 
-},[isFollowed, followedId, follower])
+},[isFollowed, follower])
     const handleDelete = async (e) => {
         e.preventDefault();
         try {
-            const deletedBookIds = await foundBookIds.map(async (foundBookId) => {
+            const deletedBookIds =  foundBookIds.map(async (foundBookId) => {
                 const deleteObj = {
                     userId: user.data._id,
                     bookId: _id,
@@ -111,7 +110,7 @@ useEffect(()=>{
             <div className={cx('card-container')}>
                 <div className={cx('card')}>
                     <div className={cx('card__img')}>
-                        <img src={photo?photo: <MoonLoader size={15} color="#36d7b7"/>} alt="" title={title} />
+                        <img src={photo} alt="" title={title} />
                     </div>
                 </div>
                 <div

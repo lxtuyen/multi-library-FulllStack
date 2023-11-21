@@ -27,6 +27,8 @@ function Book() {
     const { _id, title, author, follower, language, reviews, photo } = books;
 
     const [comments, setComments] = useState(reviews);
+    console.log(reviews);
+    console.log(comments);
     const [bookRating, setBookRating] = useState(0);
 
     const navigate = useNavigate();
@@ -178,7 +180,6 @@ function Book() {
         if (comments?.length === 0) {
             return <p>Chưa có bình luận nào.</p>;
         }
-        console.log(comments);
         return comments?.map((review, index) => (
             <div className={cx('review__item')} key={index}>
                 {review.avatarUser ? <img src={review.avatarUser} alt="" />: <img src={images.profile_user} alt="" />}

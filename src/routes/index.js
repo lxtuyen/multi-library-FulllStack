@@ -7,7 +7,6 @@ import Book from '~/pages/Book';
 import SearchType from '~/pages/SearchType';
 import Login from '~/pages/Login';
 import User from '~/pages/User';
-import Admin from '../pages/Home/Admin';
 import Chat from '../pages/Chat';
 import ReadingHistory from '~/pages/ReadingHistory';
 //layout

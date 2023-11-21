@@ -9,6 +9,7 @@ import Genre from '~/Components/SearchLayout/Genre';
 import { Table } from '~/Components/Table';
 import { BASE_URL } from '~/hooks/config';
 import UseDebounce from '~/hooks/useDebounce';
+import { FollowedProvider } from '~/context/FollowedContext'
 
 const cx = classNames.bind(styles);
 
@@ -32,16 +33,19 @@ function SearchType() {
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
+                console.log(err.message)
                 setLoading(false);
             }
         };
         getAllBook();
     }, [filterGenre, page, debounced]);
 
+
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container ')}>
-                <Search setSearch={(search) => setSearch(search)} />
+                <Search setSearch={(search) => setSearch(search)} search={search} />
                 <div className={cx('body')}>
                     <Genre
                         filterGenre={filterGenre}
@@ -49,7 +53,9 @@ function SearchType() {
                         setFilterGenre={(genre) => setFilterGenre(genre)}
                     />
                     {
-                        <Table books={obj.books ? obj.books : []} error={error} loading={loading} />
+                        <FollowedProvider>
+                            <Table books={obj.books ? obj.books : []} error={error} loading={loading} />    
+                        </FollowedProvider>                       
                     }
                 </div>
                 <Pagination

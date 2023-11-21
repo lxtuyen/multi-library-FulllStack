@@ -18,7 +18,7 @@ import style from './Chat.module.scss';
 
 const cx = classNames.bind(style);
 
-const API_KEY = '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';
+const API_KEY = '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';
 
 function Chat() {
     const { id } = useParams();
