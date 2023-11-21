@@ -1,4 +1,5 @@
 import Book from "../models/Books.js";
+import Genre from "../models/Genre.js";
 
 export const createrBook = async(req, res) => {
 
@@ -79,27 +80,6 @@ export const getSingleBook = async(req,res)=>{
     .json({ success: false, message: "not found" });
   }
 }
-/* get All Book 
-export const getAllBook = async(req,res)=>{
-  const page = parseInt(req.query.page);
-
-  try {
-    const books = await Book.findById({}).populate('reviews').skip(page * 8).limit(8)  
-    res
-      .status(200)
-      .json({
-        success: true,
-        count: books.length,
-        message: "Successful",
-        data: books,
-      });  
-  } catch (error) {
-    res
-    .status(404)
-    .json({ success: false, message: "not found" });
-  }
-}
-*/
 export const getBookBySearch = async(req, res)=>{
   const title = new RegExp(req.query.title, "i");
   const author = new RegExp(req.query.genre, "i")
@@ -154,20 +134,8 @@ export const getAllBook = async (req, res) =>{
 		const search = req.query.search || "";
 		let genre = req.query.genre ||"All";
 
-    const genreOptions = [
-			"Action",
-			"Romance",
-			"Fantasy",
-			"Drama",
-			"Crime",
-      "Rock",
-      "Pop",
-			"Adventure",
-			"Thriller",
-			"Sci-fi",
-			"Music",
-			"Family",
-		];
+   const Genres = await Genre.find({});
+   const genreOptions = Genres.map(genre => genre.name);
 
       genre === "All"?(genre= [...genreOptions]):(genre = req.query.genre.split(","));
 

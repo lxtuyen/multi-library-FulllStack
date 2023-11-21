@@ -10,9 +10,9 @@ router.post('/carousel',createrCarousel);
 // get All User
 router.get('/carousel',getAllCarousel);
 // creater Type
-router.post('/Genre',createrGenre);
+router.post('/genre',createrGenre);
 // get All Type
-router.get('/Genre',getAllGenre);
+router.get('/genre',getAllGenre);
 // creater Slider
 router.post('/Slider',createrSlider);
 // get All Slider
