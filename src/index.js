@@ -6,11 +6,13 @@ import GlobalStyles from './Components/GlobalStyles';
 import { AuthContextProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <AuthContextProvider>
+        <GoogleOAuthProvider clientId="9805153579-gqt9m66rm0g27vprujn4ss31hmpav9ln.apps.googleusercontent.com">
             <GlobalStyles>
             <ToastContainer
                 position="top-right"
@@ -21,6 +23,7 @@ root.render(
             />
                 <App />
             </GlobalStyles>
+        </GoogleOAuthProvider>
         </AuthContextProvider>
     </React.StrictMode>,
 );

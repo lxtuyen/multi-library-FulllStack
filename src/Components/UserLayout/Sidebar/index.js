@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google';
 
 import styles from './Sidebar.module.scss';
 import { AuthContext } from '~/context/AuthContext';
@@ -18,6 +19,7 @@ function Sidebar() {
     },[user?.data.avatar])
 
     const logout = () => {
+        googleLogout();
         dispatch({ type: 'LOGOUT' });
         navitage('/');
     };
@@ -34,11 +36,6 @@ function Sidebar() {
                 </div>
                 <div className={cx('profile-usertitle')}>
                     <div className={cx('profile-usertitle-name')}>{user?.data.username}</div>
-                </div>
-                <div className={cx('profile-userbuttons')}>
-                    <button type="button" className="btn btn-danger btn-sm" onClick={logout}>
-                        Đăng xuất
-                    </button>
                 </div>
                 <div className={cx('profile-usermenu')}>
                     <ul>

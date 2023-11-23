@@ -56,3 +56,10 @@
         background-color: rgba(22, 24, 35, 0.14)
     }
 }
+.clear{
+    position: absolute;
+    right: 65px;
+    top: 55%;
+    transform: translateY(-50%);
+    color: rgba(22, 24, 35, 0.34);
+}

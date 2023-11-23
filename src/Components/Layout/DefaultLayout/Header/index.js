@@ -2,6 +2,7 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import classNames from 'classnames/bind';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google';
 
 import styles from '../DefaultLayout.module.scss';
 import images from '~/assets/images';
@@ -11,11 +12,12 @@ import SearchItem from '~/Components/Layout/components/SearchItem';
 import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
 import UseDebounce from '~/hooks/useDebounce';
+import useFetch from '~/hooks/useFetch';
 
 const cx = classNames.bind(styles);
 
 function Header() {
-    const navitage = useNavigate();
+    const navigate = useNavigate();
     const { user, dispatch, role } = useContext(AuthContext);
     const [obj, setObj] = useState([]);
     const [error, setError] = useState(null);
@@ -25,6 +27,8 @@ function Header() {
     const inputRef = useRef();
     const debounced = UseDebounce(searchValue, 500)
     const [ avatar, setAvatar ] = useState()
+
+    const { data: Genres } = useFetch(`${BASE_URL}/admin/genre`);
 
     useEffect(()=>{
         setAvatar(user?.data.avatar)
@@ -51,8 +55,9 @@ function Header() {
     }, [debounced]);
 
     const logout = () => {
+        navigate('/search');
         dispatch({ type: 'LOGOUT' });
-        navitage('/');
+        googleLogout();
     };
 
     const handleHideResult = () => {
@@ -73,49 +78,18 @@ function Header() {
                             <span>Thể Loại</span>
                             <div className={cx('wrapper-list')}>
                                 <div class="row">
-                                    <div class="col-3">
-                                        <span>col</span>
+                                    {Genres?.map((Genre,i)=>(
+                                        <div class="col-4" key={i}>
+                                        <span>{Genre.name}</span>
                                     </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
-                                    <div class="col-3">
-                                        <span>col</span>
-                                    </div>
+                                    ))}  
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <NavLink>
+                            <NavLink to={`/chatbot/${user?.data._id}`}>
                                 <i className="fa-solid fa-crown"></i>
-                                <span>Xếp Hạng</span>
+                                <span>Chatbot</span>
                             </NavLink>
                         </li>
                         <li>
@@ -143,7 +117,7 @@ function Header() {
                 >
                     <div className={cx('search')}>
                         <input
-                            placeholder="Search Books and author"
+                            placeholder="Search Books"
                             spellCheck={false}
                             value={searchValue}
                             ref={inputRef}
