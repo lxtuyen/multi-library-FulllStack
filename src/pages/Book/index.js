@@ -26,9 +26,11 @@ function Book() {
     const { data: books, loading, error } = useFetch(`${BASE_URL}/books/${id}`);
     const { _id, title, author, follower, language, reviews, photo } = books;
 
-    const [comments, setComments] = useState(reviews);
-    console.log(reviews);
-    console.log(comments);
+    const [comments, setComments] = useState([]);
+
+    useEffect(()=>{
+        setComments(reviews)
+    },[reviews])
     const [bookRating, setBookRating] = useState(0);
 
     const navigate = useNavigate();
@@ -106,7 +108,6 @@ function Book() {
                 language: language,
                 photo: photo,
             };
-
             const res = await fetch(`${BASE_URL}/followed`, {
                 method: 'post',
                 headers: { 'content-type': 'application/json' },
@@ -150,8 +151,8 @@ function Book() {
                 avatarUser: user.data.avatar,
                 reviewText: commentText,
                 rating: bookRating,
+                avgRating: calculateAvgRatings([...reviews,bookRating]),
             };
-
             const res = await fetch(`${BASE_URL}/review/${id}`, {
                 method: 'post',
                 headers: { 'content-type': 'application/json' },
@@ -163,6 +164,7 @@ function Book() {
             if (!res.ok) {
                 return toast.error(result.message)
             } else {
+                console.log(reviewObj);
                 toast.success('Thành công')
                 setComments([...comments, result.data]);
                 // Xóa nội dung của ô nhập bình luận
@@ -256,14 +258,14 @@ function Book() {
                     <BookVendor book={books} Loading={loading} error={error} />
                 </div>
                 <div className={cx('wrapper__right')}>
-                    <OverViewBook book={books} Loading={loading} error={error} />
+                    <OverViewBook book={books} comments={comments} Loading={loading} error={error} />
                 </div>
             </div>
             <div className={cx('wrapper__comment-box')}>
                 <div className="container">
                     <div className={cx('comment-box')}>
                         <h4 className={cx('Comment-box__title')}>Bình Luận ({comments?.length ?comments?.length : 0} bình luận)</h4>
-                        <form onSubmit={submitHandler}>
+                        <form>
                             <div className={cx('comment-box__star')}>
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <span
@@ -285,7 +287,7 @@ function Book() {
                                     placeholder="Viết bình luận tại đây."
                                 ></textarea>
                             </div>
-                            <button type="button" className="btn btn-primary btn-block">
+                            <button type="button" onClick={submitHandler} className="btn btn-primary btn-block">
                                 Bình Luận
                             </button>
                         </form>

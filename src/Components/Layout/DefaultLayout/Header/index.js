@@ -17,7 +17,7 @@ import useFetch from '~/hooks/useFetch';
 const cx = classNames.bind(styles);
 
 function Header() {
-    const navitage = useNavigate();
+    const navigate = useNavigate();
     const { user, dispatch, role } = useContext(AuthContext);
     const [obj, setObj] = useState([]);
     const [error, setError] = useState(null);
@@ -55,9 +55,9 @@ function Header() {
     }, [debounced]);
 
     const logout = () => {
-        googleLogout();
-        navitage('/');
+        navigate('/search');
         dispatch({ type: 'LOGOUT' });
+        googleLogout();
     };
 
     const handleHideResult = () => {
@@ -117,7 +117,7 @@ function Header() {
                 >
                     <div className={cx('search')}>
                         <input
-                            placeholder="Search Books and author"
+                            placeholder="Search Books"
                             spellCheck={false}
                             value={searchValue}
                             ref={inputRef}

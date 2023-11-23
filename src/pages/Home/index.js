@@ -24,7 +24,7 @@ function Home() {
             <Slider />
             <div className={cx('wrapper-card')}>
                 <div className={cx('carouse')}>
-                    {Carousels.map((carousel) => (
+                    {Carousels?.map((carousel) => (
                         <Carousel key={carousel._id} carousel={carousel} />
     ))}
                 </div>

@@ -10,9 +10,9 @@ import Start from '~/components/Layout/components/Start';
 
 const cx = classNames.bind(styles);
 
-const OverViewBook = ({ book, Loading, error }) => { 
-    const { avgRatings } = calculateAvgRatings(book.reviews);
-
+const OverViewBook = ({ book, comments, Loading, error }) => { 
+    const { avgRatings } = calculateAvgRatings(comments);
+    
     return (
         <>
         {Loading && <h4>Loading............</h4>}

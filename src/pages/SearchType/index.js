@@ -6,6 +6,7 @@ import styles from './SearchType.module.scss';
 import Search from '~/Components/SearchLayout/Search';
 import Pagination from '~/Components/Layout/components/Pagination';
 import Genre from '~/Components/SearchLayout/Genre';
+import Sort from '~/Components/SearchLayout/Sort';
 import { Table } from '~/Components/Table';
 import { BASE_URL } from '~/hooks/config';
 import UseDebounce from '~/hooks/useDebounce';
@@ -18,6 +19,7 @@ function SearchType() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [filterGenre, setFilterGenre] = useState([]);
+    const [sort, setSort] = useState({ sort: "avgRating", order: "desc" });
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const debounced = UseDebounce(search, 500);
@@ -26,26 +28,26 @@ function SearchType() {
         const getAllBook = async () => {
             setLoading(true);
             try {
-                const url = `${BASE_URL}/books?page=${page}
-                &genre=${filterGenre.toString()}&search=${encodeURIComponent(debounced)}`;
+                const url = `${BASE_URL}/books?page=${page}&sort=${sort.sort},${sort.order}&genre=${filterGenre.toString()}&search=${encodeURIComponent(debounced)}`;
                 const { data } = await axios.get(url);
                 setObj(data);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
-                console.log(err.message)
                 setLoading(false);
             }
         };
         getAllBook();
-    }, [filterGenre, page, debounced]);
-
+    }, [sort, filterGenre, page, debounced]);
 
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container ')}>
-                <Search setSearch={(search) => setSearch(search)} search={search} />
+                <div className={cx('container-header')}>
+                    <Search setSearch={(search) => setSearch(search)} search={search} />
+                    <Sort sort={sort} setSort={(sort) => setSort(sort)} />
+                </div>
                 <div className={cx('body')}>
                     <Genre
                         filterGenre={filterGenre}
