@@ -83,6 +83,9 @@ const bookSchema = new mongoose.Schema(
             type: [String],
             require: true,
         },
+        avgRating: {
+            type: String,
+        },
         reviews: [{
             type: mongoose.Types.ObjectId,
             ref: "Review"

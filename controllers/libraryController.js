@@ -132,19 +132,26 @@ export const getAllBook = async (req, res) =>{
     const page = parseInt(req.query.page) - 1 || 0;
 		const limit = parseInt(req.query.limit) || 6;
 		const search = req.query.search || "";
+    let sort = req.query.sort || "avgRating";
 		let genre = req.query.genre ||"All";
 
    const Genres = await Genre.find({});
    const genreOptions = Genres.map(genre => genre.name);
 
       genre === "All"?(genre= [...genreOptions]):(genre = req.query.genre.split(","));
-
+      req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
+      let sortBy = {};
+		if (sort[1]) {
+			sortBy[sort[0]] = sort[1];
+		} else {
+			sortBy[sort[0]] = "asc";
+		}
       const books = await Book.find({title: {$regex:search,$options:"i"}}).populate('reviews')
       .where("genre")
 			.in([...genre])
+      .sort(sortBy)
 			.skip(page * limit)
 			.limit(limit);
-
         const total = await Book.countDocuments({
           genre: {$in: [...genre]},
           title: {$regex:search, $options:"i"}
