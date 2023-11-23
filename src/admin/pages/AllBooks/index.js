@@ -1,6 +1,30 @@
-import React from 'react'
+import React,  {useState, useEffect } from 'react'
+import axios from 'axios';
 
+import { BASE_URL } from '~/hooks/config';
+import useFetch from '~/hooks/useFetch';
 function AllBooks(){
+    const [obj, setObj] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const getAllBook = async () => {
+            setLoading(true);
+            try {
+                const url = `${BASE_URL}/books?page=1`;
+                const { data } = await axios.get(url);
+                setObj(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        getAllBook();
+    }, []);
+
+    console.log(obj.books);
     return(
         
         <div id='layoutSidenav_content'>
