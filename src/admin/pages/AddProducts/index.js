@@ -64,7 +64,7 @@ function AddBook(){
         }
     };
 
-    }
+    
 
     return(
         <div id='layoutSidenav_content'>
