@@ -22,11 +22,14 @@ function Home() {
     return (
         <>
             <Slider />
-            <div className={cx('wrapper-card')}>
-                <div className={cx('carouse')}>
+            
+                    <div className={cx('wrapper-card')}>
+                    <div className='container'>
+                <div className='row'>
                     {Carousels?.map((carousel) => (
                         <Carousel key={carousel._id} carousel={carousel} />
     ))}
+                    </div>
                 </div>
                 <div className={cx('title')}>
                     <span>Sách Mới</span>
