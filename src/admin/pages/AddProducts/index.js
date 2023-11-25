@@ -64,7 +64,7 @@ function AddBook(){
             alert(error.message);
         }
 
-    
+    }
 
     return(
         <div id='layoutSidenav_content'>

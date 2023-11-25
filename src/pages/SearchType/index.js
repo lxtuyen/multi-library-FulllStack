@@ -40,7 +40,6 @@ function SearchType() {
         getAllBook();
     }, [sort, filterGenre, page, debounced]);
 
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container ')}>
