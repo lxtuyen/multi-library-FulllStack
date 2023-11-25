@@ -1,4 +1,71 @@
+import React, { useRef, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+
+import { BASE_URL } from '~/hooks/config';
+import useFetch from '~/hooks/useFetch';
 function AddBook(){
+    const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [language, setLanguage] = useState('');
+  const [publishingCompany, setPublishingCompany] = useState('');
+  const [page, setPage] = useState('');
+  const [previewAvailable, setPreviewAvailable] = useState('');
+  const [detailHead, setDetailHead] = useState('');
+  const [detailLast, setDetailLast] = useState('');
+  const [genre, setGenre] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [people, setPeople] = useState('');
+  const [places, setPlaces] = useState('');
+  const [publishedIn, setPublishedIn] = useState('');
+  const [versionNotes, setVersionNotes] = useState('');
+  const [desc, setDesc] = useState('');
+  const [LinkedOut, setLinkedOut] = useState('');
+
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+
+          try {
+            const data = {
+                title,
+                author,
+                language,
+                publishingCompany,
+                page,
+                previewAvailable,
+                detailHead,
+                detailLast,
+                genre,
+                photo,
+                people,
+                places,
+                publishedIn,
+                versionNotes,
+                desc,
+                LinkedOut,
+              };
+
+            const res = await fetch(`${BASE_URL}/books`, {
+                method: 'post',
+                headers: { 'content-type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+            if (!res.ok) {
+                return alert(result.message);
+            } else {
+                setTitle('');
+                setAuthor('');
+                setLanguage('');
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
+    }
+
     return(
         <div id='layoutSidenav_content'>
             <main>
@@ -17,7 +84,7 @@ function AddBook(){
                             <input type="text" className="form-control display-2"/>
                             
                             <label className="form-label mt-3" name="publishingCompany" >Publisher: </label>
-                            <input type="text" className="form-control display-2"/>
+                            <input type="text"  className="form-control display-2"/>
 
                             <label className="form-label mt-3" name="page" >Pages: </label>
                             <input type="number" className="form-control display-2"/>
@@ -29,10 +96,10 @@ function AddBook(){
                             <textarea className="form-control display-2"></textarea>
 
                             <label className="form-label mt-3" name="detailLast" >Detail Last: </label>
-                            <textarea className="form-control display-2"></textarea>
+                            <textarea  className="form-control display-2"></textarea>
 
                             <label className="form-label mt-3" name="genre" >Genre: </label>
-                            <input type="text" className="form-control display-2"/>
+                            <input type="text"  className="form-control display-2"/>
 
                             <label className="form-label mt-3" name="photo" >Image: </label>
                             <input type="file" className="form-control "/>
@@ -41,7 +108,7 @@ function AddBook(){
                             <input type="text" className="form-control display-2"/>
 
                             <label className="form-label mt-3" name="places" >Address: </label>
-                            <textarea className="form-control display-2"></textarea>
+                            <textarea  className="form-control display-2"></textarea>
                             
                         <div className="sb-sidenav-menu-heading">Detail</div> 
 
@@ -52,12 +119,12 @@ function AddBook(){
                             <input type="text" className="form-control display-2"/>
 
                             <label className="form-label mt-3" name="desc">Description: </label>
-                            <textarea className="form-control display-2"></textarea>
+                            <textarea  className="form-control display-2"></textarea>
 
                             <label className="form-label mt-3" name="LinkedOut"> Other Libraries: </label>
                             <textarea className="form-control display-2"></textarea>
 
-                            <button className="btn btn-primary mt-3" type="submit">Submit form</button>
+                            <button className="btn btn-primary mt-3" type="submit" onClick={handleSubmit} >Submit form</button>
                         </form>
                     </div>
                 </div>
