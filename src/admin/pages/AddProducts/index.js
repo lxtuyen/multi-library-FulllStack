@@ -58,11 +58,11 @@ function AddBook(){
                 setTitle('');
                 setAuthor('');
                 setLanguage('');
+                setPublishingCompany('')
             }
         } catch (error) {
             alert(error.message);
         }
-    };
 
     }
 

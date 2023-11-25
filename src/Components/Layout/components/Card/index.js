@@ -5,7 +5,7 @@ import styles from './Card.module.scss';
 import calculateAvgRatings from '~/utils/avgRatings';
 import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 function Card({ items, bookIds, followedId }) {
@@ -21,20 +21,20 @@ function Card({ items, bookIds, followedId }) {
     const bookIdsArray = Array.from(bookIds.toString().split(','));
     const isFollowed = bookIdsArray.includes(_id);
     const followedIds = Array.from(followId.toString().split(','));
-        
+
     const foundBookIds = followedIds?.filter((bookId) => {
-        return followerId?.includes(bookId);  
-});
+        return followerId?.includes(bookId);
+    });
 
-useEffect(()=>{
+    useEffect(() => {
 
-    setIsFolloweds(isFollowed)   
-    setFollowerId(follower) 
-},[isFollowed, follower])
+        setIsFolloweds(isFollowed)
+        setFollowerId(follower)
+    }, [isFollowed, follower])
     const handleDelete = async (e) => {
         e.preventDefault();
         try {
-            const deletedBookIds =  foundBookIds.map(async (foundBookId) => {
+            const deletedBookIds = foundBookIds.map(async (foundBookId) => {
                 const deleteObj = {
                     userId: user.data._id,
                     bookId: _id,
@@ -52,17 +52,17 @@ useEffect(()=>{
                     return foundBookId;
                 }
             });
-    
+
             // Cập nhật trạng thái theo dõi
             if (deletedBookIds.length > 0) {
                 setIsFolloweds(false);
                 setFollowId(followId.filter(id => !foundBookIds.includes(id)))
-                setFollowerId(followerId.filter(id => id !== _id)) 
-              // Hiển thị thông báo
-              toast.success('Xóa thành công')
+                setFollowerId(followerId.filter(id => id !== _id))
+                // Hiển thị thông báo
+                toast.success('Xóa thành công')
             }
 
-            
+
         } catch (error) {
             toast.error(error.message)
         }
@@ -99,7 +99,7 @@ useEffect(()=>{
                 toast.success('Theo dõi thành công')
                 setIsFolloweds(true)
                 setFollowId([...followId, result.savedFollowed._id])
-                setFollowerId([...followerId, result.savedFollowed.bookId]) 
+                setFollowerId([...followerId, result.savedFollowed.bookId])
             }
         } catch (error) {
             toast.error(error.message)
