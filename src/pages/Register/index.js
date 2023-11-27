@@ -15,14 +15,17 @@ const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Register = () => {
-    const { dispatch } = useContext(AuthContext);
-    const navitage = useNavigate();
+    const { user, dispatch } = useContext(AuthContext);
+    const navigate = useNavigate();
+    if(user){
+        navigate('/')
+    }
 
     const [loading , setLoading] = useState(false);
 
     const usernameRef = useRef();
 
-    const [user, setUser] = useState('');
+    const [username, setUsername] = useState('');
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
@@ -43,9 +46,9 @@ const Register = () => {
     }, []);
 
     useEffect(() => {
-        const result = USER_REGEX.test(user);
+        const result = USER_REGEX.test(username);
         setValidName(result);
-    }, [user]);
+    }, [username]);
 
     useEffect(() => {
         const result = EMAIL_REGEX.test(email);
@@ -60,7 +63,7 @@ const Register = () => {
     }, [pwd, matchPwd]);
 
     const credentials = {
-        username: user,
+        username: username,
         email: email,
         password: pwd,
     };
@@ -81,7 +84,7 @@ const Register = () => {
             setLoading(false)
             toast.success('Đăng ký thành công')
             dispatch({ type: 'REGISTER_SUCCESS' });
-            navitage('/login');
+            navigate('/login');
         } catch (err) {
             toast.error('Đăng ký thất bại')
         }
@@ -97,7 +100,7 @@ const Register = () => {
                             <span className={cx(validName ? 'valid' : 'hide')}>
                                 <i className="fa-solid fa-check"></i>
                             </span>
-                            <span className={cx(validName || !user ? 'hide' : 'invalid')}>
+                            <span className={cx(validName || !username ? 'hide' : 'invalid')}>
                                 <i className="fa-solid fa-times"></i>
                             </span>
                         </label>
@@ -107,7 +110,7 @@ const Register = () => {
                             placeholder="VD: tuyen123"
                             ref={usernameRef}
                             autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                             aria-invalid={validName ? 'false' : 'true'}
                             aria-describedby="uidnote"
@@ -116,7 +119,7 @@ const Register = () => {
                         />
                         <span
                             id="uidnote"
-                            className={cx(userFocus && user && !validName ? 'instructions' : 'offscreen')}
+                            className={cx(userFocus && username && !validName ? 'instructions' : 'offscreen')}
                         >
                             <i className="fa-solid fa-circle-info"></i>
                             4 đến 24 ký tự <br />

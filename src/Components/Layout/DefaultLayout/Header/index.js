@@ -3,10 +3,11 @@ import classNames from 'classnames/bind';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { googleLogout } from '@react-oauth/google';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import axios from 'axios';
 
 import styles from '../DefaultLayout.module.scss';
 import images from '~/assets/images';
-import axios from 'axios';
 import { Wrapper as PopperWrapper } from '~/Components/Layout/Popper';
 import SearchItem from '~/Components/Layout/components/SearchItem';
 import { AuthContext } from '~/context/AuthContext';
@@ -25,10 +26,18 @@ function Header() {
     const [searchValue, setSearchValue] = useState('');
     const [showResult, setShowResult] = useState(true);
     const inputRef = useRef();
-    const debounced = UseDebounce(searchValue, 500)
+    const debounced = UseDebounce(searchValue, 400)
     const [ avatar, setAvatar ] = useState()
+    const startListening = () => SpeechRecognition.startListening({ continuous: true });
+    const { transcript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition()
 
     const { data: Genres } = useFetch(`${BASE_URL}/admin/genre`);
+    useEffect(() => {
+        if (listening && transcript) {
+            // Update the input field with the recognized speech
+            setSearchValue(transcript);
+        }
+    }, [listening, transcript]);
 
     useEffect(()=>{
         setAvatar(user?.data.avatar)
@@ -145,8 +154,13 @@ function Header() {
                                 <i className="fa-solid fa-spinner"></i>
                             </div>
                         )}
-                        <buttton className={cx('search-btn')}>
-                            <i className="fa-solid fa-magnifying-glass"></i>
+                        <buttton className={cx('search-btn')}
+                              onTouchStart={startListening}
+                              onMouseDown={startListening}
+                              onTouchEnd={SpeechRecognition.stopListening}
+                              onMouseUp={SpeechRecognition.stopListening}
+                        >
+                            <i className="fa-solid fa-microphone"></i>
                         </buttton>
                     </div>
                 </HeadlessTippy>

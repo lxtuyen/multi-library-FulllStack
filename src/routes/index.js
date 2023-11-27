@@ -22,7 +22,7 @@ const publicRoutes = [
     {path: '/books/:id', component: Book },
     {path: '/login', component: Login},
     {path: '/register', component: Register},
-    {path: '/search', component: SearchType},
+    {path:'/search', component: SearchType},
     {path: '/chatbot/:id', component: Chat},
     {path: '/user/:id', component: User},
 ]

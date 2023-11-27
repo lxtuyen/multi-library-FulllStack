@@ -13,7 +13,6 @@ const Search = ({ setSearch, search }) => {
     
       useEffect(() => {
         if (listening && transcript) {
-            console.log(transcript)
             // Update the input field with the recognized speech
             setSearch(transcript);
         }
