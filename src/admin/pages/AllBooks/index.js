@@ -1,12 +1,20 @@
-import React,  {useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+
 
 import { BASE_URL } from '~/hooks/config';
 import useFetch from '~/hooks/useFetch';
-function AllBooks(){
+import calculateAvgRatings from '~/utils/avgRatings';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import Tr from 'admin/Components/TableLayout';
+function AllBooks() {
     const [obj, setObj] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [reviews, setReviews] = useState([]);
+    const option = { day: 'numeric', month: 'long', year: 'numeric' };
+    const { avgRatings } = calculateAvgRatings(obj?.reviews);
 
     useEffect(() => {
         const getAllBook = async () => {
@@ -24,17 +32,37 @@ function AllBooks(){
         getAllBook();
     }, []);
 
+    const handleDelete = async (e, id) => {
+        e.preventDefault();
+        try {
+            const res = await fetch(`${BASE_URL}/books/${id}`, {
+                method: 'delete',
+                headers: { 'content-type': 'application/json' },
+                credentials: 'include',
+            });
+            const result = await res.json();
+            if (!res.ok) {
+                return alert(result.message);
+            } else {
+                alert('thanh cong')
+                setObj((book) => book.filter((id) => id._id.toString() !== id))
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     console.log(obj.books);
-    return(
-        
+    return (
+
         <div id='layoutSidenav_content'>
             <main>
-                <div class="container-fluid px-4">         
+                <div class="container-fluid px-4">
                     <h1 className='mt-4'> All Books</h1>
                     <div className='card mb-4'>
                         <div className='card-header'>
                             <i className="fas fa-table me-1"></i>
-                                DataTable Example
+                            DataTable Example
                         </div>
                         <table className="table table-striped table-hover table-bordered">
                             <thead>
@@ -50,23 +78,14 @@ function AllBooks(){
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <button className='btn btn-outline-danger'> Xóa </button>
-                                    </td>
-                                    <td>
-                                        <button className='btn btn-outline-primary'>Sửa</button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            {loading && <h4>Loading............</h4>}
+                            {error && <h4>Error!!!</h4>}
+                            {!loading && !error && (
+                                <tbody>
+                                    {obj.books?.map((book, i)=>(
+                                        <Tr item={book} key={i} index={i} />
+                                    ))}                  
+                                </tbody>)}
                         </table>
                     </div>
                 </div>
@@ -76,3 +95,8 @@ function AllBooks(){
 }
 
 export default AllBooks
+
+/*
+ 
+ 
+*/

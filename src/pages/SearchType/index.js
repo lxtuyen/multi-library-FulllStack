@@ -55,7 +55,6 @@ function SearchType() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sort, filterGenre, page, debounced]);
 
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container ')}>

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import classNames from 'classnames/bind';
 
@@ -9,18 +9,25 @@ const cx = classNames.bind(styles);
 const Search = ({ setSearch, search }) => {
     const inputRef = useRef();
     const startListening = () => SpeechRecognition.startListening({ continuous: true });
-    const { transcript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition()
-    
-      useEffect(() => {
+    const { transcript, listening, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition()
+    const [inputFocused, setInputFocused] = useState(false);
+
+    useEffect(() => {
         if (listening && transcript) {
             // Update the input field with the recognized speech
             setSearch(transcript);
+            inputRef.current.value = transcript;
+            // Scroll to the end of the input field
+            inputRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    }, [listening, transcript, setSearch]);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [listening, transcript, inputFocused]);
+    console.log('transcript :',transcript );
+    console.log('search :',search );
+    console.log('inputRef.current.value :',inputRef.current?.value );
     if (!browserSupportsSpeechRecognition) {
         console.log('loi');
-      }
+    }
     return (
         <div className={cx('search')}>
             <input
@@ -29,29 +36,37 @@ const Search = ({ setSearch, search }) => {
                 ref={inputRef}
                 className={cx('input')}
                 placeholder="Tìm kiếm"
-                onChange={({ currentTarget: input }) => setSearch(input.value)}
+                onChange={({ currentTarget: input }) => {
+                    setSearch(input.value);
+                }}
+                onFocus={() => setInputFocused(true)}
+                onBlur={() => setInputFocused(false)}
             />
             {!!search && (
-            <buttton
-            className={cx('clear')}
-            onClick={() => {
-                setSearch('');
-                inputRef.current.focus();
-            }}
-        >
-            <i className="fa-solid fa-circle-xmark"></i>
-        </buttton>
+                <buttton
+                    className={cx('clear')}
+                    onClick={() => {
+                        setSearch('');
+                        inputRef.current.focus();
+                        inputRef.current.value = '';
+                        resetTranscript();
+                    }}
+                >
+                    <i className="fa-solid fa-circle-xmark"></i>
+                </buttton>
             )}
             <buttton className={cx('search-btn')}
-                 onTouchStart={startListening}
-                 onMouseDown={startListening}
-                 onTouchEnd={SpeechRecognition.stopListening}
-                 onMouseUp={SpeechRecognition.stopListening}
-            >
-                <i className="fa-solid fa-microphone"></i>
+                //onTouchStart={startListening}
+                //onTouchEnd={SpeechRecognition.stopListening}
+                onMouseDown={startListening}
+                onMouseUp={SpeechRecognition.stopListening}
+                
+            >   {listening ? <i className="fa-solid fa-circle-xmark"></i> : <i className="fa-solid fa-microphone"></i>  }
+                
             </buttton>
         </div>
     );
 };
 
 export default Search;
+//               
