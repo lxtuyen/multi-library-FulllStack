@@ -238,7 +238,7 @@ const Register = () => {
                         </Link>
                     </p>
                     <button disabled={!validName || !validPwd || !validMatch ? true : false } type="submit" className="btn">
-                        {loading ? <SyncLoader size={15} color="#36d7b7" /> : "Đăng ký"}
+                        {loading ? <SyncLoader size={12} color="#36d7b7" /> : "Đăng ký"}
                     </button>
                 </form>
             </MDBContainer>
