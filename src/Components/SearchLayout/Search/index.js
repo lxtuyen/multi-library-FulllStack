@@ -22,9 +22,6 @@ const Search = ({ setSearch, search }) => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [listening, transcript, inputFocused]);
-    console.log('transcript :',transcript );
-    console.log('search :',search );
-    console.log('inputRef.current.value :',inputRef.current?.value );
     if (!browserSupportsSpeechRecognition) {
         console.log('loi');
     }
