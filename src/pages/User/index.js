@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import styles from './User.module.scss';
 import Sidebar from '~/Components/UserLayout/Sidebar';
@@ -8,12 +9,37 @@ import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
 
 const cx = classNames.bind(styles);
-
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 function User() {
     const { id } = useParams();
     const { user, dispatch } = useContext(AuthContext);
+
+    const [name, setUsername] = useState('');
+
     const [previewURL, setPreviewURL] = useState('');
-    console.log(user);
+
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
+    const [email, setEmail] = useState('');
+    const [ allProvince, setAllProvince ] = useState([])
+    useEffect(() => {
+        const url = 'https://provinces.open-api.vn/api/';
+      
+        const fetchData = async () => {
+          const response = await axios.get(url);
+          const data = response.data;
+          setAllProvince(data)
+        };
+      
+        fetchData();
+      }, []);
+    
+    useEffect(() => {
+        setUsername(user?.data.username);
+        setPhoneNumber(user?.data.phoneNumber);
+        setAddress(user?.data.address);
+        setEmail(user?.data.email);
+    }, [user]);
     const handleFileInput = async (e) => {
         const file = e.target.files[0];
         const uploadData = new FormData();
@@ -33,12 +59,11 @@ function User() {
         e.preventDefault();
         try {
             const obj = {
-                username: user?.data.username,
-                password: user?.data.password,
+                username: name,
                 avatar: previewURL,
-                phoneNumber: '',
-                address: '',
-                email: user.email,
+                phoneNumber: phoneNumber,
+                address: address,
+                email: email,
             };
             const res = await fetch(`${BASE_URL}/users/${id}`, {
                 method: 'put',
@@ -58,8 +83,8 @@ function User() {
                     payload: {
                         data: {
                             avatar: previewURL,
-                            phoneNumber: '',
-                            address: '',
+                            phoneNumber: phoneNumber,
+                            address: address,
                         },
                     },
                 });
@@ -82,47 +107,39 @@ function User() {
                             <div className="p-3 py-5">
                                 <div className="row mt-2">
                                     <div className="col-md-12">
-                                        <label className="labels">Username</label>
+                                        <label className="labels">Username:</label>
                                         <input
                                             type="text"
                                             className="form-control"
                                             placeholder="first name"
-                                            value={user?.data.username}
-                                            disabled
+                                            value={name}
+                                            onChange={(e) => setUsername(e.target.value)}
                                         />
                                     </div>
                                 </div>
                                 <div className="row mt-3">
                                     <div className="col-md-12">
-                                        <label className="labels">PhoneNumber</label>
+                                        <label className="labels">Số điện thoại:</label>
                                         <input
                                             type="text"
                                             className="form-control"
                                             placeholder="enter phone number"
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-12">
-                                        <label className="labels">Password</label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="enter your password"
-                                            value={user?.data.password}
-                                            disabled
-                                        />
-                                    </div>
-                                    <div className="col-md-12">
-                                        <label className="labels">Email ID</label>
+                                        <label className="labels">Email:</label>
                                         <input
                                             type="text"
                                             className="form-control"
                                             placeholder="enter email id"
-                                            value={user?.data.email}
+                                            value={email}
                                             disabled
                                         />
                                     </div>
                                     <div className="col-md-12">
-                                        <label className="labels">ảnh đại diện</label>
+                                        <label className="labels">Ảnh đại diện</label>
                                         <input
                                             type="file"
                                             id="file"
@@ -133,12 +150,15 @@ function User() {
                                         />
                                     </div>
                                     <div className="col-md-12">
-                                        <label className="labels">Address</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="enter address"
-                                        />
+                                        <label className="labels">Địa chỉ</label>
+                                        <form action="">
+                                            <select name="" id="province" onChange={(e)=> setAddress(e.target.value)}>
+                                            <option value={address}>{address || 'Chọn tỉnh'}</option>
+                                                {allProvince.map((province,i)=>(
+                                                    <option value={province.name}>{province.name}</option>
+                                                ))}
+                                            </select>
+                                        </form>
                                     </div>
                                 </div>
                                 <div className="mt-5 text-center">

@@ -16,9 +16,11 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Login = () => {
-    const { dispatch } = useContext(AuthContext);
-    const navitage = useNavigate();
-
+    const { user, dispatch } = useContext(AuthContext);
+    const navigate = useNavigate();
+    if(user){
+        navigate('/')
+    }
     const emailRef = useRef();
    // const errRef = useRef();
 
@@ -74,7 +76,7 @@ const Login = () => {
                 setLoading(false);
                 toast.success('Đăng nhập thành công');
                 dispatch({ type: 'LOGIN_SUCCESS', payload: result });
-                navitage('/');
+                navigate('/');
             }
         } catch (err) {
             toast.error('Đăng nhập thất bại');
@@ -107,7 +109,7 @@ const Login = () => {
                // console.log(res);
                 toast.success('Đăng nhập thành công');
                 dispatch({ type: 'LOGIN_SUCCESS', payload: result });
-                navitage('/');
+                navigate('/');
             }
            }
         } catch (error) {
@@ -196,7 +198,9 @@ const Login = () => {
                         </span>
                     </div>
                     <div className="d-flex justify-content-between mx-4 mb-4">
-                        <MDBCheckbox name="flexCheck" value="" id="flexCheckDefault" label="Nhớ mật khẩu" />
+                        <p className="ms-5">
+                                Quên mật khẩu
+                        </p>
                         <p className="ms-5">
                             Chưa có tài khoản?
                             <Link to="/register" className="link-info">

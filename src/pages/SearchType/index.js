@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './SearchType.module.scss';
 import Search from '~/Components/SearchLayout/Search';
@@ -23,6 +24,7 @@ function SearchType() {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const debounced = UseDebounce(search, 500);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getAllBook = async () => {
@@ -32,12 +34,25 @@ function SearchType() {
                 const { data } = await axios.get(url);
                 setObj(data);
                 setLoading(false);
+                const queryParams = new URLSearchParams({
+                    page: page,
+                    sort: sort.sort,
+                    order: sort.order,
+                });
+                if (encodeURIComponent(debounced).length > 0) {
+                    queryParams.set('search', encodeURIComponent(debounced));
+                  }
+                if (filterGenre.length > 0) {
+                    queryParams.set('genre', filterGenre.toString());
+                  }
+                navigate(`/search?${queryParams.toString()}`);
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
             }
         };
         getAllBook();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sort, filterGenre, page, debounced]);
 
     return (
