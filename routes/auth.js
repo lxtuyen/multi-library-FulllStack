@@ -8,5 +8,4 @@ router.post('/register', register);
 router.post('/login', login);
 router.post('/admin/register', verifyAdmin, adminRegister);
 router.post('/googleLogin', googleLogin);
-
 export default router

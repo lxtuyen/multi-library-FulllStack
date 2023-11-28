@@ -1,6 +1,9 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Joi from "joi";
+import crypto from "crypto";
+import passwordComplexity from 'joi-password-complexity';
 import { OAuth2Client } from "google-auth-library";
 const client = new OAuth2Client(
   "9805153579-gqt9m66rm0g27vprujn4ss31hmpav9ln.apps.googleusercontent.com"
@@ -110,7 +113,7 @@ export const adminRegister = async (req, res) => {
       message: "successfully created",
     });
   } catch (error) {
-    res.status(200).json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -164,6 +167,30 @@ export const googleLogin = async (req, res) => {
       }
     }
   } catch (err) {
-    console.log(err.message);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
+export const forgotPassword = async (req, res) =>{
+  try {
+    const { email } = req.body.email
+    if(!email){
+        return res
+          .status(404)
+          .json({ success: false, message: "Vui lòng nhập email của bạn!!!" });
+    }
+    const user = await User.findOne({ email })
+    if(!user){
+      return res
+      .status(404)
+      .json({ success: false, message: "User not found, invalid request!!!" });
+    }
+    res
+    .status(200)
+    .send({ message: "Password reset link sent to your email account" });
+} catch (error) {
+  res.status(500).send(error.message);
+}
+}
