@@ -35,7 +35,7 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
                     body: JSON.stringify(deleteObj),
                 });
                 const result = await res.json();
-                if (!res.ok) {
+                if (!res.ok){
                     return alert(result.message);
                 } else {
                     toast.success('Xóa thành công')

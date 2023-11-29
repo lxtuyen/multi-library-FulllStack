@@ -13,8 +13,9 @@ import ReadingHistory from '~/pages/ReadingHistory';
 
 import Dashboard from 'admin/pages/Dashboard';
 import AllBooks from 'admin/pages/AllBooks';
-import AddBook from 'admin/pages/AddProducts';
+import AddBook from 'admin/pages/AddBook';
 import AllUsers from 'admin/pages/AllUsers';
+import EditBook from 'admin/pages/UpdateBook';
 const publicRoutes = [
     {path: '/', component: Home},
     {path: '/followed/:id', component: Following}, 
@@ -30,6 +31,7 @@ const privareRoutes = [
     {path: '/', component: Dashboard},
     {path: '/allbooks', component: AllBooks},
     {path: '/addbook', component: AddBook},
+    {path: '/editbook/:id', component: EditBook},
     {path: '/users', component: AllUsers}
 ]
 export {publicRoutes, privareRoutes}

@@ -1,6 +1,55 @@
-import React from 'react'
+import axios from 'axios';
+import { BASE_URL } from 'hooks/config';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function AllUsers(){
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [role, setRole] = useState('')
+    const { id } = useParams();
+    const [obj, setObj] = useState([]);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+
+            const data = {
+                role : role
+            };
+            const res = await fetch(`${BASE_URL}/users/${id}`, {
+                method: 'put',
+                headers: { 'content-type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+            if (!res.ok) {
+                return toast.error(result.message)
+            } else {
+                toast.success('Thành công')
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    };
+    useEffect(() => {
+        const getAllUser = async () => {
+            setLoading(true);
+            try {
+                const url = `${BASE_URL}/users`;
+                const { data } = await axios.get(url);
+                setObj(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        getAllUser();
+    }, [])
+    console.log(obj.data);
     return(
         
         <div id='layoutSidenav_content'>
@@ -25,26 +74,28 @@ function AllUsers(){
                                     <th></th>
                                 </tr>
                             </thead>
+                            {loading && <h4>Loading............</h4>}
+                            {error && <h4>Error!!!</h4>}
+                            {!loading && !error && (
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td> 
-                                    <select className="form-select" aria-label=".form-select-sm example">
+                                {obj.data?.map((user, i)=>(
+                                
+                                 <tr>
+                                    <th scope="row">{i}</th>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.phoneNumber}</td>
+                                    <td>{user.address}</td>
+                                    <td>
+                                    <select className="form-select" aria-label=".form-select-sm example" value={user.role}>
                                         <option selected>select role</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="user">User</option>
+                                        <option value="admin" onChange={(e)=>{setRole(e.target.value)}}>Admin</option>
+                                        <option value="user" onChange={(e)=>{setRole(e.target.value)}}>User</option>
                                     </select>
                                     </td>
-                                    <td>
-                                        <button className='btn btn-outline-primary'>Update</button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                </tr>))}
+                            </tbody>)}
                         </table>
                     </div>
                 </div>

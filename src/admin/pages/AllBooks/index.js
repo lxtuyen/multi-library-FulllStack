@@ -1,37 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-
-
-import { BASE_URL } from '~/hooks/config';
-import useFetch from '~/hooks/useFetch';
-import calculateAvgRatings from '~/utils/avgRatings';
 import { toast } from 'react-toastify';
+import classNames from "classnames";
+import { BASE_URL } from '~/hooks/config';
 import { Link } from 'react-router-dom';
-import Tr from 'admin/Components/TableLayout';
+import styled from "../AllBooks/AllBooks.scss";
 function AllBooks() {
+    const cx = classNames.bind(styled)
     const [obj, setObj] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [reviews, setReviews] = useState([]);
     const option = { day: 'numeric', month: 'long', year: 'numeric' };
-    const { avgRatings } = calculateAvgRatings(obj?.reviews);
-
     useEffect(() => {
-        const getAllBook = async () => {
+        const getAllBooks = async () => {
             setLoading(true);
             try {
-                const url = `${BASE_URL}/books?page=1`;
+                const url = `${BASE_URL}/books`;
                 const { data } = await axios.get(url);
-                setObj(data);
+                setObj(data?.books);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
             }
         };
-        getAllBook();
+        getAllBooks();
     }, []);
-
     const handleDelete = async (e, id) => {
         e.preventDefault();
         try {
@@ -44,15 +38,13 @@ function AllBooks() {
             if (!res.ok) {
                 return alert(result.message);
             } else {
-                alert('thanh cong')
-                setObj((book) => book.filter((id) => id._id.toString() !== id))
+                toast.success('xóa thành công')
+                setObj((prevStatus) => prevStatus.filter((book) => book._id !== id));
             }
         } catch (error) {
             toast.error(error.message)
         }
     }
-
-    console.log(obj.books);
     return (
 
         <div id='layoutSidenav_content'>
@@ -68,12 +60,12 @@ function AllBooks() {
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Ảnh</th>
-                                    <th scope="col">Tác giả</th>
-                                    <th scope="col">Thể loại</th>
-                                    <th scope="col">Ngày đăng</th>
-                                    <th scope="col">Đánh giá trung bình</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Genre</th>
+                                    <th scope="col">Publish date</th>
+                                    <th scope="col">Average rate</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -82,9 +74,28 @@ function AllBooks() {
                             {error && <h4>Error!!!</h4>}
                             {!loading && !error && (
                                 <tbody>
-                                    {obj.books?.map((book, i)=>(
-                                        <Tr item={book} key={i} index={i} />
-                                    ))}                  
+                                    {obj?.map((book, i) => (
+                                        //<Tr item={book} key={i} index={i} setObj={(obj) => setObj(obj)} obj={obj.books} />
+                                        <tr>
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{book.title}</td>
+                                            <td> <img src={book.photo} alt={book.title} className={cx('img')} /> </td>
+                                            <td>{book.author}</td>
+                                            <td>{book.genre.map((genre, index) => (
+                                                <div key={index}>
+                                                    {genre} {index !== genre.length - 1 && ','}
+                                                </div>
+                                            ))}</td>
+                                            <td> {new Date(book.createdAt).toLocaleDateString('en-US', option)}</td>
+                                            <td>{book.avgRating}</td>
+                                            <td>
+                                                <button className='btn btn-outline-danger' onClick={(e) => handleDelete(e, book._id)}> Delete </button>
+                                            </td>
+                                            <td>
+                                                <button className='btn btn-outline-primary'><Link to={`/editbook/${book._id}`}>Edit</Link></button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>)}
                         </table>
                     </div>
