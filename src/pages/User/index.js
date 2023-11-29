@@ -9,7 +9,6 @@ import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
 
 const cx = classNames.bind(styles);
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 function User() {
     const { id } = useParams();
     const { user, dispatch } = useContext(AuthContext);
@@ -67,7 +66,9 @@ function User() {
             };
             const res = await fetch(`${BASE_URL}/users/${id}`, {
                 method: 'put',
-                headers: { 'content-type': 'application/json' },
+                headers: { 'content-type': 'application/json',  
+                    'Authorization': `Bearer ${user.token}`,
+                },
                 credentials: 'include',
                 body: JSON.stringify(obj),
             });
