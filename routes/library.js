@@ -4,7 +4,7 @@ import { createrBook, deleteBook, getAllBook, getBookBySearch, getSingleBook, up
 const router = express.Router();
 import { verifyAdmin } from "../untils/VerifyToken.js"
 // create New book
-router.post('/',createrBook);
+router.post('/', verifyAdmin,createrBook);
 // update New book
 router.put('/:id',verifyAdmin,updateBook);
 // delete book

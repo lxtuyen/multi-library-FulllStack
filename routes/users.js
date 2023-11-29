@@ -6,7 +6,7 @@ const router = new express.Router();
 import { verifyUser,verifyAdmin } from "../untils/VerifyToken.js"
 
 // update New UsercreaterUser
-router.put('/:id',updateUser);
+router.put('/:id', verifyUser,updateUser);
 // delete User
 router.delete('/:id' , verifyUser,deleteUser);
 // getSingleUser

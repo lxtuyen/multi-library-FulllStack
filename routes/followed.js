@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post('/', verifyUser, createFollow)
 router.get('/:id', getFollower);
-router.delete('/:id', deleteFollow);
+router.delete('/:id', verifyUser, deleteFollow);
 router.get('/', verifyAdmin, getAllFollow)
 
 
