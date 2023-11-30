@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 function Footer() {
     return (
-            <footer className="text-center text-lg-start text-muted">
+            <footer className="text-center text-lg-start text-muted" >
 
                 <section>
                     <div className="container text-center text-md-start mt-5">

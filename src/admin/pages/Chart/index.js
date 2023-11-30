@@ -54,9 +54,6 @@ function Chart() {
         keys.push(key);
         values.push(value);
     }
-
-    console.log(keys); // ['2023', '2021', '2022']
-    console.log(values); // [1, 1, 2]
     useEffect(() => {
         setBooks(
             {

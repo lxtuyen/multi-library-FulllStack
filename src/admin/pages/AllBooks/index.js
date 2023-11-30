@@ -5,19 +5,23 @@ import classNames from "classnames";
 import { BASE_URL } from '~/hooks/config';
 import { Link } from 'react-router-dom';
 import styled from "../AllBooks/AllBooks.scss";
+import Pagination from 'Components/Layout/components/Pagination';
 function AllBooks() {
     const cx = classNames.bind(styled)
     const [obj, setObj] = useState([]);
+    const [pag, setPag] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
     const option = { day: 'numeric', month: 'long', year: 'numeric' };
     useEffect(() => {
         const getAllBooks = async () => {
             setLoading(true);
             try {
-                const url = `${BASE_URL}/books`;
+                const url = `${BASE_URL}/books?page=${page}&sort=avgRating,desc`;
                 const { data } = await axios.get(url);
                 setObj(data?.books);
+                setPag(data);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -25,7 +29,7 @@ function AllBooks() {
             }
         };
         getAllBooks();
-    }, []);
+    }, [page]);
     const handleDelete = async (e, id) => {
         e.preventDefault();
         try {
@@ -87,7 +91,7 @@ function AllBooks() {
                                                 </div>
                                             ))}</td>
                                             <td> {new Date(book.createdAt).toLocaleDateString('en-US', option)}</td>
-                                            <td>{book.avgRating}</td>
+                                            <td>{book.avgRating || <p>Not Rating</p>}</td>
                                             <td>
                                                 <button className='btn btn-outline-danger' onClick={(e) => handleDelete(e, book._id)}> Delete </button>
                                             </td>
@@ -98,10 +102,17 @@ function AllBooks() {
                                     ))}
                                 </tbody>)}
                         </table>
+                        <Pagination 
+                            page={page}
+                            limit={pag.limit ? pag.limit : 0}
+                            total={pag.total ? pag.total : 0}
+                            setPage={(page) => setPage(page)}
+                        />
                     </div>
                 </div>
             </main>
         </div>
+
     )
 }
 

@@ -14,11 +14,9 @@
     }
 }
 .genre-container{
-    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     div{
-        min-width: 90px;
         display: flex;
         align-items: center;
         margin: 2px 0;

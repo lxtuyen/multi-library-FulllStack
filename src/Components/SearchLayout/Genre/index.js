@@ -19,9 +19,9 @@ const Genre = ({ genres, filterGenre, setFilterGenre }) => {
     return (
         <div className={cx('wrapper')}>
             <h1>Tìm Kiếm Theo Thể Loại</h1>
-            <hr/>
+            <hr />
             <div className={cx('genre-container')}>
-            {genres.map((genre,index) => (
+                {genres.map((genre, index) => (
                     <div key={genre}>
                         <input
                             type='checkbox'
@@ -30,7 +30,7 @@ const Genre = ({ genres, filterGenre, setFilterGenre }) => {
                         />
                         <p>{genre}</p>
                     </div>
-            ))}
+                ))}
             </div>
         </div>
     );

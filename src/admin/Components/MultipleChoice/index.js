@@ -7,15 +7,13 @@ import { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from 'hooks/config';
 import { options } from '@fullcalendar/core/preact';
-
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
-function MultiChoice() {
+function MultiChoice({setGenre}) {
   const [obj, setObj] = useState([]);
   const [error, setError] = useState(null);
   
-  
+  const handleChange = (value) => {
+    setGenre(value)
+  };
   useEffect(() => {
     const getAllBooks = async () => {
       try {

@@ -7,19 +7,23 @@ import Chart from "../Chart";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import styled from "../Dashboard/Dashboard.scss";
+import Pagination from 'Components/Layout/components/Pagination';
 function Dashboard() {
     const cx = classNames.bind(styled)
     const [obj, setObj] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [pag, setPag] = useState([]);
+    const [page, setPage] = useState(1);
     const option = { day: 'numeric', month: 'long', year: 'numeric' };
     useEffect(() => {
         const getAllBooks = async () => {
             setLoading(true);
             try {
-                const url = `${BASE_URL}/books?page=1`;
+                const url = `${BASE_URL}/books?page=${page}&sort=avgRating,desc`;
                 const { data } = await axios.get(url);
                 setObj(data?.books);
+                setPag(data)
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -27,7 +31,7 @@ function Dashboard() {
             }
         };
         getAllBooks();
-    }, []);
+    }, [page]);
     return (
         <>
             <div id="layoutSidenav_content">
@@ -108,6 +112,12 @@ function Dashboard() {
                                             ))}
                                         </tbody>)}
                                 </table>
+                                <Pagination 
+                                page={page}
+                                limit={pag.limit ? pag.limit : 0}
+                                total={pag.total ? pag.total : 0}
+                                setPage={(page) => setPage(page)}
+                                />
                             </div>
                         </div>
                     </div>

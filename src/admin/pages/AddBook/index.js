@@ -1,8 +1,8 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import React, {useState } from 'react';
 
 import { BASE_URL } from '~/hooks/config';
 import MultiChoice from 'admin/Components/MultipleChoice';
+import { toast } from 'react-toastify';
 
 function AddBook(){
     const [title, setTitle] = useState('');
@@ -14,7 +14,6 @@ function AddBook(){
   const [detailHead, setDetailHead] = useState('');
   const [detailLast, setDetailLast] = useState('');
   const [genre, setGenre] = useState('');
-  const [photo, setPhoto] = useState('');
   const [people, setPeople] = useState('');
   const [places, setPlaces] = useState('');
   const [publishedIn, setPublishedIn] = useState('');
@@ -60,10 +59,22 @@ function AddBook(){
                 setAuthor('');
                 setLanguage('');
                 setPublishingCompany('')
-                alert('thanh cong');
+                setPage('')
+                setPreviewAvailable('')
+                setDetailHead('')
+                setDetailLast('')
+                setGenre('')
+                setPreviewURL('')
+                setPeople('')
+                setPlaces('')
+                setPublishedIn('')
+                setVersionNotes('')
+                setDesc('')
+                setLinkOut('')
+                toast.success("Successful")
             }
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message);
         }
 
     }
@@ -82,6 +93,7 @@ function AddBook(){
             .then((data) => setPreviewURL(data.url))
             .catch((err) => console.log(err));
     };
+    console.log(genre);
     return(
         <div id='layoutSidenav_content'>
             <main>
@@ -115,7 +127,7 @@ function AddBook(){
                             <textarea  className="form-control display-2" onChange={(e)=>{setDetailLast(e.target.value)}}></textarea>
 
                             <label className="form-label mt-3" name="genre" >Genre: </label>
-                            <MultiChoice onChange={(e)=>setGenre(e.target.value)}/>
+                            <MultiChoice setGenre={(genre)=>setGenre(genre)}/>
 
                             <label className="form-label mt-3" name="photo" >Image: </label>
                             <input type="file" className="form-control " onChange={handleFileInput}/>
