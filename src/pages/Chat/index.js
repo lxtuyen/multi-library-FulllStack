@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { BASE_URL } from 'hooks/config';
@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import style from './Chat.module.scss';
+import { AuthContext } from '~/context/AuthContext';
 
 const cx = classNames.bind(style);
 
@@ -24,11 +25,16 @@ function Chat() {
     const { id } = useParams();
     const [isTyping, setTyping] = useState(false);
     const [messages, setMessages] = useState([]);
+    const { user  } = useContext(AuthContext);
     useEffect(() => {
         const getAllBook = async () => {
             try {
                 const url = `${BASE_URL}/message/${id}`;
-                const { data } = await axios.get(url);
+                const { data } = await axios.get(url, {
+                    headers: {
+                      Authorization: `Bearer ${user.token}`,
+                    },
+                  });
                 const messages = data.messages
                 setMessages(messages);
             } catch (err) {
@@ -36,7 +42,7 @@ function Chat() {
             }
         };
         getAllBook();
-    }, [id]);
+    }, [id, user.token]);
     const handleSend = async (message) => {
         const newMessage = {
             message: message,
@@ -49,7 +55,7 @@ function Chat() {
         try {
             const res = await fetch(`${BASE_URL}/message/${id}`, {
                 method: 'post',
-                headers: { 'content-type': 'application/json' },
+                headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${user.token}`, },
                 credentials: 'include',
                 body: JSON.stringify(newMessage),
             });

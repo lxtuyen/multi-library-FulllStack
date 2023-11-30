@@ -38,7 +38,9 @@ function Header() {
             setSearchValue(transcript);
         }
     }, [listening, transcript]);
-
+    if (!browserSupportsSpeechRecognition) {
+        console.log('loi');
+    }
     useEffect(()=>{
         setAvatar(user?.data.avatar)
     },[user?.data.avatar])

@@ -65,7 +65,7 @@ function Book() {
                 };
                 const res = await fetch(`${BASE_URL}/followed/${foundBookId}`, {
                     method: 'delete',
-                    headers: { 'content-type': 'application/json' },
+                    headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${user.token}`, },
                     credentials: 'include',
                     body: JSON.stringify(deleteObj),
                 });
@@ -145,17 +145,22 @@ function Book() {
                 navigate('/login');
                 return;
             }
+            const newComments = [...comments, {
+                rating: bookRating,
+              }];
+          
+            const updatedAvgRatings = calculateAvgRatings(newComments);
 
             const reviewObj = {
                 username: user.data.username,
                 avatarUser: user.data.avatar,
                 reviewText: commentText,
                 rating: bookRating,
-                avgRating: calculateAvgRatings([...reviews,bookRating]),
+                avgRating: updatedAvgRatings.avgRatings,
             };
             const res = await fetch(`${BASE_URL}/review/${id}`, {
                 method: 'post',
-                headers: { 'content-type': 'application/json' },
+                headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${user.token}`, },
                 credentials: 'include',
                 body: JSON.stringify(reviewObj),
             });
@@ -170,7 +175,9 @@ function Book() {
                 // Xóa nội dung của ô nhập bình luận
                 commentRef.current.value = '';
             }
+            console.log(reviewObj);
         } catch (error) {
+            console.log(error.message);
             toast.error(error.message)
         }
     };

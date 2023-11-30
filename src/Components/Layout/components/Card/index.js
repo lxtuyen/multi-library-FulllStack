@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 function Card({ items, bookIds, followedId }) {
     const { user } = useContext(AuthContext);
-    const { _id, photo, title, author, genre, reviews, language, follower } = items;
+    const { _id, photo, title, author, genre, reviews, avgRating, language, follower } = items;
     const navigate = useNavigate();
 
     const [isFolloweds, setIsFolloweds] = useState(false);
@@ -41,7 +41,7 @@ function Card({ items, bookIds, followedId }) {
                 };
                 const res = await fetch(`${BASE_URL}/followed/${foundBookId}`, {
                     method: 'delete',
-                    headers: { 'content-type': 'application/json' },
+                    headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${user.token}`, },
                     credentials: 'include',
                     body: JSON.stringify(deleteObj),
                 });
