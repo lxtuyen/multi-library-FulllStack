@@ -19,7 +19,7 @@ import { AuthContext } from '~/context/AuthContext';
 
 const cx = classNames.bind(style);
 
-const API_KEY = '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';
+const API_KEY = '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';
 
 function Chat() {
     const { id } = useParams();
@@ -30,11 +30,7 @@ function Chat() {
         const getAllBook = async () => {
             try {
                 const url = `${BASE_URL}/message/${id}`;
-                const { data } = await axios.get(url, {
-                    headers: {
-                      Authorization: `Bearer ${user.token}`,
-                    },
-                  });
+                const { data } = await axios.get(url);
                 const messages = data.messages
                 setMessages(messages);
             } catch (err) {

@@ -9,6 +9,7 @@ import Login from '~/pages/Login';
 import User from '~/pages/User';
 import Chat from '../pages/Chat';
 import ReadingHistory from '~/pages/ReadingHistory';
+import Content from '~/pages/Content';
 //layout
 
 import Dashboard from 'admin/pages/Dashboard';
@@ -26,6 +27,7 @@ const publicRoutes = [
     {path:'/search', component: SearchType},
     {path: '/chatbot/:id', component: Chat},
     {path: '/user/:id', component: User},
+    {path: '/books/content/:id', component: Content},
 ]
 const privareRoutes = [
     {path: '/', component: Dashboard},

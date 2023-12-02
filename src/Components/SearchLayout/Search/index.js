@@ -17,6 +17,7 @@ const Search = ({ setSearch, search }) => {
             // Update the input field with the recognized speech
             setSearch(transcript);
             inputRef.current.value = transcript;
+            console.log(transcript)
             // Scroll to the end of the input field
             inputRef.current.scrollIntoView({ behavior: "smooth" });
         }

@@ -128,6 +128,30 @@ function Book() {
             toast.error(error.message)
         }
     };
+    const handleRead = async (e) => {
+        e.preventDefault();
+        try {
+            const followedObj = {
+                userId: user.data._id,
+                bookId: _id,
+            };
+            const res = await fetch(`${BASE_URL}/history`, {
+                method: 'post',
+                headers: { 'content-type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(followedObj),
+            });
+
+            const result = await res.json();
+            if (!res.ok) {
+                return toast.error(result.message)
+            } else {
+                navigate(`/books/content/${_id}`);
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
     // xử lý bình luận
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -160,7 +184,7 @@ function Book() {
             };
             const res = await fetch(`${BASE_URL}/review/${id}`, {
                 method: 'post',
-                headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${user.token}`, },
+                headers: { 'content-type': 'application/json'},
                 credentials: 'include',
                 body: JSON.stringify(reviewObj),
             });
@@ -220,13 +244,9 @@ function Book() {
                             <img src={photo} alt={title} />
                         </div>
                         <div className={cx('read-options__button')}>
-                            <button type="button" className="btn btn-primary btn-block">
+                            <button type="button" className="btn btn-primary btn-block" onClick={handleRead}>
                                 <i className="fa-solid fa-book-open-reader"></i>
-                                Đọc
-                            </button>
-                            <button type="button" className="btn btn-primary btn-block">
-                                <i className="fa-solid fa-book"></i>
-                                Mượn Sách
+                                 Đọc                     
                             </button>
                             {isFolloweds ? (
                                 <button onClick={handleDelete} className="btn btn-danger">

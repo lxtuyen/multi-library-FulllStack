@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { MDBContainer, MDBCheckbox } from 'mdb-react-ui-kit';
+import { MDBContainer } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { toast } from 'react-toastify';
