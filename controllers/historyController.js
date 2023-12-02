@@ -2,22 +2,31 @@ import History from "../models/history.js";
 import User from "../models/User.js";
 
 export const createHistory = async (req, res) => {
-  const id = req.body.userId;
-  const newHistory = new History({ ...req.body });
+  const userId = req.body.userId;
+  const bookId = req.body.bookId;
   try {
+    const check = await History.find({bookId: bookId, userId: userId})
+    if(check){
+      return res
+        .status(200)
+        .json({ success: true, message: "Đã đọc" });
+  } else{
+    const newHistory = new History({ ...req.body });
     const savedHistory = newHistory.save();
     await User.findByIdAndUpdate(id, {
       $push: { readingHistory: 
         (await savedHistory)._id
      },
     })
-    res
+    return res
       .status(200)
       .json({
         success: true,
         message: "your book is followed",
         data: savedHistory,
       });
+  }
+   
   } catch (error) {
     res.status(404).json({ success: false, message: error.message });
   }
@@ -28,7 +37,7 @@ export const getHistory = async(req,res)=>{
   const page = parseInt(req.query.page) - 1 || 0;
   const limit = parseInt(req.query.limit) || 6;
   try {
-    const user = await User.findById(id).populate('followed');
+    const user = await User.findById(id).populate('readingHistory');
     if (!Array.prototype.skip) {
       Array.prototype.skip = function(n) {
         return this.slice(n);
@@ -50,7 +59,7 @@ export const getHistory = async(req,res)=>{
   } catch (error) {
     res
     .status(404)
-    .json({ success: false, message: "not found" });
+    .json({ success: false, message: error.message });
   }
 }
 // alll follow

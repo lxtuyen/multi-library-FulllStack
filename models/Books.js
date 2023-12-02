@@ -113,7 +113,11 @@ const bookSchema = new mongoose.Schema(
         checkNearbyLibraries: {
             type: [String],
             require: true,
-        },
+        },  
+        contents: [{
+            type: mongoose.Types.ObjectId,
+            ref: "Content"
+        }],
     },
     { timestamps: true}
 );

@@ -6,15 +6,15 @@ const router = new express.Router();
 import { verifyUser,verifyAdmin } from "../untils/VerifyToken.js"
 
 // update New UsercreaterUser
-router.post('/carousel', verifyAdmin ,createrCarousel);
+router.post('/carousel' ,createrCarousel);
 // get All User
 router.get('/carousel' ,getAllCarousel);
 // creater Type
-router.post('/genre', verifyAdmin ,createrGenre);
+router.post('/genre' ,createrGenre);
 // get All Type
 router.get('/genre' ,getAllGenre);
 // creater Slider
-router.post('/Slider', verifyAdmin ,createrSlider);
+router.post('/Slider' ,createrSlider);
 // get All Slider
 router.get('/Slider' ,getAllSlider);
 

@@ -64,7 +64,7 @@ export const deleteUser = async(req,res)=>{
 export const getAllUser = async(req,res)=>{
 
   try {
-    const users = await User.findById({}) 
+    const users = await User.find({}) 
     res
       .status(200)
       .json({

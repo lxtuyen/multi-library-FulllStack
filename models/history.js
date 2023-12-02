@@ -6,23 +6,9 @@ const historySchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Book",
     },
-    bookName: {
-      type: String,
-      required: true,
-    },
-    author: {
-      type: String,
-      required: true,
-    },
-    avgRating: {
-      type: Number,
-    },
-    language: {
-      type: String,
-      require: true,
-  },
-    photo: {
-      type: String,
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
     },
   },
   { timestamps: true }
