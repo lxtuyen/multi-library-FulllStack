@@ -31,7 +31,7 @@ function Slider() {
                     aria-label="Slide 3"
                 ></button>
             </div>
-            <div className={cx('carousel-inner')}>
+            <div className='carousel-inner'>
                 <div className='carousel-item active'>
                     <img src={images.slide1} className='d-block w-100' alt="..." />
                 </div>

@@ -54,7 +54,7 @@ function Header() {
     }, [debounced]);
 
     const logout = () => {
-        navigate('/search');
+        window.location.href = "/"
         dispatch({ type: 'LOGOUT' });
         googleLogout();
     };
@@ -74,7 +74,7 @@ function Header() {
                     <ul>
                         <li className={cx('nav-item__type-list')}>
                             <i className="fa-solid fa-book"></i>
-                            <span>Thể Loại</span>
+                            <small>&nbsp;Thể Loại</small>
                             <div className={cx('wrapper-list')}>
                                 <div class="row">
                                     {Genres?.map((Genre,i)=>(
@@ -89,14 +89,14 @@ function Header() {
                         </li>
                         <li>
                             <NavLink to={`/chatbot/${user?.data._id}`}>
-                                <i className="fa-solid fa-crown"></i>
-                                <span>Chatbot</span>
+                            <i class="fas fa-robot"></i>
+                                <small>&nbsp;Chatbot</small>
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/search">
                                 <i className="fa-solid fa-magnifying-glass"></i>
-                                <span>Tìm Kiếm</span>
+                                <small> Tìm Kiếm</small>
                             </NavLink>
                         </li>
                     </ul>

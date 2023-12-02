@@ -1,5 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 import { BASE_URL } from '~/hooks/config';
 import useFetch from '~/hooks/useFetch';
@@ -77,7 +76,7 @@ function EditBook() {
             if (!res.ok) {
                 return toast.error(result.message)
             } else {
-                toast.success('Thành công')
+                toast.success('Successful')
             }
         } catch (error) {
             toast.error(error.message)

@@ -34,7 +34,7 @@ function Setting(){
     console.log(user.role);
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
-        navitage('/');
+        window.location.href = "/"
     };
     return (
         <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
