@@ -39,7 +39,7 @@ function Book() {
     const { avgRatings } = calculateAvgRatings(reviews);
     //kiểm tra xem có theo dõi chưa
     const { data: followed } = useFetch(`${BASE_URL}/users/${idUser}`);
-
+    const { data: HistoryBook } = useFetch(`${BASE_URL}/hisory/book/${idUser}`);
     const bookIds = [followed?.map((book) => book.bookId)];
 
     const bookIdsArray = Array.from(bookIds.toString().split(','));
@@ -134,6 +134,11 @@ function Book() {
             const followedObj = {
                 userId: user.data._id,
                 bookId: _id,
+                bookName: title,
+                author: author,
+                avgRating: avgRatings,
+                language: language,
+                photo: photo,
             };
             const res = await fetch(`${BASE_URL}/history`, {
                 method: 'post',
@@ -285,7 +290,7 @@ function Book() {
                     <BookVendor book={books} Loading={loading} error={error} />
                 </div>
                 <div className={cx('wrapper__right')}>
-                    <OverViewBook book={books} comments={comments} Loading={loading} error={error} />
+                    <OverViewBook book={books} HistoryBook={HistoryBook} comments={comments} Loading={loading} error={error} />
                 </div>
             </div>
             <div className={cx('wrapper__comment-box')}>

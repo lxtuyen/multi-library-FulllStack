@@ -10,7 +10,7 @@ import Start from '~/components/Layout/components/Start';
 
 const cx = classNames.bind(styles);
 
-const OverViewBook = ({ book, comments, Loading, error }) => { 
+const OverViewBook = ({ book, HistoryBook, comments, Loading, error }) => { 
     const { avgRatings } = calculateAvgRatings(comments);
     
     return (
@@ -30,8 +30,8 @@ const OverViewBook = ({ book, comments, Loading, error }) => {
                         </li>
                         <li>{book.reviews?.length} Đánh giá</li>
                         <li>{book.followed?.length ? book.followed?.length : 0} Đang theo dõi</li>
-                        <li> {book.currentlyReading} Hiện đang đọc</li>
-                        <li>{book.haveRead} Đã đọc</li>
+                        <li> {HistoryBook?.length} Hiện đang đọc</li>
+                        <li>{HistoryBook?.length} Đã đọc</li>
                     </ul>
                     <ul className={cx('book-navbar')}>
                         <li>

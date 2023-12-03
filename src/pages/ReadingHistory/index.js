@@ -12,8 +12,6 @@ function ReadingHistory() {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const title = "Lịch sử đọc";
-
-
     useEffect(() => {
         const getAllHistory = async () => {
             setLoading(true);
@@ -31,7 +29,7 @@ function ReadingHistory() {
     }, [id, page]);
     return (
         <>
-            <RSideBar obj={obj} value={2} title={title} error={error} loading={loading} setPage={setPage} page={page} />
+            <RSideBar obj={obj} title={title} error={error} loading={loading} setPage={setPage} page={page} />
         </>
     );
 }

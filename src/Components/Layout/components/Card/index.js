@@ -25,9 +25,8 @@ function Card({ items, bookIds, followedId }) {
     const foundBookIds = followedIds?.filter((bookId) => {
         return followerId?.includes(bookId);
     });
-
+    console.log(foundBookIds)
     useEffect(() => {
-
         setIsFolloweds(isFollowed)
         setFollowerId(follower)
     }, [isFollowed, follower])
@@ -47,7 +46,7 @@ function Card({ items, bookIds, followedId }) {
                 });
                 const result = await res.json();
                 if (!res.ok) {
-                    return alert(result.message);
+                    return toast.error(result.message)
                 } else {
                     return foundBookId;
                 }
@@ -94,7 +93,7 @@ function Card({ items, bookIds, followedId }) {
 
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return toast.error(result.message)
             } else {
                 toast.success('Theo dõi thành công')
                 setIsFolloweds(true)
