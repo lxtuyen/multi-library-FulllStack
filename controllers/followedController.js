@@ -5,8 +5,16 @@ import Book from "../models/Books.js";
 export const createFollow = async (req, res) => {
   const idUser = req.body.userId;
   const idBook = req.body.bookId;
-  const newFollowed = new Followed({ ...req.body });
+
+  
   try {
+    const check = await Followed.findOne({bookId: idBook, userId: idUser})
+    if(check){
+      return res
+        .status(200)
+        .json({ success: true, message: "Đã đọc" });
+  } else{
+    const newFollowed = new Followed({ ...req.body });
     const savedFollowed = await  newFollowed.save();
     await User.findByIdAndUpdate(idUser, {
       $push: { followed:  savedFollowed._id },
@@ -19,6 +27,7 @@ export const createFollow = async (req, res) => {
       message: "your book is followed",
       savedFollowed,
     });
+  }
   } catch (error) {
     res.status(404).json({ success: false, message: error.message });
   }

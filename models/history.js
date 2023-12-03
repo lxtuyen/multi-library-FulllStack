@@ -10,6 +10,20 @@ const historySchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "User",
     },
+    author: {
+      type: String,
+      required: true,
+    },
+    avgRating: {
+      type: Number,
+    },
+    language: {
+      type: String,
+      require: true,
+  },
+    photo: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

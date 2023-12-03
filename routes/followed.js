@@ -5,9 +5,9 @@ import { createFollow, getFollower, deleteFollow, getAllFollow } from '../contro
 
 const router = express.Router()
 
-router.post('/', verifyUser, createFollow)
+router.post('/', createFollow);
 router.get('/:id', getFollower);
-router.delete('/:id', verifyUser, deleteFollow);
+router.delete('/:id', deleteFollow);
 router.get('/', verifyAdmin, getAllFollow)
 
 

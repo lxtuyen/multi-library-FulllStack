@@ -1,5 +1,6 @@
 import Book from "../models/Books.js";
 import Genre from "../models/Genre.js";
+import History from "../models/history.js";
 
 export const createrBook = async(req, res) => {
 
@@ -66,7 +67,7 @@ export const getSingleBook = async(req,res)=>{
   const id = req.params.id;
   try {
     const book = await Book.findById(id).populate('reviews')
-
+    const reader = await History.find({ bookId: id })
     res
       .status(200)
       .json({
