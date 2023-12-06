@@ -25,7 +25,7 @@ function Card({ items, bookIds, followedId }) {
     const foundBookIds = followedIds?.filter((bookId) => {
         return followerId?.includes(bookId);
     });
-    console.log(foundBookIds)
+
     useEffect(() => {
         setIsFolloweds(isFollowed)
         setFollowerId(follower)

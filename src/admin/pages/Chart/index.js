@@ -10,7 +10,7 @@ function Chart() {
     useEffect(() => {
         const getAllBooks = async () => {
             try {
-                const url = `${BASE_URL}/books?page=1`;
+                const url = `${BASE_URL}/books`;
                 const { data } = await axios.get(url);
                 setObj(data?.books);
             } catch (err) {
@@ -60,9 +60,10 @@ function Chart() {
     }, [keys, obj, values])
     return (
         <>
-           <Bar data={books} />
+           
         </>
     )
 }
 
 export default Chart;
+//<Bar data={books} />

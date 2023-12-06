@@ -23,7 +23,6 @@ function AddBook(){
   const [previewURL, setPreviewURL] = useState('');
     const handleSubmit = async (e) =>{
         e.preventDefault();
-
           try {
             const data = {
                 title: title,
@@ -43,7 +42,6 @@ function AddBook(){
                 desc : desc,
                 linkOut : linkOut,
               };
-              console.log(data);
             const res = await fetch(`${BASE_URL}/books`, {
                 method: 'post',
                 headers: { 'content-type': 'application/json' },
@@ -93,7 +91,6 @@ function AddBook(){
             .then((data) => setPreviewURL(data.url))
             .catch((err) => console.log(err));
     };
-    console.log(genre);
     return(
         <div id='layoutSidenav_content'>
             <main>
