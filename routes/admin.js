@@ -1,5 +1,5 @@
 import express from 'express';
-import { createrCarousel, getAllCarousel, createrGenre , getAllGenre, createrSlider, getAllSlider } from '../controllers/adminController.js';
+import { createrCarousel, getAllCarousel, createrGenre, deleteGenre , getAllGenre, createrSlider, getAllSlider } from '../controllers/adminController.js';
 
 const router = new express.Router();
 
@@ -9,10 +9,12 @@ import { verifyUser,verifyAdmin } from "../untils/VerifyToken.js"
 router.post('/carousel' ,createrCarousel);
 // get All User
 router.get('/carousel' ,getAllCarousel);
-// creater Type
+// creater genre
 router.post('/genre' ,createrGenre);
-// get All Type
+// get All genre
 router.get('/genre' ,getAllGenre);
+// deleteGenre
+router.delete('/genre/:id' ,deleteGenre);
 // creater Slider
 router.post('/Slider' ,createrSlider);
 // get All Slider
