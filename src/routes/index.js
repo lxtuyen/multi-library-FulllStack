@@ -1,5 +1,3 @@
-//layout
-
 import Home from '~/pages/Home';
 import Following from '~/pages/Followed';
 import Register from '~/pages/Register';
@@ -9,13 +7,15 @@ import Login from '~/pages/Login';
 import User from '~/pages/User';
 import Chat from '../pages/Chat';
 import ReadingHistory from '~/pages/ReadingHistory';
-//layout
-
+import Content from '~/pages/Content';
+//admin layout
 import Dashboard from 'admin/pages/Dashboard';
 import AllBooks from 'admin/pages/AllBooks';
 import AddBook from 'admin/pages/AddBook';
 import AllUsers from 'admin/pages/AllUsers';
 import EditBook from 'admin/pages/UpdateBook';
+import Genre from 'admin/pages/Genre';
+
 const publicRoutes = [
     {path: '/', component: Home},
     {path: '/followed/:id', component: Following}, 
@@ -26,12 +26,14 @@ const publicRoutes = [
     {path:'/search', component: SearchType},
     {path: '/chatbot/:id', component: Chat},
     {path: '/user/:id', component: User},
+    {path: '/books/content/:id', component: Content},
 ]
 const privareRoutes = [
     {path: '/', component: Dashboard},
     {path: '/allbooks', component: AllBooks},
     {path: '/addbook', component: AddBook},
     {path: '/editbook/:id', component: EditBook},
-    {path: '/users', component: AllUsers}
+    {path: '/users', component: AllUsers},
+    {path: '/genres', component: Genre}
 ]
 export {publicRoutes, privareRoutes}

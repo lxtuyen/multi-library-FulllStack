@@ -28,7 +28,10 @@ function Sidebar(){
                             <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
                                 Users
                             </Link>
-
+                            <Link className="nav-link" to="/genres">
+                            <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
+                                Genre
+                            </Link>
                         </div>
                     </div>
                     <div className="sb-sidenav-footer">

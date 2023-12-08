@@ -66,9 +66,7 @@ function User() {
             };
             const res = await fetch(`${BASE_URL}/users/${id}`, {
                 method: 'put',
-                headers: { 'content-type': 'application/json',  
-                    'Authorization': `Bearer ${user.token}`,
-                },
+                headers: { 'content-type': 'application/json'},
                 credentials: 'include',
                 body: JSON.stringify(obj),
             });

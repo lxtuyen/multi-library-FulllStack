@@ -26,26 +26,26 @@ function AddBook() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
+          try {
             const data = {
                 title: title,
                 author: author,
                 language: language,
-                publishingCompany: publishingCompany,
-                page: page,
-                previewAvailable: previewAvailable,
-                detailHead: detailHead,
-                detailLast: detailLast,
-                genre: genre,
-                photo: previewURL,
-                people: people,
-                places: places,
-                publishedIn: publishedIn,
-                versionNotes: versionNotes,
-                desc: desc,
-                linkOut: linkOut,
-            };
-            console.log(data);
+                publishingCompany : publishingCompany,
+                page : page,
+                previewAvailable : previewAvailable,
+                detailHead : detailHead,
+                detailLast : detailLast,
+                genre : genre,
+                photo : previewURL,
+                people : people,
+                places : places,
+                publishedIn : publishedIn,
+                versionNotes : versionNotes,
+                desc : desc,
+                linkOut : linkOut,
+              };
+              console.log(data);
             const res = await fetch(`${BASE_URL}/books`, {
                 method: 'post',
                 headers: { 'content-type': 'application/json' },
@@ -97,7 +97,7 @@ function AddBook() {
             .catch((err) => console.log(err));
     };
     console.log(genre);
-    return (
+    return(
         <div id='layoutSidenav_content'>
             <main>
                 <div class="container-fluid px-4">

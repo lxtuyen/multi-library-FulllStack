@@ -1,8 +1,8 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
-import {  toast } from 'react-toastify';
-import SyncLoader from 'react-spinners/SyncLoader'
+import { toast } from 'react-toastify';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 import styles from './RSideBar.module.scss';
 import Sidebar from '~/components/UserLayout/Sidebar';
@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 
 function RSideBar({ title, value, obj, error, loading, setPage, page }) {
     const { user } = useContext(AuthContext);
-    const type = (value = 1 ? obj.followed : obj.readingHistory);
+    const type = title === 'Đang theo dõi' ? obj.followed : obj.readingHistory;
     const option = { day: 'numeric', month: 'long', year: 'numeric' };
     const [status, setStatus] = useState([]);
     useEffect(() => {
@@ -23,27 +23,51 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
     }, [obj, type, value]);
     const handleDelete = async (e, _id, bookId) => {
         e.preventDefault();
-            try {
-                const deleteObj = {
-                    userId: user.data._id,
-                    bookId: bookId,
-                };
-                const res = await fetch(`${BASE_URL}/followed/${_id}`, {
-                    method: 'delete',
-                    headers: { 'content-type': 'application/json' },
-                    credentials: 'include',
-                    body: JSON.stringify(deleteObj),
-                });
-                const result = await res.json();
-                if (!res.ok){
-                    return alert(result.message);
-                } else {
-                    toast.success('Xóa thành công')
-                    setStatus((prevStatus) => prevStatus.filter((id) => id._id.toString() !== _id));
-                }
-            } catch (error) {
-                toast.error('Xóa thất bại')
+        try {
+            const deleteObj = {
+                userId: user.data._id,
+                bookId: bookId,
+            };
+            const res = await fetch(`${BASE_URL}/followed/${_id}`, {
+                method: 'delete',
+                headers: { 'content-type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(deleteObj),
+            });
+            const result = await res.json();
+            if (!res.ok) {
+                return alert(result.message);
+            } else {
+                toast.success('Xóa thành công');
+                setStatus((prevStatus) => prevStatus.filter((id) => id._id.toString() !== _id));
             }
+        } catch (error) {
+            toast.error('Xóa thất bại');
+        }
+    };
+    const handleDeleteHistory = async (e, _id, bookId) => {
+        e.preventDefault();
+        try {
+            const deleteObj = {
+                userId: user.data._id,
+                bookId: bookId,
+            };
+            const res = await fetch(`${BASE_URL}/history/${_id}`, {
+                method: 'delete',
+                headers: { 'content-type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(deleteObj),
+            });
+            const result = await res.json();
+            if (!res.ok) {
+                return alert(result.message);
+            } else {
+                toast.success('Xóa thành công');
+                setStatus((prevStatus) => prevStatus.filter((id) => id._id.toString() !== _id));
+            }
+        } catch (error) {
+            toast.error('Xóa thất bại');
+        }
     };
     return (
         <div className={cx('wrapper')}>
@@ -90,14 +114,25 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
                                                                     Đọc tiếp
                                                                 </button>
                                                             </Link>
-                                                            <button
-                                                                onClick={(e) =>
-                                                                    handleDelete(e, value._id, value.bookId)
-                                                                }
-                                                                className="btn btn-danger"
-                                                            >
-                                                                Xóa
-                                                            </button>
+                                                            {title === 'Đang theo dõi' ? (
+                                                                <button
+                                                                    onClick={(e) =>
+                                                                        handleDelete(e, value._id, value.bookId)
+                                                                    }
+                                                                    className="btn btn-danger"
+                                                                >
+                                                                    Xóa
+                                                                </button>
+                                                            ) : (
+                                                                <button
+                                                                    onClick={(e) =>
+                                                                        handleDeleteHistory(e, value._id, value.bookId)
+                                                                    }
+                                                                    className="btn btn-danger"
+                                                                >
+                                                                    Xóa
+                                                                </button>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </td>

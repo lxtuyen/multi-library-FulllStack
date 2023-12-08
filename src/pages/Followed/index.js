@@ -31,7 +31,7 @@ function Following() {
     console.log(obj);
     return (
         <>
-        <RSideBar obj={obj} value={1} title={title} error={error} loading={loading} setPage={setPage} page={page} />
+        <RSideBar obj={obj} title={title} error={error} loading={loading} setPage={setPage} page={page} />
     </>
     );
 }

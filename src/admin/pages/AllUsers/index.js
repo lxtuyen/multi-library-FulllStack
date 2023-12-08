@@ -54,9 +54,8 @@ function AllUsers(){
             }
         };
         getAllUser();
-    }, [user.token])
-
-    
+    }, [])
+    console.log(obj.data);
     return(
         
         <div id='layoutSidenav_content'>

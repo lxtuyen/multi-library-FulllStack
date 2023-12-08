@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from './SearchType.module.scss';
 import Search from '~/Components/SearchLayout/Search';
@@ -30,10 +30,6 @@ function SearchType() {
         const getAllBook = async () => {
             setLoading(true);
             try {
-                const url = `${BASE_URL}/books?page=${page}&sort=${sort.sort},${sort.order}&genre=${filterGenre.toString()}&search=${encodeURIComponent(debounced)}`;
-                const { data } = await axios.get(url);
-                setObj(data);
-                setLoading(false);
                 const queryParams = new URLSearchParams({
                     page: page,
                     sort: sort.sort,
@@ -45,6 +41,10 @@ function SearchType() {
                 if (filterGenre.length > 0) {
                     queryParams.set('genre', filterGenre.toString());
                   }
+                const url = `${BASE_URL}/books?page=${page}&sort=${sort.sort},${sort.order}&genre=${filterGenre.toString()}&search=${encodeURIComponent(debounced)}`;
+                const { data } = await axios.get(url);
+                setObj(data);
+                setLoading(false);
                 navigate(`/search?${queryParams.toString()}`);
             } catch (err) {
                 setError(err.message);

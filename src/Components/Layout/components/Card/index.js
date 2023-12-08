@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 function Card({ items, bookIds, followedId }) {
     const { user } = useContext(AuthContext);
-    const { _id, photo, title, author, genre, reviews, avgRating, language, follower } = items;
+    const { _id, photo, title, author, genre, reviews, language, follower } = items;
     const navigate = useNavigate();
 
     const [isFolloweds, setIsFolloweds] = useState(false);
@@ -27,7 +27,6 @@ function Card({ items, bookIds, followedId }) {
     });
 
     useEffect(() => {
-
         setIsFolloweds(isFollowed)
         setFollowerId(follower)
     }, [isFollowed, follower])
@@ -41,13 +40,13 @@ function Card({ items, bookIds, followedId }) {
                 };
                 const res = await fetch(`${BASE_URL}/followed/${foundBookId}`, {
                     method: 'delete',
-                    headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${user.token}`, },
+                    headers: { 'content-type': 'application/json'},
                     credentials: 'include',
                     body: JSON.stringify(deleteObj),
                 });
                 const result = await res.json();
                 if (!res.ok) {
-                    return alert(result.message);
+                    return toast.error(result.message)
                 } else {
                     return foundBookId;
                 }
@@ -94,7 +93,7 @@ function Card({ items, bookIds, followedId }) {
 
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return toast.error(result.message)
             } else {
                 toast.success('Theo dõi thành công')
                 setIsFolloweds(true)
