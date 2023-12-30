@@ -1,3 +1,5 @@
 npm i @mui/material @emotion/react @emotion/styled @mui/x-data-grid @mui/icons-material react-pro-sidebar@0.7.1 formik yup @fullcalendar/core @ful
 lcalendar/daygrid @fullcalendar/timegrid @fullcalendar/list @nivo/core @nivo/pie @ni
-vo/line @nivo/bar @nivo/geo        
+vo/line @nivo/bar @nivo/geo 
+npm install --save @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+npm i html-react-parser

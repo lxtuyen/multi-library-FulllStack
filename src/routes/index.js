@@ -15,6 +15,9 @@ import AddBook from 'admin/pages/AddBook';
 import AllUsers from 'admin/pages/AllUsers';
 import EditBook from 'admin/pages/UpdateBook';
 import Genre from 'admin/pages/Genre';
+import AddContent from 'admin/pages/AddContent';
+import Chapters from 'admin/pages/Chapters';
+import EditContent from 'admin/pages/UpdateContent';
 
 const publicRoutes = [
     {path: '/', component: Home},
@@ -34,6 +37,9 @@ const privareRoutes = [
     {path: '/addbook', component: AddBook},
     {path: '/editbook/:id', component: EditBook},
     {path: '/users', component: AllUsers},
-    {path: '/genres', component: Genre}
+    {path: '/genres', component: Genre},
+    {path: '/addContent/:id', component: AddContent},
+    {path: '/chapters/:id', component: Chapters},
+    {path: '/editChapters/:id', component: EditContent},
 ]
 export {publicRoutes, privareRoutes}

@@ -72,6 +72,7 @@ function AllBooks() {
                                     <th scope="col">Average rate</th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             {loading && <h4>Loading............</h4>}
@@ -79,7 +80,6 @@ function AllBooks() {
                             {!loading && !error && (
                                 <tbody>
                                     {obj?.map((book, i) => (
-                                        //<Tr item={book} key={i} index={i} setObj={(obj) => setObj(obj)} obj={obj.books} />
                                         <tr>
                                             <th scope="row">{i + 1}</th>
                                             <td>{book.title}</td>
@@ -93,10 +93,13 @@ function AllBooks() {
                                             <td> {new Date(book.createdAt).toLocaleDateString('en-US', option)}</td>
                                             <td>{book.avgRating || <p>Not Rating</p>}</td>
                                             <td>
-                                                <button className='btn btn-outline-danger' onClick={(e) => handleDelete(e, book._id)}> Delete </button>
-                                            </td>
+                                                <button className='btn btn-outline-primary'><Link to={`/chapters/${book._id}`}>Chapters</Link></button>
+                                            </td> 
                                             <td>
                                                 <button className='btn btn-outline-primary'><Link to={`/editbook/${book._id}`}>Edit</Link></button>
+                                            </td>
+                                            <td>
+                                                <button className='btn btn-outline-danger' onClick={(e) => handleDelete(e, book._id)}> Delete </button>
                                             </td>
                                         </tr>
                                     ))}

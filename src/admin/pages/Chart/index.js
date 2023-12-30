@@ -4,21 +4,28 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { toast } from 'react-toastify';
+import {
+    Chart as ChartJS,
+} from 'chart.js/auto'
+
 function Chart() {
     const [obj, setObj] = useState([]);
     const option = { year: 'numeric' };
     useEffect(() => {
         const getAllBooks = async () => {
             try {
-                const url = `${BASE_URL}/books`;
+                const url = `${BASE_URL}/books?page=1`;
                 const { data } = await axios.get(url);
                 setObj(data?.books);
+
             } catch (err) {
                 toast.error(err.message)
             }
         };
         getAllBooks();
-    },[]);
+    }, []);
+
+
     const [books, setBooks] = useState({
         labels: [],
         datasets: [
@@ -28,7 +35,9 @@ function Chart() {
             }
         ]
     })
+
     const arrDate = obj?.map((book) => new Date(book.publishedIn).toLocaleDateString('en-US', option))
+    console.log(arrDate);
     const countOccurrences = (arrDate) => {
         const occurrences = {};
         for (const item of arrDate) {
@@ -45,6 +54,9 @@ function Chart() {
         keys.push(key);
         values.push(value);
     }
+
+    console.log(keys); // ['2023', '2021', '2022']
+    console.log(values); // [1, 1, 2]
     useEffect(() => {
         setBooks(
             {
@@ -57,13 +69,12 @@ function Chart() {
                 ]
             }
         )
-    }, [keys, obj, values])
+    }, [obj])
     return (
         <>
-           
+            <Bar data={books} />
         </>
     )
 }
 
 export default Chart;
-//<Bar data={books} />

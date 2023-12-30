@@ -199,9 +199,6 @@ const Login = () => {
                     </div>
                     <div className="d-flex justify-content-between mx-4 mb-4">
                         <p className="ms-5">
-                                Quên mật khẩu
-                        </p>
-                        <p className="ms-5">
                             Chưa có tài khoản?
                             <Link to="/register" className="link-info">
                                 Đăng Ký

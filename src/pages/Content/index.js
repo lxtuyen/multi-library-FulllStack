@@ -10,29 +10,31 @@ const cx = classNames.bind(styles);
 function Content() {
     const { id } = useParams();
     const [result, setResult] = useState([]);
-    const { data: contents } = useFetch(`${BASE_URL}/content/${id}`);
+    const { data: chapter } = useFetch(`${BASE_URL}/content/${id}`);
+    console.log(chapter)
     const onChange = (pageNumber) => {
-        const result = contents.filter((item) => item.chapter === pageNumber);
+        const result = chapter?.filter((item) => item.chapter === pageNumber);
         setResult(result)
       };
       useEffect(()=>{
-        const result = contents.filter((item) => item.chapter === 1);
+        const result = chapter?.filter((item) => item.chapter === 2);
         setResult(result)
-      },[contents])
+      },[chapter])
     return (
         <div className={cx('wrapper')}>
-            {result.map((item) => (
+            {result?.map((item) => (
             <>
             <h1>{item.title}</h1>
             <div className="container">
                 <div className={cx('content')}>
-                    {item.content}
+                    <div dangerouslySetInnerHTML={{__html: item.content}}></div>
+                    
                 </div>
                 </div>
             </>
             ))}
                 <div className={cx('pagination')}>
-                    <Pagination showQuickJumper defaultCurrent={1} total={`${contents.length}0`} onChange={onChange} />
+                    <Pagination defaultCurrent={1} total={`${chapter.length}0`} onChange={onChange} />
                 </div>  
         </div>
     );

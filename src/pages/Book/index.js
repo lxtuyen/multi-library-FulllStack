@@ -131,6 +131,11 @@ function Book() {
     const handleRead = async (e) => {
         e.preventDefault();
         try {
+            if (!user || user === undefined || user === null) {
+                toast.warn('Vui lòng đăng nhập.')
+                navigate('/login');
+                return;
+            }
             const followedObj = {
                 userId: user.data._id,
                 bookId: _id,
@@ -198,7 +203,6 @@ function Book() {
             if (!res.ok) {
                 return toast.error(result.message)
             } else {
-                console.log(reviewObj);
                 toast.success('Thành công')
                 setComments([...comments, result.data]);
                 // Xóa nội dung của ô nhập bình luận

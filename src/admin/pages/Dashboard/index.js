@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AllBooks from "../AllBooks";
 import { useEffect } from "react";
 import { BASE_URL } from "hooks/config";
 import axios from "axios";
@@ -95,7 +94,6 @@ function Dashboard() {
                                     {!loading && !error && (
                                         <tbody>
                                             {obj?.map((book, i) => (
-                                                //<Tr item={book} key={i} index={i} setObj={(obj) => setObj(obj)} obj={obj.books} />
                                                 <tr>
                                                     <th scope="row">{i + 1}</th>
                                                     <td>{book.title}</td>
@@ -107,7 +105,7 @@ function Dashboard() {
                                                         </h5>
                                                     ))}</td>
                                                     <td> {new Date(book.createdAt).toLocaleDateString('en-US', option)}</td>
-                                                    <td>{book.avgRating}</td>
+                                                    <td>{book.avgRating || <p>Not Rating</p>}</td>
                                                 </tr>
                                             ))}
                                         </tbody>)}
