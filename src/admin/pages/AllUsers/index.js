@@ -1,10 +1,12 @@
 import axios from 'axios';
+import { AuthContext } from 'context/AuthContext';
 import { BASE_URL } from 'hooks/config';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 function AllUsers(){
+    const { user  } = useContext(AuthContext);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [role, setRole] = useState('')
@@ -39,7 +41,11 @@ function AllUsers(){
             setLoading(true);
             try {
                 const url = `${BASE_URL}/users`;
-                const { data } = await axios.get(url);
+                const { data } = await axios.get(
+                    url,{
+                    headers: { 'content-type': 'application/json',},
+                    cookies: {'accessToken': user.token},
+                });
                 setObj(data);
                 setLoading(false);
             } catch (err) {
@@ -49,6 +55,7 @@ function AllUsers(){
         };
         getAllUser();
     }, [])
+    console.log(obj.data);
     return(
         
         <div id='layoutSidenav_content'>

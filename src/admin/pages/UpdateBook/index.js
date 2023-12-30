@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { BASE_URL } from '~/hooks/config';
 import useFetch from '~/hooks/useFetch';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-function EditBook() {
 
+function EditBook() {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [language, setLanguage] = useState('');
@@ -77,6 +78,7 @@ function EditBook() {
                 return toast.error(result.message)
             } else {
                 toast.success('Successful')
+                navigate('/allbooks')
             }
         } catch (error) {
             toast.error(error.message)
