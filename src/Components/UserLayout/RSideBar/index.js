@@ -36,7 +36,7 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
             });
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return  toast.error(result.message)
             } else {
                 toast.success('Xóa thành công');
                 setStatus((prevStatus) => prevStatus.filter((id) => id._id.toString() !== _id));
@@ -60,7 +60,7 @@ function RSideBar({ title, value, obj, error, loading, setPage, page }) {
             });
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return toast.error(result.message)
             } else {
                 toast.success('Xóa thành công');
                 setStatus((prevStatus) => prevStatus.filter((id) => id._id.toString() !== _id));

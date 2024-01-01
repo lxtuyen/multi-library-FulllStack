@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
-
-import { BASE_URL } from '~/hooks/config';
 import { toast } from 'react-toastify';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useParams } from 'react-router-dom';
+
+import { BASE_URL } from '~/hooks/config';
+
 function AddBook() {
     const { id } = useParams();
     const chapterInputRef = useRef(null);
-  const titleInputRef = useRef(null);
+    const titleInputRef = useRef(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [chapter, setChapter] = useState('');
@@ -30,7 +31,7 @@ function AddBook() {
 
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return toast.error(result.message);
             } else {
                 chapterInputRef.current.value = '';
                 titleInputRef.current.value = '';
@@ -56,7 +57,7 @@ function AddBook() {
                             <input
                                 type="text"
                                 className="form-control display-2"
-                                ref={titleInputRef }
+                                ref={titleInputRef}
                                 onChange={(e) => {
                                     setTitle(e.target.value);
                                 }}
@@ -67,7 +68,7 @@ function AddBook() {
                             <input
                                 type="text"
                                 className="form-control display-2"
-                                ref={chapterInputRef }
+                                ref={chapterInputRef}
                                 onChange={(e) => {
                                     setChapter(e.target.value);
                                 }}
@@ -77,7 +78,7 @@ function AddBook() {
                             </label>
                             <CKEditor
                                 editor={ClassicEditor}
-                                data={content} 
+                                data={content}
                                 onChange={(event, editor) => {
                                     setContent(editor.getData());
                                 }}

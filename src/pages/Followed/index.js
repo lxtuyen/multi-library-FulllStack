@@ -28,7 +28,6 @@ function Following() {
         };
         getAllBook();
     }, [id, page]);
-    console.log(obj);
     return (
         <>
         <RSideBar obj={obj} title={title} error={error} loading={loading} setPage={setPage} page={page} />

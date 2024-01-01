@@ -14,7 +14,7 @@ function AddBook() {
     const onFinish = async (values) => {
         try {
             const addGenres = values.genres.map(async (value) => {
-                const data = { name: value.name};
+                const data = { name: value.name };
                 const res = await fetch(`${BASE_URL}/admin/genre`, {
                     method: 'post',
                     headers: { 'content-type': 'application/json' },
@@ -23,9 +23,9 @@ function AddBook() {
                 });
                 const result = await res.json();
                 if (!res.ok) {
-                    return toast.error(result.message)
+                    return toast.error(result.message);
                 } else {
-                    setGenre([result.data,...genre])
+                    setGenre([result.data, ...genre]);
                     return value;
                 }
             });
@@ -34,10 +34,9 @@ function AddBook() {
                 toast.success('Successful');
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
         }
     };
-    console.log(genre)
     useEffect(() => {
         const getAllUser = async () => {
             setLoading(true);
@@ -55,8 +54,8 @@ function AddBook() {
     }, []);
 
     useEffect(() => {
-        setGenre(obj.data)
-    },[obj]);
+        setGenre(obj.data);
+    }, [obj]);
     const handleDelete = async (e, id) => {
         e.preventDefault();
         try {
@@ -69,13 +68,13 @@ function AddBook() {
             if (!res.ok) {
                 return toast.error(result.message);
             } else {
-                toast.success('xóa thành công')
+                toast.success('xóa thành công');
                 setGenre((prevGenre) => prevGenre.filter((Genre) => Genre._id !== id));
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
         }
-    }
+    };
     return (
         <div id="layoutSidenav_content">
             <main>
@@ -87,7 +86,7 @@ function AddBook() {
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Tên</th>
-                                    <th></th> 
+                                    <th></th>
                                 </tr>
                             </thead>
                             {loading && <h4>Loading............</h4>}

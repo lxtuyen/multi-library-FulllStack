@@ -94,7 +94,6 @@ const Login = () => {
                 email_verified: decode.email_verified,
                 picture: decode.picture,
             };
-            console.log(credentials)
            if(credentials){
             const res = await fetch(`${BASE_URL}/auth/googleLogin`,{
                 method: 'post',

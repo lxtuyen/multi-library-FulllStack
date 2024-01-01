@@ -54,7 +54,7 @@ function User() {
         })
             .then((res) => res.json())
             .then((data) => setPreviewURL(data.url))
-            .catch((err) => console.log(err));
+            .catch((err) => toast.error(err))
     };
     const handleUpdate = async (e) => {
         e.preventDefault();

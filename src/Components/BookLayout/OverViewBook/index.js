@@ -59,7 +59,7 @@ const OverViewBook = ({ book, HistoryBook, comments, Loading, error }) => {
                         </div>
                         <div className={cx('book-info__item')}>
                             <p>Chương</p>            
-                            <span>{book.contents.length}</span>
+                            <span>{book.contents?.length ? book.contents?.length : 0}</span>
                         </div>
                     </div>
                     <div className={cx('previews-languages')}>

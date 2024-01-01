@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import {  toast } from 'react-toastify';
 import classNames from 'classnames/bind';
 
 import styles from './Search.module.scss';
@@ -17,14 +18,13 @@ const Search = ({ setSearch, search }) => {
             // Update the input field with the recognized speech
             setSearch(transcript);
             inputRef.current.value = transcript;
-            console.log(transcript)
             // Scroll to the end of the input field
             inputRef.current.scrollIntoView({ behavior: "smooth" });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [listening, transcript, inputFocused]);
     if (!browserSupportsSpeechRecognition) {
-        console.log('loi');
+        toast.error('Lỗi!!')
     }
     return (
         <div className={cx('search')}>

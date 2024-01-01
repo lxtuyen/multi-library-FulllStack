@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import classNames from "classnames";
-import { BASE_URL } from '~/hooks/config';
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import styled from "../AllBooks/AllBooks.scss";
+
+import { BASE_URL } from '~/hooks/config';
+import styled from '../AllBooks/AllBooks.scss';
 import Pagination from 'Components/Layout/components/Pagination';
+
 function AllBooks() {
-    const cx = classNames.bind(styled)
+    const cx = classNames.bind(styled);
     const [obj, setObj] = useState([]);
     const [pag, setPag] = useState([]);
     const [error, setError] = useState(null);
@@ -40,23 +42,22 @@ function AllBooks() {
             });
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return toast.error(result.message);
             } else {
-                toast.success('xóa thành công')
+                toast.success('xóa thành công');
                 setObj((prevStatus) => prevStatus.filter((book) => book._id !== id));
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
         }
-    }
+    };
     return (
-
-        <div id='layoutSidenav_content'>
+        <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 className='mt-4'> All Books</h1>
-                    <div className='card mb-4'>
-                        <div className='card-header'>
+                    <h1 className="mt-4"> All Books</h1>
+                    <div className="card mb-4">
+                        <div className="card-header">
                             <i className="fas fa-table me-1"></i>
                             DataTable Example
                         </div>
@@ -83,29 +84,45 @@ function AllBooks() {
                                         <tr>
                                             <th scope="row">{i + 1}</th>
                                             <td>{book.title}</td>
-                                            <td> <img src={book.photo} alt={book.title} className={cx('img')} /> </td>
+                                            <td>
+                                                {' '}
+                                                <img src={book.photo} alt={book.title} className={cx('img')} />{' '}
+                                            </td>
                                             <td>{book.author}</td>
-                                            <td>{book.genre.map((genre, index) => (
-                                                <div key={index}>
-                                                    {genre} {index !== genre.length - 1 && ','}
-                                                </div>
-                                            ))}</td>
+                                            <td>
+                                                {book.genre.map((genre, index) => (
+                                                    <div key={index}>
+                                                        {genre} {index !== genre.length - 1 && ','}
+                                                    </div>
+                                                ))}
+                                            </td>
                                             <td> {new Date(book.createdAt).toLocaleDateString('en-US', option)}</td>
                                             <td>{book.avgRating || <p>Not Rating</p>}</td>
                                             <td>
-                                                <button className='btn btn-outline-primary'><Link to={`/chapters/${book._id}`}>Chapters</Link></button>
-                                            </td> 
-                                            <td>
-                                                <button className='btn btn-outline-primary'><Link to={`/editbook/${book._id}`}>Edit</Link></button>
+                                                <button className="btn btn-outline-primary">
+                                                    <Link to={`/chapters/${book._id}`}>Chapters</Link>
+                                                </button>
                                             </td>
                                             <td>
-                                                <button className='btn btn-outline-danger' onClick={(e) => handleDelete(e, book._id)}> Delete </button>
+                                                <button className="btn btn-outline-primary">
+                                                    <Link to={`/editbook/${book._id}`}>Edit</Link>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-outline-danger"
+                                                    onClick={(e) => handleDelete(e, book._id)}
+                                                >
+                                                    {' '}
+                                                    Delete{' '}
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
-                                </tbody>)}
+                                </tbody>
+                            )}
                         </table>
-                        <Pagination 
+                        <Pagination
                             page={page}
                             limit={pag.limit ? pag.limit : 0}
                             total={pag.total ? pag.total : 0}
@@ -115,11 +132,10 @@ function AllBooks() {
                 </div>
             </main>
         </div>
-
-    )
+    );
 }
 
-export default AllBooks
+export default AllBooks;
 
 /*
  
