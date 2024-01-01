@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import styles from './User.module.scss';
 import Sidebar from '~/Components/UserLayout/Sidebar';
@@ -9,6 +10,7 @@ import { AuthContext } from '~/context/AuthContext';
 import { BASE_URL } from '~/hooks/config';
 
 const cx = classNames.bind(styles);
+const regexPhoneNumber = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
 function User() {
     const { id } = useParams();
     const { user, dispatch } = useContext(AuthContext);
@@ -57,40 +59,42 @@ function User() {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const obj = {
-                username: name,
-                avatar: previewURL,
-                phoneNumber: phoneNumber,
-                address: address,
-                email: email,
-            };
-            const res = await fetch(`${BASE_URL}/users/${id}`, {
-                method: 'put',
-                headers: { 'content-type': 'application/json'},
-                credentials: 'include',
-                body: JSON.stringify(obj),
-            });
-            const result = await res.json();
-            if (!res.ok) {
-                console.error('Update failed:', result.message);
-                alert(`Update failed: ${result.message}`);
-            } else {
-                console.log('Update successful:', result);
-                alert('Update successful');
-                dispatch({
-                    type: 'UPDATE_INFO',
-                    payload: {
-                        data: {
-                            avatar: previewURL,
-                            phoneNumber: phoneNumber,
-                            address: address,
-                        },
-                    },
+            if(phoneNumber.match(regexPhoneNumber)){
+                const obj = {
+                    username: name,
+                    avatar: previewURL,
+                    phoneNumber: phoneNumber,
+                    address: address,
+                    email: email,
+                };
+                const res = await fetch(`${BASE_URL}/users/${id}`, {
+                    method: 'put',
+                    headers: { 'content-type': 'application/json'},
+                    credentials: 'include',
+                    body: JSON.stringify(obj),
                 });
+                const result = await res.json();
+                if (!res.ok) {
+                toast.error(result.message);
+                } else {
+                    toast.success('Cập nhật thành công');
+                    dispatch({
+                        type: 'UPDATE_INFO',
+                        payload: {
+                            data: {
+                                username: name,
+                                avatar: previewURL,
+                                phoneNumber: phoneNumber,
+                                address: address,
+                            },
+                        },
+                    });
+                }
+            } else{
+                toast.error('Nhập chưa đúng yêu cầu');
             }
         } catch (error) {
-            console.error('Update error:', error);
-            alert('Update error');
+            toast.error('Cập nhật thất bại');
         }
     };
     return (

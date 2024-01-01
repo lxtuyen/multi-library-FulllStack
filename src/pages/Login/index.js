@@ -106,7 +106,6 @@ const Login = () => {
             if (!res.ok) {
                 return toast.error(result.message);
             } else {
-               // console.log(res);
                 toast.success('Đăng nhập thành công');
                 dispatch({ type: 'LOGIN_SUCCESS', payload: result });
                 navigate('/');

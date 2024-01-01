@@ -19,7 +19,7 @@ import { AuthContext } from '~/context/AuthContext';
 
 const cx = classNames.bind(style);
 
-const API_KEY = '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';
+const API_KEY = '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';
 
 function Chat() {
     const { id } = useParams();
