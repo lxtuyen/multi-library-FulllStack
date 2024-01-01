@@ -2,30 +2,51 @@ import React, { useState,useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { Pagination } from 'antd';
 import { useParams } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 import useFetch from '~/hooks/useFetch';
 import { BASE_URL } from '~/hooks/config';
 import styles from './Content.module.scss';
+import axios from 'axios';
+import { SyncLoader } from 'react-spinners';
 const cx = classNames.bind(styles);
 function Content() {
     const { id } = useParams();
     const [result, setResult] = useState([]);
+    const [obj, setObj] = useState([]);
     const { data: chapter } = useFetch(`${BASE_URL}/content/${id}`);
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        const getAllBooks = async () => {
+            setLoading(true);
+            try {
+                const url = `${BASE_URL}/content/${id}`;
+                const { data } = await axios.get(url);
+                setObj(data.data);
+                setLoading(false);
+            } catch (err) {
+                toast.error(err.message)
+                setLoading(false);
+            }
+        };
+        getAllBooks();
+    },[id] );
     const onChange = (pageNumber) => {
-        const result = chapter?.filter((item) => item.chapter === pageNumber);
+        const result = obj?.filter((item) => item.chapter === pageNumber);
         setResult(result)
       };
       useEffect(()=>{
-        const result = chapter?.filter((item) => item.chapter === 1);
+        const result = obj?.filter((item) => item.chapter === 1);
         setResult(result)
-      },[chapter])
+      },[obj])
+     
     return (
         <div className={cx('wrapper')}>
             {result?.map((item) => (
             <>
             <div className="container">
                 <div className={cx('content')}>
-                    <div dangerouslySetInnerHTML={{__html: item.content}}></div> 
+                    {loading ? <SyncLoader size={13} color="#36d7b7" /> : 
+                    <div dangerouslySetInnerHTML={{__html: item.content}}></div> }
                 </div>
                 </div>
             </>

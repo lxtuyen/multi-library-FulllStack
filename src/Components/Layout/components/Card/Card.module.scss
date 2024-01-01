@@ -35,6 +35,10 @@
 .card__img{
     
     border-radius: 5px 5px 0 0 ;
+    img{
+       width: 222px;
+       height: 337px;
+    }
     img:hover{
         transform: scale(1.02);
         transition: all ease 0.8s;
@@ -42,7 +46,6 @@
 }
 .book__rating{
     height: 20px;
-    display: flex;
     align-items: center;
     font-size: 13px;
     color: #333;
@@ -55,7 +58,6 @@
 }
 .book__author{
     margin-top: 2px;
-    display: flex;
     align-items: center;
     font-weight: 500;
     color: #555;
@@ -95,7 +97,7 @@
 .genre_container{
     display: flex;
     h5{
-        margin: 5px 0 0 4px;
+        margin: 6px 0 0 4px;
         justify-content: center;
         font-weight: 500;
         font-size: 13px;
