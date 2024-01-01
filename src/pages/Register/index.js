@@ -79,7 +79,7 @@ const Register = () => {
             });
             const result = await res.json();
             if (!res.ok) {
-                alert(result.message);
+            toast.error(result.message)
             } 
             setLoading(false)
             toast.success('Đăng ký thành công')

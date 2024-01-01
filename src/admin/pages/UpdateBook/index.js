@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { BASE_URL } from '~/hooks/config';
 import useFetch from '~/hooks/useFetch';
-import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 function EditBook() {
     const navigate = useNavigate();
@@ -97,7 +97,7 @@ function EditBook() {
         })
             .then((res) => res.json())
             .then((data) => setPreviewURL(data.url))
-            .catch((err) => console.log(err));
+            .catch((err) => toast.error(err))
     };
     return (
         <div id='layoutSidenav_content'>

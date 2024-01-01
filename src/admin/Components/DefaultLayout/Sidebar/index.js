@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-function Sidebar(){
-    return(
+function Sidebar() {
+    return (
         <>
             <div id="layoutSidenav_nav">
                 <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -9,27 +9,53 @@ function Sidebar(){
                         <div className="nav">
                             <div className="sb-sidenav-menu-heading">Core</div>
                             <Link className="nav-link" to="/">
-                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
+                                <div className="sb-nav-link-icon">
+                                    <i className="fas fa-tachometer-alt"></i>
+                                </div>
                                 Dashboard
                             </Link>
                             <div className="sb-sidenav-menu-heading">Interface</div>
-                            <a className="nav-link collapsed" href="/" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
-                                    Books
-                                <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                            <a
+                                className="nav-link collapsed"
+                                href="/"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseLayouts"
+                                aria-expanded="false"
+                                aria-controls="collapseLayouts"
+                            >
+                                <div className="sb-nav-link-icon">
+                                    <i className="fas fa-book-open"></i>
+                                </div>
+                                Books
+                                <div className="sb-sidenav-collapse-arrow">
+                                    <i className="fas fa-angle-down"></i>
+                                </div>
                             </a>
-                            <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div
+                                className="collapse"
+                                id="collapseLayouts"
+                                aria-labelledby="headingOne"
+                                data-bs-parent="#sidenavAccordion"
+                            >
                                 <nav className="sb-sidenav-menu-nested nav">
-                                    <Link className="nav-link" to="/addbook">Add Book</Link>
-                                    <Link className="nav-link" to="/allbooks">All Books</Link>
+                                    <Link className="nav-link" to="/addbook">
+                                        Add Book
+                                    </Link>
+                                    <Link className="nav-link" to="/allbooks">
+                                        All Books
+                                    </Link>
                                 </nav>
                             </div>
                             <Link className="nav-link" to="/users">
-                            <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
+                                <div className="sb-nav-link-icon">
+                                    <i className="fas fa-book-open"></i>
+                                </div>
                                 Users
                             </Link>
                             <Link className="nav-link" to="/genres">
-                            <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
+                                <div className="sb-nav-link-icon">
+                                    <i className="fas fa-book-open"></i>
+                                </div>
                                 Genre
                             </Link>
                         </div>
@@ -41,7 +67,7 @@ function Sidebar(){
                 </nav>
             </div>
         </>
-    )
+    );
 }
 
 export default Sidebar;

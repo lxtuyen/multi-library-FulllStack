@@ -34,7 +34,7 @@ function Chat() {
                 const messages = data.messages
                 setMessages(messages);
             } catch (err) {
-                console.log(err.message);
+                toast.error(err.message);
             }
         };
         getAllBook();
@@ -92,10 +92,9 @@ function Chat() {
             });
 
             const responseData = await response.json();
-            console.log(responseData);
 
             if (!response.ok) {
-                return alert(responseData.message);
+                return toast.error(responseData.message)
             } else {
                 setMessages([
                     ...chatMessages,
@@ -129,8 +128,7 @@ function Chat() {
             console.error('Error processing message:', error);
             setTyping(false);
         }
-    }
-    console.log(messages);
+    };
     return (
         <div className="container">
             <div className={cx('wrapper')}>

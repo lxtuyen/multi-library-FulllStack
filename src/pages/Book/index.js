@@ -65,13 +65,12 @@ function Book() {
                 };
                 const res = await fetch(`${BASE_URL}/followed/${foundBookId}`, {
                     method: 'delete',
-                    headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${user.token}`, },
                     credentials: 'include',
                     body: JSON.stringify(deleteObj),
                 });
                 const result = await res.json();
                 if (!res.ok) {
-                    return alert(result.message);
+                    return toast.error(result.message)
                 } else {
                     return foundBookId;
                 }
@@ -156,6 +155,7 @@ function Book() {
             if (!res.ok) {
                 return toast.error(result.message)
             } else {
+                console.log(result)
                 navigate(`/books/content/${_id}`);
             }
         } catch (error) {
@@ -208,9 +208,7 @@ function Book() {
                 // Xóa nội dung của ô nhập bình luận
                 commentRef.current.value = '';
             }
-            console.log(reviewObj);
         } catch (error) {
-            console.log(error.message);
             toast.error(error.message)
         }
     };

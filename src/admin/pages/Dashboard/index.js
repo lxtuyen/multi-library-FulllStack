@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { BASE_URL } from "hooks/config";
-import axios from "axios";
-import Chart from "../Chart";
-import { Link } from "react-router-dom";
-import classNames from "classnames";
-import styled from "../Dashboard/Dashboard.scss";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+
+import Chart from '../Chart';
+import { BASE_URL } from 'hooks/config';
+import styled from '../Dashboard/Dashboard.scss';
 import Pagination from 'Components/Layout/components/Pagination';
 function Dashboard() {
-    const cx = classNames.bind(styled)
+    const cx = classNames.bind(styled);
     const [obj, setObj] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ function Dashboard() {
                 const url = `${BASE_URL}/books?page=${page}&sort=avgRating,desc`;
                 const { data } = await axios.get(url);
                 setObj(data?.books);
-                setPag(data)
+                setPag(data);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -45,8 +45,12 @@ function Dashboard() {
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">Books</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <Link class="small text-white stretched-link" to="/allbooks">View Details</Link>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <Link class="small text-white stretched-link" to="/allbooks">
+                                            View Details
+                                        </Link>
+                                        <div class="small text-white">
+                                            <i class="fas fa-angle-right"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -54,8 +58,12 @@ function Dashboard() {
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Users</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <Link class="small text-white stretched-link" href="/alluser">View Details</Link>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <Link class="small text-white stretched-link" href="/alluser">
+                                            View Details
+                                        </Link>
+                                        <div class="small text-white">
+                                            <i class="fas fa-angle-right"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -97,33 +105,45 @@ function Dashboard() {
                                                 <tr>
                                                     <th scope="row">{i + 1}</th>
                                                     <td>{book.title}</td>
-                                                    <td> <img src={book.photo} alt={book.title} className={cx('img')} /> </td>
+                                                    <td>
+                                                        {' '}
+                                                        <img
+                                                            src={book.photo}
+                                                            alt={book.title}
+                                                            className={cx('img')}
+                                                        />{' '}
+                                                    </td>
                                                     <td>{book.author}</td>
-                                                    <td>{book.genre.map((genre, index) => (
-                                                        <h5 key={index}>
-                                                            {genre} {index !== genre.length - 1 && ','}
-                                                        </h5>
-                                                    ))}</td>
-                                                    <td> {new Date(book.createdAt).toLocaleDateString('en-US', option)}</td>
+                                                    <td>
+                                                        {book.genre.map((genre, index) => (
+                                                            <h5 key={index}>
+                                                                {genre} {index !== genre.length - 1 && ','}
+                                                            </h5>
+                                                        ))}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        {new Date(book.createdAt).toLocaleDateString('en-US', option)}
+                                                    </td>
                                                     <td>{book.avgRating || <p>Not Rating</p>}</td>
                                                 </tr>
                                             ))}
-                                        </tbody>)}
+                                        </tbody>
+                                    )}
                                 </table>
-                                <Pagination 
-                                page={page}
-                                limit={pag.limit ? pag.limit : 0}
-                                total={pag.total ? pag.total : 0}
-                                setPage={(page) => setPage(page)}
+                                <Pagination
+                                    page={page}
+                                    limit={pag.limit ? pag.limit : 0}
+                                    total={pag.total ? pag.total : 0}
+                                    setPage={(page) => setPage(page)}
                                 />
                             </div>
                         </div>
                     </div>
                 </main>
             </div>
-
         </>
-    )
+    );
 }
 
 export default Dashboard;

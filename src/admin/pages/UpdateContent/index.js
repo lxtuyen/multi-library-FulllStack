@@ -36,7 +36,7 @@ function UpdateBook() {
 
             const result = await res.json();
             if (!res.ok) {
-                return alert(result.message);
+                return  toast.error(result.message)
             } else {
                 toast.success('Successful');
             }
